@@ -30,12 +30,12 @@ import {
   saveLocalAccount, 
   syncUserToFirestore, 
   auth,
+  onAuthStateChanged,
   logOutUser,
   fetchUserScansFromFirestore,
   fetchUserFromFirestore,
   createFreshUserAccount
 } from './lib/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -49,14 +49,14 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
-        // Fetch persisted user data & scans from Firestore
+        const uid = fbUser.uid;
         const [cloudUser, scans] = await Promise.all([
-          fetchUserFromFirestore(fbUser.uid),
-          fetchUserScansFromFirestore(fbUser.uid)
+          fetchUserFromFirestore(uid),
+          fetchUserScansFromFirestore(uid)
         ]);
 
         const resolvedUser: UserAccount = cloudUser || createFreshUserAccount(
-          fbUser.uid,
+          uid,
           fbUser.email || 'clinician@hospital.org',
           fbUser.displayName
         );
@@ -76,7 +76,10 @@ export default function App() {
         }
       }
     });
-    return () => unsubscribe();
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   // Save changes to localStorage and Firestore

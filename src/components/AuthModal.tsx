@@ -20,18 +20,16 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { 
-  auth, 
+  auth,
   googleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   saveLocalAccount, 
   syncUserToFirestore, 
   fetchUserFromFirestore,
   createFreshUserAccount
 } from '../lib/firebase';
-import { 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword,
-  signInWithPopup
-} from 'firebase/auth';
 import { UserAccount } from '../types';
 import { soundFx } from '../lib/soundFx';
 
@@ -88,16 +86,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       if (isSignUp) {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        const newUser = createFreshUserAccount(cred.user.uid, cred.user.email || email, fullName);
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const fbUser = userCred.user;
+        const newUser = createFreshUserAccount(
+          fbUser.uid, 
+          fbUser.email || email, 
+          fullName || fbUser.displayName
+        );
         await syncUserToFirestore(newUser);
         soundFx.success();
         onSuccess(newUser);
         onClose();
       } else {
-        const cred = await signInWithEmailAndPassword(auth, email, password);
-        const existingData = await fetchUserFromFirestore(cred.user.uid);
-        const loggedUser: UserAccount = existingData || createFreshUserAccount(cred.user.uid, cred.user.email || email, cred.user.displayName);
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        const fbUser = userCred.user;
+        const existingData = await fetchUserFromFirestore(fbUser.uid);
+        const loggedUser: UserAccount = existingData || createFreshUserAccount(
+          fbUser.uid, 
+          fbUser.email || email, 
+          fbUser.displayName
+        );
         saveLocalAccount(loggedUser);
         soundFx.success();
         onSuccess(loggedUser);
@@ -108,39 +116,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       let message = err.message || 'Authentication failed. Please verify credentials.';
       let details: { title: string; hint: string; canBypass?: boolean } | null = null;
 
-      if (err.code === 'auth/operation-not-allowed') {
-        message = 'Email/Password sign-in is disabled in your Firebase console.';
-        details = {
-          title: 'Email/Password Provider Not Enabled',
-          hint: 'By default, Firebase projects only have Google Sign-In enabled. You can use "Continue with Google", enable Email/Password in Firebase Console (Authentication > Sign-in method), or proceed directly in local session below.',
-          canBypass: true
-        };
-      } else if (err.code === 'auth/unauthorized-domain') {
-        message = 'This domain is not in your Firebase Authorized Domains list.';
-        details = {
-          title: 'Unauthorized Firebase Domain',
-          hint: 'Add this web URL in Firebase Console (Authentication > Settings > Authorized domains), or proceed below.',
-          canBypass: true
-        };
-      } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
-        message = 'Invalid email or password. Please verify your credentials or sign up.';
-      } else if (err.code === 'auth/email-already-in-use') {
-        message = 'An account with this email already exists. Please switch to Log In.';
-      } else if (err.code === 'auth/weak-password') {
+      if (message.includes('auth/invalid-credential') || message.includes('auth/wrong-password')) {
+        message = 'Invalid email or password. Please verify credentials or create an account.';
+      } else if (message.includes('auth/email-already-in-use')) {
+        message = 'An account with this email is already registered. Please switch to Log In.';
+      } else if (message.includes('auth/weak-password')) {
         message = 'Password should be at least 6 characters.';
-      } else if (err.code === 'auth/invalid-email') {
-        message = 'Please enter a valid medical email address.';
-      } else if (err.code === 'auth/network-request-failed') {
-        message = 'Network error contacting Firebase Authentication.';
-        details = {
-          title: 'Network / Connectivity Issue',
-          hint: 'Could not reach Firebase servers. You can enter the workspace in local clinician mode.',
-          canBypass: true
-        };
       } else {
         details = {
           title: 'Firebase Authentication Notice',
-          hint: 'If Firebase services are restricted in your browser or preview iframe, you can enter the clinical workspace directly.',
+          hint: 'You can proceed in local clinician mode if network or authentication is restricted.',
           canBypass: true
         };
       }
@@ -160,37 +145,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       const result = await signInWithPopup(auth, googleAuthProvider);
       const fbUser = result.user;
       const existingData = await fetchUserFromFirestore(fbUser.uid);
-      
-      const clinicalUser: UserAccount = existingData || createFreshUserAccount(fbUser.uid, fbUser.email || 'clinician@hospital.org', fbUser.displayName);
-
-      await syncUserToFirestore(clinicalUser);
+      const loggedUser: UserAccount = existingData || createFreshUserAccount(
+        fbUser.uid,
+        fbUser.email || 'clinician.google@hospital.org',
+        fbUser.displayName
+      );
+      await syncUserToFirestore(loggedUser);
       soundFx.success();
-      onSuccess(clinicalUser);
+      onSuccess(loggedUser);
       onClose();
     } catch (err: any) {
-      console.error('Google Sign-In Error:', err);
-      if (err.code === 'auth/popup-closed-by-user') {
-        // User voluntarily closed popup
-        setErrorMsg('Google Sign-In was cancelled.');
-      } else if (err.code === 'auth/popup-blocked') {
-        setErrorMsg('The sign-in popup was blocked by your browser.');
-        setErrorDetails({
-          title: 'Browser Popup Blocked',
-          hint: 'Your browser or iframe blocked the Google popup window. Please allow popups for this site or open in a new tab.',
-          canBypass: true
-        });
-      } else if (err.code === 'auth/unauthorized-domain') {
-        setErrorMsg('This domain is not in Firebase Authorized Domains.');
-        setErrorDetails({
-          title: 'Domain Not Authorized in Firebase',
-          hint: 'Add this domain in Firebase Console (Authentication > Settings > Authorized domains), or proceed below.',
-          canBypass: true
-        });
+      console.error('Google Firebase Sign-In Error:', err);
+      if (err?.code === 'auth/popup-closed-by-user' || err?.message?.includes('closed-by-user')) {
+        setErrorMsg('Sign-in popup was closed.');
       } else {
         setErrorMsg(err.message || 'Google sign-in encountered an issue.');
         setErrorDetails({
-          title: 'Google Sign-In Notice',
-          hint: 'You can also sign in via clinical email or enter the clinical workspace directly.',
+          title: 'Google Authentication Notice',
+          hint: 'Sign in with clinical email/password or proceed in local mode below.',
           canBypass: true
         });
       }
@@ -395,7 +367,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="flex items-center justify-center gap-4 text-[11px] text-slate-400 pt-2 border-t border-slate-100">
           <span className="flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-            Firebase Cloud Encrypted
+            Firebase Cloud Firestore & Auth
           </span>
           <span>•</span>
           <span>HIPAA Compliant Protocol</span>

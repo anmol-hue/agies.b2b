@@ -7,9 +7,35 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
+import { startAuthorization, getToken, getConnectorMetadata } from "@vercel/connect";
 import dotenv from "dotenv";
 
 dotenv.config();
+
+// Vercel Connect & Supabase OAuth constants from your configuration
+const VERCEL_CONNECT_ID = process.env.VERCEL_CONNECT_ID || "scl_0bIcaoDjGhDCxnuisy43Q";
+const SUPABASE_OAUTH_CLIENT_ID = process.env.SUPABASE_OAUTH_CLIENT_ID || "1a9865df-029d-4a6e-aa44-5b217b799560";
+const SUPABASE_SERVER_URL = "https://mcp.supabase.com/mcp";
+const SUPABASE_DISCOVERY_URL = "https://api.supabase.com";
+const SUPABASE_AUTH_ENDPOINT = "https://api.supabase.com/v1/oauth/authorize";
+const SUPABASE_TOKEN_ENDPOINT = "https://api.supabase.com/v1/oauth/token";
+const SUPABASE_REGISTRATION_ENDPOINT = "https://api.supabase.com/platform/oauth/register";
+const SUPABASE_ISSUER = "https://api.supabase.com";
+
+const SUPABASE_SCOPES = [
+  "analytics:read", "analytics:write", 
+  "analytics_config:read", "analytics_config:write", 
+  "auth:read", "auth:write", 
+  "database:read", "database:write", 
+  "domains:read", "domains:write", 
+  "edge_functions:read", "edge_functions:write", 
+  "environment:read", "environment:write", 
+  "organizations:read", "organizations:write", 
+  "projects:read", "projects:write", 
+  "rest:read", "rest:write", 
+  "secrets:read", "secrets:write", 
+  "storage:read", "storage:write"
+];
 
 async function startServer() {
   const app = express();
@@ -21,6 +47,115 @@ async function startServer() {
   // API HEALTH CHECK
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
+  });
+
+  // VERCEL CONNECT & SUPABASE OAUTH AUTHORIZATION ROUTE
+  // Initiates developer / agent authorization to Supabase via @vercel/connect
+  app.post("/api/connect/supabase", async (req, res) => {
+    const subjectId = req.body?.subjectId || "usr_123";
+    const subjectType = req.body?.subjectType || "user";
+    const customScopes = req.body?.scopes || SUPABASE_SCOPES;
+    const connectorTarget = req.body?.connectorId || VERCEL_CONNECT_ID;
+
+    const authParams = {
+      subject: { type: subjectType, id: subjectId },
+      scopes: customScopes
+    };
+
+    console.log("[Vercel Connect] Starting authorization for Supabase...", {
+      connector: connectorTarget,
+      subject: authParams.subject,
+      scopesCount: customScopes.length,
+      clientId: SUPABASE_OAUTH_CLIENT_ID
+    });
+
+    try {
+      // First attempt with the specific Vercel Connection ID (scl_0bIcaoDjGhDCxnuisy43Q)
+      let authResult;
+      try {
+        authResult = await startAuthorization(connectorTarget, authParams);
+      } catch (firstErr) {
+        // Fallback attempt with connector name "supabase/auth"
+        authResult = await startAuthorization("supabase/auth", authParams);
+      }
+
+      return res.json({
+        success: true,
+        connector: connectorTarget,
+        result: authResult
+      });
+    } catch (err: any) {
+      console.warn("[Vercel Connect] Notice during startAuthorization:", err?.message || err);
+      
+      // Fallback OAuth direct authorization URL for browser / agent consent
+      const fallbackAuthorizeUrl = `${SUPABASE_AUTH_ENDPOINT}?client_id=${encodeURIComponent(
+        SUPABASE_OAUTH_CLIENT_ID
+      )}&response_type=code&scope=${encodeURIComponent(SUPABASE_SCOPES.join(" "))}`;
+
+      return res.status(200).json({
+        success: false,
+        notice: "Vercel Connect OIDC active in production Vercel deployments.",
+        error: err?.message || "Vercel OIDC Token header required in cloud container.",
+        connectionId: VERCEL_CONNECT_ID,
+        clientId: SUPABASE_OAUTH_CLIENT_ID,
+        clientName: "auth",
+        scopes: SUPABASE_SCOPES,
+        manualAuthorizeUrl: fallbackAuthorizeUrl,
+        serverUrl: SUPABASE_SERVER_URL,
+        discoveryUrl: SUPABASE_DISCOVERY_URL,
+        authorizationEndpoint: SUPABASE_AUTH_ENDPOINT,
+        tokenEndpoint: SUPABASE_TOKEN_ENDPOINT,
+        registrationEndpoint: SUPABASE_REGISTRATION_ENDPOINT,
+        issuer: SUPABASE_ISSUER,
+        codeChallengeMethodsSupported: ["S256", "plain"],
+        grantTypesSupported: ["authorization_code", "refresh_token"],
+        responseModesSupported: ["query"],
+        responseTypesSupported: ["code"],
+        tokenAuthMethodsSupported: ["client_secret_basic", "client_secret_post"]
+      });
+    }
+  });
+
+  // Fetch access token via @vercel/connect for agent tasks
+  app.post("/api/connect/supabase/token", async (req, res) => {
+    try {
+      const subjectId = req.body?.subjectId || "usr_123";
+      const subjectType = req.body?.subjectType || "user";
+      const connectorTarget = req.body?.connectorId || VERCEL_CONNECT_ID;
+
+      const token = await getToken(connectorTarget, {
+        subject: { type: subjectType, id: subjectId }
+      });
+
+      return res.json({ success: true, token });
+    } catch (err: any) {
+      return res.status(200).json({
+        success: false,
+        notice: "Vercel Connect session required for token exchange.",
+        error: err?.message || "No active token cached."
+      });
+    }
+  });
+
+  // GET route to inspect current Vercel Connect & Supabase OAuth configuration
+  app.get("/api/connect/supabase", (req, res) => {
+    res.json({
+      connectionId: VERCEL_CONNECT_ID,
+      clientId: SUPABASE_OAUTH_CLIENT_ID,
+      clientName: "auth",
+      scopes: SUPABASE_SCOPES,
+      serverUrl: SUPABASE_SERVER_URL,
+      discoveryUrl: SUPABASE_DISCOVERY_URL,
+      authorizationEndpoint: SUPABASE_AUTH_ENDPOINT,
+      tokenEndpoint: SUPABASE_TOKEN_ENDPOINT,
+      registrationEndpoint: SUPABASE_REGISTRATION_ENDPOINT,
+      issuer: SUPABASE_ISSUER,
+      codeChallengeMethodsSupported: ["S256", "plain"],
+      grantTypesSupported: ["authorization_code", "refresh_token"],
+      responseModesSupported: ["query"],
+      responseTypesSupported: ["code"],
+      tokenAuthMethodsSupported: ["client_secret_basic", "client_secret_post"]
+    });
   });
 
   // COMPREHENSIVE LOCAL RULE-BASED CLINICAL MAPPING ENGINE (PLAN A FALLBACK)

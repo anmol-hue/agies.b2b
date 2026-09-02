@@ -27,24 +27,80 @@ import {
   deleteDoc,
   onSnapshot
 } from 'firebase/firestore';
+import firebaseConfigJson from '../../firebase-applet-config.json';
 import { UserAccount, CabinetItem, ClinicalHistoryEntry, Patient, SavedAiScan } from '../types';
 import { INITIAL_PATIENTS } from '../data/patients';
 
+export enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+export interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+    emailVerified?: boolean | null;
+    isAnonymous?: boolean | null;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId?: string | null;
+      email?: string | null;
+    }[];
+  };
+}
+
+export function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo: auth.currentUser?.providerData?.map(provider => ({
+        providerId: provider.providerId,
+        email: provider.email,
+      })) || []
+    },
+    operationType,
+    path
+  };
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  return errInfo;
+}
+
 const firebaseConfig = {
-  projectId: "resonant-gravity-56vd8",
-  appId: "1:731869313117:web:1db19c462f8a1e4ef5b5b4",
-  apiKey: "AIzaSyC4lCkWhyVmXiYYNZfAhAW92Bzz7ATrheI",
-  authDomain: "resonant-gravity-56vd8.firebaseapp.com",
-  firestoreDatabaseId: "ai-studio-tpisagies-c0faa7b6-1a65-4b04-be17-0f234e7ae734",
-  storageBucket: "resonant-gravity-56vd8.firebasestorage.app",
-  messagingSenderId: "731869313117",
-  measurementId: ""
+  projectId: firebaseConfigJson.projectId || "agies-b6afc",
+  appId: firebaseConfigJson.appId || "1:422005690143:web:6a897dcabb99c6035f6a2a",
+  apiKey: firebaseConfigJson.apiKey || "AIzaSyCnepW7uslWymkBIqoU3G2zL3JBRgBiEV8",
+  authDomain: firebaseConfigJson.authDomain || "agies-b6afc.firebaseapp.com",
+  firestoreDatabaseId: firebaseConfigJson.firestoreDatabaseId || "ai-studio-tpisagies-c0faa7b6-1a65-4b04-be17-0f234e7ae734",
+  storageBucket: firebaseConfigJson.storageBucket || "agies-b6afc.firebasestorage.app",
+  messagingSenderId: firebaseConfigJson.messagingSenderId || "422005690143",
+  measurementId: firebaseConfigJson.measurementId || ""
 };
 
 // Initialize Firebase safely
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+
+export { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signInWithPopup, 
+  GoogleAuthProvider,
+  onAuthStateChanged
+};
 
 export const googleAuthProvider = new GoogleAuthProvider();
 googleAuthProvider.setCustomParameters({

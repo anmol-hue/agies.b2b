@@ -37,7 +37,7 @@ import {
 } from 'lucide-react';
 import { soundFx } from '../lib/soundFx';
 import { ThreeAnatomicalScanner } from './ThreeAnatomicalScanner';
-import { auth, saveAiScanToFirestore, fetchUserScansFromFirestore, deleteScanFromFirestore } from '../lib/firebase';
+import { saveAiScanToFirestore, fetchUserScansFromFirestore, deleteScanFromFirestore } from '../lib/firebase';
 import { MEDICINES } from '../data/medicines';
 
 interface ClinicalScannerProps {
@@ -99,7 +99,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
   // Load saved scans from Firestore on mount or user change
   useEffect(() => {
     async function loadScans() {
-      const uid = auth.currentUser?.uid || user.id;
+      const uid = user.id;
       if (uid) {
         const fetched = await fetchUserScansFromFirestore(uid);
         if (fetched.length > 0) {
@@ -210,8 +210,8 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       setResult(diagResult);
       setLoading(false);
 
-      // AUTOMATICALLY SAVE SCAN TO CLOUD FIRESTORE
-      const uid = auth.currentUser?.uid || user.id || 'clinician-user';
+      // AUTOMATICALLY SAVE SCAN TO FIRESTORE
+      const uid = user.id || 'clinician-user';
       const newSavedScan: SavedAiScan = {
         id: `scan-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
         userId: uid,
@@ -233,7 +233,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       setSavedScans(prev => [newSavedScan, ...prev]);
 
       // Trigger temporary saved toast
-      setSavedNotification('AI Diagnostic Scan automatically saved to Cloud Firestore.');
+      setSavedNotification('AI Diagnostic Scan automatically saved to Firebase Firestore.');
       setTimeout(() => setSavedNotification(null), 4500);
     }
   };
@@ -283,7 +283,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             </span>
           </div>
           <p className="text-sm text-slate-600 max-w-3xl">
-            Multimodal AI diagnostic toolkit with automatic Firestore scan archiving, computer vision lesion analysis, and differential hypothesis mapping.
+            Multimodal AI diagnostic toolkit with automatic Firebase Firestore scan archiving, computer vision lesion analysis, and differential hypothesis mapping.
           </p>
         </div>
 
@@ -684,7 +684,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
               </div>
               <h3 className="text-lg font-bold text-slate-900">No Saved AI Scans Yet</h3>
               <p className="text-xs text-slate-500 max-w-md mx-auto">
-                Run an AI symptom check or skin lesion scan in the Live Scanner tab. Completed analyses are automatically persisted to your Cloud Firestore archive.
+                Run an AI symptom check or skin lesion scan in the Live Scanner tab. Completed analyses are automatically persisted to your Firebase Firestore cloud archive.
               </p>
               <button
                 onClick={() => setMainView('scanner')}
