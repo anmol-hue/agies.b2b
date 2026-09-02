@@ -59,18 +59,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [errorDetails, setErrorDetails] = useState<{ title: string; hint: string; canBypass?: boolean } | null>(null);
 
   if (!isOpen) return null;
+
+  const handleContinueLocalFallback = () => {
+    soundFx.click();
+    const cleanEmail = email || 'clinician@hospital.org';
+    const cleanName = fullName || cleanEmail.split('@')[0] || 'Clinician';
+    const fallbackUser = createFreshUserAccount(`local-${Date.now()}`, cleanEmail, cleanName);
+    saveLocalAccount(fallbackUser);
+    soundFx.success();
+    onSuccess(fallbackUser);
+    onClose();
+  };
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       setErrorMsg('Please enter both clinical email address and password.');
+      setErrorDetails(null);
       return;
     }
 
     setLoading(true);
     setErrorMsg('');
+    setErrorDetails(null);
 
     try {
       if (isSignUp) {
@@ -92,16 +106,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     } catch (err: any) {
       console.error('Firebase Auth Error:', err);
       let message = err.message || 'Authentication failed. Please verify credentials.';
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
-        message = 'Invalid email or password. Please try again.';
+      let details: { title: string; hint: string; canBypass?: boolean } | null = null;
+
+      if (err.code === 'auth/operation-not-allowed') {
+        message = 'Email/Password sign-in is disabled in your Firebase console.';
+        details = {
+          title: 'Email/Password Provider Not Enabled',
+          hint: 'By default, Firebase projects only have Google Sign-In enabled. You can use "Continue with Google", enable Email/Password in Firebase Console (Authentication > Sign-in method), or proceed directly in local session below.',
+          canBypass: true
+        };
+      } else if (err.code === 'auth/unauthorized-domain') {
+        message = 'This domain is not in your Firebase Authorized Domains list.';
+        details = {
+          title: 'Unauthorized Firebase Domain',
+          hint: 'Add this web URL in Firebase Console (Authentication > Settings > Authorized domains), or proceed below.',
+          canBypass: true
+        };
+      } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+        message = 'Invalid email or password. Please verify your credentials or sign up.';
       } else if (err.code === 'auth/email-already-in-use') {
-        message = 'An account with this email already exists. Switch to Log In.';
+        message = 'An account with this email already exists. Please switch to Log In.';
       } else if (err.code === 'auth/weak-password') {
         message = 'Password should be at least 6 characters.';
       } else if (err.code === 'auth/invalid-email') {
         message = 'Please enter a valid medical email address.';
+      } else if (err.code === 'auth/network-request-failed') {
+        message = 'Network error contacting Firebase Authentication.';
+        details = {
+          title: 'Network / Connectivity Issue',
+          hint: 'Could not reach Firebase servers. You can enter the workspace in local clinician mode.',
+          canBypass: true
+        };
+      } else {
+        details = {
+          title: 'Firebase Authentication Notice',
+          hint: 'If Firebase services are restricted in your browser or preview iframe, you can enter the clinical workspace directly.',
+          canBypass: true
+        };
       }
+
       setErrorMsg(message);
+      setErrorDetails(details);
     } finally {
       setLoading(false);
     }
@@ -110,6 +155,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const handleGoogleAuth = async () => {
     setLoading(true);
     setErrorMsg('');
+    setErrorDetails(null);
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const fbUser = result.user;
@@ -123,8 +169,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       onClose();
     } catch (err: any) {
       console.error('Google Sign-In Error:', err);
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setErrorMsg(err.message || 'Google sign in encountered an issue.');
+      if (err.code === 'auth/popup-closed-by-user') {
+        // User voluntarily closed popup
+        setErrorMsg('Google Sign-In was cancelled.');
+      } else if (err.code === 'auth/popup-blocked') {
+        setErrorMsg('The sign-in popup was blocked by your browser.');
+        setErrorDetails({
+          title: 'Browser Popup Blocked',
+          hint: 'Your browser or iframe blocked the Google popup window. Please allow popups for this site or open in a new tab.',
+          canBypass: true
+        });
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setErrorMsg('This domain is not in Firebase Authorized Domains.');
+        setErrorDetails({
+          title: 'Domain Not Authorized in Firebase',
+          hint: 'Add this domain in Firebase Console (Authentication > Settings > Authorized domains), or proceed below.',
+          canBypass: true
+        });
+      } else {
+        setErrorMsg(err.message || 'Google sign-in encountered an issue.');
+        setErrorDetails({
+          title: 'Google Sign-In Notice',
+          hint: 'You can also sign in via clinical email or enter the clinical workspace directly.',
+          canBypass: true
+        });
       }
     } finally {
       setLoading(false);
@@ -200,9 +268,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {errorMsg && (
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-            <span>{errorMsg}</span>
+          <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs space-y-2">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
+              <div className="space-y-1">
+                <span className="font-bold text-rose-950 block">{errorDetails?.title || 'Authentication Notice'}</span>
+                <p className="text-rose-700 leading-relaxed">{errorMsg}</p>
+                {errorDetails?.hint && (
+                  <p className="text-[11px] text-rose-600/90 leading-snug mt-1">{errorDetails.hint}</p>
+                )}
+              </div>
+            </div>
+
+            {errorDetails?.canBypass && (
+              <div className="pt-2 border-t border-rose-200/60 flex items-center justify-between gap-2">
+                <span className="text-[11px] text-slate-500 font-medium">Bypass cloud error:</span>
+                <button
+                  type="button"
+                  onClick={handleContinueLocalFallback}
+                  className="px-3 py-1.5 rounded-lg bg-white border border-rose-300 hover:bg-rose-100 text-rose-900 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
+                >
+                  <Building2 className="w-3.5 h-3.5 text-blue-600" />
+                  <span>Enter as Local Clinician</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
+              </div>
+            )}
           </div>
         )}
 

@@ -67,8 +67,13 @@ export default function App() {
         setUser(resolvedUser);
         saveLocalAccount(resolvedUser);
       } else {
-        setUser(null);
-        saveLocalAccount(null);
+        const local = loadLocalAccount();
+        if (local && !local.id.startsWith('doc-guest') && !local.id.startsWith('demo-')) {
+          setUser(local);
+        } else {
+          setUser(null);
+          saveLocalAccount(null);
+        }
       }
     });
     return () => unsubscribe();
