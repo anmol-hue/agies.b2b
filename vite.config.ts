@@ -4,7 +4,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/agies.b2b/',
+  base: 'https://anmol-hue.github.io/agies.b2b/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
