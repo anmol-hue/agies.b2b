@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "UserProfile": {
+      "collectionName": "users",
+      "fields": {
+        "id": { "type": "string", "description": "User UID" },
+        "name": { "type": "string", "description": "User full name" },
+        "email": { "type": "string", "description": "User email address" },
+        "role": { "type": "string", "description": "Clinical role (e.g. Physician)" },
+        "status": { "type": "string", "description": "Online/offline status" },
+        "lastLogin": { "type": "string", "description": "ISO timestamp of last login" },
+        "doctorProfile": { "type": "object", "description": "Physician profile information" },
+        "cabinet": { "type": "array", "description": "Custom cabinet prescriptions" },
+        "patients": { "type": "array", "description": "Clinical EMR patient records" },
+        "history": { "type": "array", "description": "Clinical history entries" }
+      }
+    },
+    "SavedScan": {
+      "collectionName": "scans",
+      "fields": {
+        "id": { "type": "string", "description": "Scan unique identifier" },
+        "userId": { "type": "string", "description": "User UID who executed the scan" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" },
+        "scanType": { "type": "string", "description": "Scan modality (image/symptoms/pill)" },
+        "queryOrPillName": { "type": "string", "description": "Name or symptoms analyzed" },
+        "previewUrl": { "type": "string", "description": "Thumbnail or image preview data" },
+        "matchedDrugName": { "type": "string", "description": "Identified drug or entity" },
+        "confidence": { "type": "number", "description": "Diagnostic confidence score" },
+        "primaryHypothesis": { "type": "string", "description": "Clinical findings summary" },
+        "empatheticNarrative": { "type": "string", "description": "Detailed clinical narrative" },
+        "differentialMatches": { "type": "array", "description": "Differential diagnostic matches" },
+        "isDangerous": { "type": "string", "description": "Safety classification (Dangerous/Safe)" },
+        "warningSigns": { "type": "array", "description": "Critical red flags" },
+        "recommendation": { "type": "string", "description": "Clinical recommendations" },
+        "patientMrn": { "type": "string", "description": "Associated patient MRN if any" }
+      }
+    }
+  }
+}

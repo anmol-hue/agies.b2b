@@ -1,0 +1,6 @@
+{
+  "name": "tpis.agies",
+  "description": "Clinical Intelligence Center: an offline-first platform for medicine search, multi-drug interaction checking, visual pill identification, AI symptom diagnostics, and personal medicine cabinet management.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
