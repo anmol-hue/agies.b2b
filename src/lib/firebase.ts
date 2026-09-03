@@ -109,6 +109,36 @@ googleAuthProvider.setCustomParameters({
 
 const STORAGE_KEY = 'tpis_agies_user_session';
 
+// Helper to filter out pre-populated demo patients across all accounts
+export function filterOutDemoPatients(patients?: Patient[]): Patient[] {
+  if (!patients || !Array.isArray(patients)) return [];
+  const demoIds = new Set([
+    'pat-101', 'pat-102', 'pat-103', 'pat-104', 'pat-105',
+    'pat-1', 'pat-2', 'pat-3', 'pat-4', 'pat-5'
+  ]);
+  const demoMrns = new Set([
+    'MRN-84920', 'MRN-39104', 'MRN-58291', 'MRN-19402', 'MRN-77382'
+  ]);
+  const demoNames = new Set([
+    'Eleanor Vance',
+    'Marcus Chen',
+    'Sophia Rodriguez',
+    'Arthur Pendelton',
+    'Amara Okafor'
+  ]);
+
+  return patients.filter(p => {
+    if (!p) return false;
+    if (demoIds.has(p.id)) return false;
+    if (typeof p.id === 'string' && (p.id.startsWith('pat-10') || p.id.startsWith('demo-') || p.id.startsWith('sample-'))) {
+      return false;
+    }
+    if (p.mrn && demoMrns.has(p.mrn.trim())) return false;
+    if (p.name && demoNames.has(p.name.trim())) return false;
+    return true;
+  });
+}
+
 // Helper to create a clean new clinical account for authenticated users
 export function createFreshUserAccount(uid: string, email: string, displayName?: string | null): UserAccount {
   const cleanName = displayName?.trim() || email.split('@')[0] || 'Clinician';
@@ -131,7 +161,7 @@ export function createFreshUserAccount(uid: string, email: string, displayName?:
       npiNumber: `NPI-${Math.floor(1000000000 + Math.random() * 9000000000)}`,
       activeHospitalWard: 'Central Ward 3'
     },
-    patients: INITIAL_PATIENTS,
+    patients: [], // Clean patient queue with no pre-populated demo patients
     cabinet: [],
     history: [],
     savedScans: []
@@ -149,6 +179,7 @@ export function loadLocalAccount(): UserAccount | null {
         localStorage.removeItem(STORAGE_KEY);
         return null;
       }
+      parsed.patients = filterOutDemoPatients(parsed.patients);
       return parsed;
     }
   } catch (err) {
@@ -160,7 +191,11 @@ export function loadLocalAccount(): UserAccount | null {
 export function saveLocalAccount(account: UserAccount | null) {
   try {
     if (account) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(account));
+      const sanitized = {
+        ...account,
+        patients: filterOutDemoPatients(account.patients)
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sanitized));
     } else {
       localStorage.removeItem(STORAGE_KEY);
     }
@@ -171,7 +206,8 @@ export function saveLocalAccount(account: UserAccount | null) {
 
 // Sync user profile and clinical work to Firestore
 export async function syncUserToFirestore(account: UserAccount) {
-  saveLocalAccount(account);
+  const sanitizedPatients = filterOutDemoPatients(account.patients);
+  saveLocalAccount({ ...account, patients: sanitizedPatients });
   try {
     if (auth.currentUser) {
       const userRef = doc(db, 'users', auth.currentUser.uid);
@@ -184,7 +220,7 @@ export async function syncUserToFirestore(account: UserAccount) {
         role: account.role || 'Physician',
         doctorProfile: account.doctorProfile || null,
         cabinet: account.cabinet || [],
-        patients: account.patients || INITIAL_PATIENTS,
+        patients: sanitizedPatients,
         history: account.history || []
       }, { merge: true });
     }
@@ -198,7 +234,9 @@ export async function fetchUserFromFirestore(uid: string): Promise<UserAccount |
     const userRef = doc(db, 'users', uid);
     const snap = await getDoc(userRef);
     if (snap.exists()) {
-      return snap.data() as UserAccount;
+      const data = snap.data() as UserAccount;
+      data.patients = filterOutDemoPatients(data.patients);
+      return data;
     }
   } catch (err) {
     console.warn('Failed to load user from firestore:', err);

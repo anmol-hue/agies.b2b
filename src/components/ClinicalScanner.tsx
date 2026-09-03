@@ -86,7 +86,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
         urgency: "Routine Allergy Care"
       }
     ],
-    disclaimer: "Note: Dual-layer fail-safe active. AI hypotheses are rule-verified against current clinical guidelines. Always consult a licensed specialist.",
+    disclaimer: "Clinical Decision Support Notice: Algorithmic differential patterns are generated for clinician reference only. Not a substitute for formal clinical judgment, laboratory testing, or physician diagnosis.",
     warningSigns: [
       "Fever exceeding 103°F (39.4°C) or lasting more than 72 hours",
       "Shortness of breath, painful chest inhalation, or stridor breathing sounds",
@@ -197,7 +197,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             urgency: "Routine"
           }
         ],
-        disclaimer: "Note: Dual-layer fail-safe active. AI hypotheses are rule-verified against current clinical guidelines. Always consult a licensed specialist.",
+        disclaimer: "Clinical Decision Support Notice: Algorithmic differential patterns are generated for clinician reference only. Not a substitute for formal clinical judgment, laboratory testing, or physician diagnosis.",
         warningSigns: [
           "Severe breathing difficulty or sudden face swelling",
           "High continuous fever over 103°F (39.4°C)"
@@ -640,7 +640,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     </div>
                   )}
 
-                  {/* Dual Layer Fail-Safe Note */}
+                  {/* Clinical Decision Support Reference Note */}
                   <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-500 leading-relaxed flex items-start gap-2">
                     <Info className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
                     <span>

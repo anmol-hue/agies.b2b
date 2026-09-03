@@ -67,7 +67,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
       id: 'directory',
       label: 'HOSPITAL FORMULARY',
       icon: Pill,
-      badge: '16+ Meds DB',
+      badge: '30+ Meds DB',
       description: 'Comprehensive clinical drug database with 3D molecular structures'
     },
     {
@@ -100,19 +100,19 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
     },
     {
       label: 'FORMULARY DB',
-      value: '16+ SPECIALTIES',
+      value: '30+ THERAPEUTICS',
       detailTitle: 'STANDARDIZED HOSPITAL FORMULARY',
       detailSub: 'Critical care, oncology, cardiology, and antimicrobial therapeutics with full pharmacology profiles.',
-      description: 'FDA, RxNorm, and ATC index synchronized drug catalog with real-time 3D models.',
+      description: 'Curated RxNorm and ATC pharmacotherapy catalog with real-time 3D models.',
       actionTab: 'directory',
       actionLabel: 'BROWSE FORMULARY'
     },
     {
       label: 'AI DIAGNOSTICS',
-      value: '0.02s LATENCY',
+      value: 'INTERACTIVE DSS',
       detailTitle: 'MULTIMODAL DIFFERENTIAL ENGINE',
       detailSub: 'Analyzes patient symptom presentations, CT/X-Ray imaging scans, and vitals telemetry with clinical differentials.',
-      description: 'Instant AI diagnostic hypothesis generation and clinical risk triage.',
+      description: 'Rapid differential hypothesis generation and algorithmic triage indicators.',
       actionTab: 'scanner',
       actionLabel: 'RUN AI SCAN'
     },
@@ -160,16 +160,33 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
 
         <div className="relative z-10 max-w-5xl mx-auto space-y-6">
           
-          {/* Top Category Tag */}
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50/90 backdrop-blur-xs border border-blue-200/80 text-blue-700 text-xs font-extrabold tracking-wider uppercase shadow-2xs"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-spin" style={{ animationDuration: '8s' }} />
-            <span>3D CLINICAL INTELLIGENCE ARCHITECTURE</span>
-          </motion.div>
+          {/* Animated Clinical ECG Vital Ribbon */}
+          <div className="flex items-center justify-center gap-3">
+            <div className="h-6 w-32 relative overflow-hidden flex items-center opacity-75">
+              <svg className="w-full h-full text-blue-500" viewBox="0 0 120 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M0 12 L30 12 L36 4 L42 20 L48 10 L52 14 L56 12 L120 12" />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-shimmer" style={{ width: '40%', animationDuration: '2s' }}></div>
+            </div>
+
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50/90 backdrop-blur-xs border border-blue-200/80 text-blue-700 text-xs font-extrabold tracking-wider uppercase shadow-2xs hover:scale-105 transition-transform cursor-default"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-spin" style={{ animationDuration: '8s' }} />
+              <span>3D CLINICAL DECISION SUPPORT SYSTEM</span>
+            </motion.div>
+
+            <div className="h-6 w-32 relative overflow-hidden flex items-center opacity-75">
+              <svg className="w-full h-full text-blue-500" viewBox="0 0 120 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M0 12 L30 12 L36 4 L42 20 L48 10 L52 14 L56 12 L120 12" />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-shimmer" style={{ width: '40%', animationDuration: '2s' }}></div>
+            </div>
+          </div>
 
           {/* Display Headline */}
           <motion.h1 
@@ -206,21 +223,26 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               return (
                 <motion.button
                   key={module.id}
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                   onClick={() => {
                     soundFx.click();
                     setActiveTab(module.id);
                   }}
-                  className="group relative flex flex-col items-center justify-center p-3.5 rounded-2xl bg-gradient-to-b from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-xs tracking-wider transition-all shadow-md hover:shadow-lg hover:shadow-blue-500/25 cursor-pointer border border-blue-500/30"
+                  className="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-b from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold text-xs tracking-wider transition-all shadow-md hover:shadow-xl hover:shadow-blue-500/30 cursor-pointer border border-blue-400/30 overflow-hidden"
                 >
-                  <div className="flex items-center gap-2 mb-1">
-                    <Icon className="w-4 h-4 text-blue-100 group-hover:rotate-12 transition-transform" />
-                    <span>{module.label}</span>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative z-10 flex items-center gap-2 mb-1.5">
+                    <Icon className="w-4 h-4 text-sky-200 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="tracking-wider">{module.label}</span>
                   </div>
-                  <span className="text-[10px] text-blue-200 font-mono font-medium">
-                    {module.badge}
-                  </span>
+                  <div className="relative z-10 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span className="text-[10px] text-blue-200 font-mono font-medium">
+                      {module.badge}
+                    </span>
+                  </div>
                 </motion.button>
               );
             })}
@@ -229,16 +251,16 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
           {/* 3 Key Stats Strip */}
           <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-2xl mx-auto text-center">
             <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">99.9%</div>
-              <div className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">ACCURACY</div>
+              <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">EVIDENCE</div>
+              <div className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">CLINICAL GUIDELINES</div>
             </div>
             <div className="space-y-1 border-x border-slate-200">
-              <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">10K+</div>
-              <div className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">MOLECULES</div>
+              <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">30+</div>
+              <div className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">CORE MONOGRAPHS</div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">SECURE</div>
-              <div className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">COMPLIANT</div>
+              <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">CLOUD</div>
+              <div className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">FIRESTORE SYNC</div>
             </div>
           </div>
 

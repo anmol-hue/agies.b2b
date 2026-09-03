@@ -34,7 +34,8 @@ import {
   logOutUser,
   fetchUserScansFromFirestore,
   fetchUserFromFirestore,
-  createFreshUserAccount
+  createFreshUserAccount,
+  filterOutDemoPatients
 } from './lib/firebase';
 
 export default function App() {
@@ -61,6 +62,7 @@ export default function App() {
           fbUser.displayName
         );
 
+        resolvedUser.patients = filterOutDemoPatients(resolvedUser.patients);
         resolvedUser.savedScans = scans;
         resolvedUser.lastLogin = new Date().toISOString();
 
@@ -69,6 +71,7 @@ export default function App() {
       } else {
         const local = loadLocalAccount();
         if (local && !local.id.startsWith('doc-guest') && !local.id.startsWith('demo-')) {
+          local.patients = filterOutDemoPatients(local.patients);
           setUser(local);
         } else {
           setUser(null);

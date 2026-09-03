@@ -23,6 +23,7 @@ import {
   LogOut
 } from 'lucide-react';
 import { soundFx } from '../lib/soundFx';
+import { ThreeLogo3D } from './ThreeLogo3D';
 
 interface NavbarProps {
   activeTab: string;
@@ -112,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
-        {/* Brand Logo with 3D glowing molecular icon */}
+        {/* Brand Logo with Interactive 3D WebGL Engine & Animations */}
         <button 
           onClick={() => {
             soundFx.click();
@@ -120,30 +121,26 @@ export const Navbar: React.FC<NavbarProps> = ({
           }}
           className="flex items-center gap-2.5 group focus:outline-none text-left cursor-pointer shrink-0"
         >
-          <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-sky-400 flex items-center justify-center shadow-md shadow-blue-500/20 group-hover:scale-105 group-hover:shadow-blue-500/35 transition-all">
-            <svg className="w-5 h-5 text-white animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ animationDuration: '24s' }}>
-              <circle cx="12" cy="12" r="3" />
-              <path d="M12 3v6" />
-              <path d="M12 15v6" />
-              <path d="M3 12h6" />
-              <path d="M15 12h6" />
-              <circle cx="12" cy="3" r="1.5" />
-              <circle cx="12" cy="21" r="1.5" />
-              <circle cx="3" cy="12" r="1.5" />
-              <circle cx="21" cy="12" r="1.5" />
-            </svg>
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-white animate-ping"></span>
+          <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 p-0.5 shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 group-hover:scale-105 transition-all duration-300 flex items-center justify-center border border-blue-500/30 overflow-hidden">
+            <div className="absolute inset-0 bg-radial from-blue-500/20 via-transparent to-transparent opacity-75 group-hover:opacity-100 transition-opacity"></div>
+            <ThreeLogo3D size={38} className="relative z-10" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-white animate-ping"></span>
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
           </div>
 
           <div className="flex flex-col">
             <div className="flex items-baseline gap-0.5">
               <span className="font-extrabold text-xl tracking-tight text-slate-950 font-['Plus_Jakarta_Sans',sans-serif]">tpis</span>
-              <span className="font-extrabold text-xl text-blue-600">.</span>
+              <span className="font-extrabold text-xl text-blue-600 animate-pulse">.</span>
               <span className="font-bold text-xl tracking-tight text-slate-900">agies</span>
+              <span className="ml-1.5 px-1.5 py-0.5 bg-blue-50 text-blue-600 border border-blue-200/80 rounded-md text-[9px] font-extrabold tracking-wider font-mono">3D</span>
             </div>
-            <span className="text-[9px] font-bold tracking-widest text-slate-600 uppercase font-mono">
-              3D Clinical Engine
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] font-bold tracking-widest text-slate-600 uppercase font-mono">
+                3D Clinical Engine
+              </span>
+              <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
           </div>
         </button>
 

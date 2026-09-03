@@ -263,8 +263,9 @@ export const MedicineDirectory: React.FC<MedicineDirectoryProps> = ({
                 key={med.id}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(idx * 0.05, 0.4), duration: 0.35 }}
-                className="bg-white border border-slate-200/90 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/5 transition-all group"
+                whileHover={{ y: -4, scale: 1.015 }}
+                transition={{ delay: Math.min(idx * 0.04, 0.3), duration: 0.3, type: 'spring', stiffness: 350, damping: 22 }}
+                className="bg-white border border-slate-200/90 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 transition-all group"
               >
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-2">

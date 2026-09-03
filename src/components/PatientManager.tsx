@@ -51,12 +51,14 @@ import {
   Medicine
 } from '../types';
 import { MEDICINES } from '../data/medicines';
+import { soundFx } from '../lib/soundFx';
 
 interface PatientManagerProps {
   user: UserAccount;
   onUpdatePatient: (patient: Patient) => void;
   onAddPatient: (patient: Patient) => void;
   onDeletePatient: (patientId: string) => void;
+  onClearAllPatients?: () => void;
   onRunAiScanForPatient: (patient: Patient) => void;
   onRunInteractionForPatient: (patient: Patient) => void;
   setActiveTab: (tab: string) => void;
@@ -67,6 +69,7 @@ export function PatientManager({
   onUpdatePatient,
   onAddPatient,
   onDeletePatient,
+  onClearAllPatients,
   onRunAiScanForPatient,
   onRunInteractionForPatient,
   setActiveTab
@@ -78,6 +81,13 @@ export function PatientManager({
   const [departmentFilter, setDepartmentFilter] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedPatientId, setSelectedPatientId] = useState<string>(patients[0]?.id || '');
+
+  // EMR Tab Navigation State: 'overview' | 'scans' | 'prescriptions' | 'soap' | 'differential' | 'all'
+  const [activeEmrTab, setActiveEmrTab] = useState<'overview' | 'scans' | 'prescriptions' | 'soap' | 'differential' | 'all'>('overview');
+  
+  // Delete Modals
+  const [patientToDelete, setPatientToDelete] = useState<Patient | null>(null);
+  const [isClearAllConfirmOpen, setIsClearAllConfirmOpen] = useState<boolean>(false);
   
   // Modals
   const [isAddPatientOpen, setIsAddPatientOpen] = useState<boolean>(false);
@@ -1246,12 +1256,28 @@ export function PatientManager({
 
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-              <Users className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <h3 className="text-base font-bold text-slate-800">Select a Patient to View EMR</h3>
-              <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-                Choose a patient from the ward triage list on the left to inspect live vitals, attached radiology scans, and initiate AI diagnostics.
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-12 text-center shadow-xs">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-4">
+                <Users className="w-7 h-7" />
+              </div>
+              <h3 className="text-base font-bold text-slate-800">
+                {patients.length === 0 ? 'No Patients in Ward Queue' : 'Select a Patient to View EMR'}
+              </h3>
+              <p className="text-xs text-slate-500 mt-1.5 max-w-sm mx-auto leading-relaxed">
+                {patients.length === 0 
+                  ? 'Your clinical patient list is currently clean. Admit a new patient to track live vitals, attached radiology scans, and initiate AI diagnostics.'
+                  : 'Choose a patient from the ward triage list on the left to inspect live vitals, attached radiology scans, and initiate AI diagnostics.'
+                }
               </p>
+              {patients.length === 0 && (
+                <button
+                  onClick={() => setIsAddPatientOpen(true)}
+                  className="mt-5 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Admit First Patient</span>
+                </button>
+              )}
             </div>
           )}
         </div>

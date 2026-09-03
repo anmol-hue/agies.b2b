@@ -22,12 +22,15 @@ export interface Medicine {
     | 'Antihistamine' 
     | 'Oncology'
     | 'Cardiology / Antiarrhythmic'
+    | 'Cardiovascular'
+    | 'Endocrine'
     | 'Psychiatric / Antidepressant'
     | 'Emergency / Critical Care'
     | 'Immunosuppressant'
     | 'Corticosteroid'
     | 'Antiviral'
     | 'Antifungal'
+    | 'Rheumatology / Immunology'
     | 'Other';
   dosage: string;
   dosageSchedule: string;
@@ -54,10 +57,10 @@ export interface Medicine {
     bioavailability?: string;
   };
   visualPill: {
-    shape: 'Round' | 'Oval' | 'Capsule' | 'Oblong';
-    color: 'White' | 'Blue' | 'Pink' | 'Yellow' | 'Red' | 'White/Pink' | 'White/Blue' | 'Orange' | 'Purple' | 'Teal';
+    shape: 'Round' | 'Oval' | 'Capsule' | 'Oblong' | 'Triangle' | 'Diamond';
+    color: 'White' | 'Blue' | 'Pink' | 'Yellow' | 'Red' | 'White/Pink' | 'White/Blue' | 'Orange' | 'Purple' | 'Teal' | 'Violet' | 'Clear';
     imprint: string;
-    score: 'Single' | 'None' | 'Cross';
+    score: 'Single' | 'None' | 'Cross' | 'Scored';
     matchPct: number;
     svgColorPrimary: string;
     svgColorSecondary?: string;
@@ -65,7 +68,7 @@ export interface Medicine {
   safetyWarnings: string[];
   foodInteractions: string;
   renalDosing: string;
-  pregnancyRisk: 'Safe' | 'Caution' | 'Contraindicated';
+  pregnancyRisk: 'Safe' | 'Caution' | 'Contraindicated' | 'Not Recommended';
   blackBoxWarning?: string;
   atcCode?: string;
 }

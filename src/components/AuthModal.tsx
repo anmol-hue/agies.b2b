@@ -28,7 +28,8 @@ import {
   saveLocalAccount, 
   syncUserToFirestore, 
   fetchUserFromFirestore,
-  createFreshUserAccount
+  createFreshUserAccount,
+  filterOutDemoPatients
 } from '../lib/firebase';
 import { UserAccount } from '../types';
 import { soundFx } from '../lib/soundFx';
@@ -106,7 +107,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           fbUser.email || email, 
           fbUser.displayName
         );
+        loggedUser.patients = filterOutDemoPatients(loggedUser.patients);
         saveLocalAccount(loggedUser);
+        await syncUserToFirestore(loggedUser);
         soundFx.success();
         onSuccess(loggedUser);
         onClose();
@@ -150,6 +153,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         fbUser.email || 'clinician.google@hospital.org',
         fbUser.displayName
       );
+      loggedUser.patients = filterOutDemoPatients(loggedUser.patients);
+      saveLocalAccount(loggedUser);
       await syncUserToFirestore(loggedUser);
       soundFx.success();
       onSuccess(loggedUser);

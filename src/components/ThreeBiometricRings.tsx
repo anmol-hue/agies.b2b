@@ -242,9 +242,9 @@ export const ThreeBiometricRings: React.FC<ThreeBiometricRingsProps> = ({
   }, [height, interactive]);
 
   const metricsData = [
-    { title: 'Neural Core Sync', value: '100% Locked', icon: Zap, color: 'text-blue-500' },
-    { title: 'Kinetic Latency', value: '0.02s Vector', icon: Activity, color: 'text-cyan-500' },
-    { title: 'CYP450 Matrix', value: 'Zero Conflict', icon: Shield, color: 'text-indigo-500' }
+    { title: 'WebGL Graphics', value: '60 FPS Active', icon: Zap, color: 'text-blue-500' },
+    { title: 'Vitals Stream', value: 'Synchronized', icon: Activity, color: 'text-cyan-500' },
+    { title: 'Screening Engine', value: 'Active Monitor', icon: Shield, color: 'text-indigo-500' }
   ];
 
   return (

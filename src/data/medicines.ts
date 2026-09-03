@@ -1734,5 +1734,761 @@ export const MEDICINES: Medicine[] = [
     renalDosing: 'Strict AUC-guided dosing or trough-based interval extension (q24h, q48h, or post-dialysis).',
     pregnancyRisk: 'Caution',
     atcCode: 'J01XA01'
+  },
+  {
+    id: 'empagliflozin',
+    name: 'Empagliflozin',
+    genericName: 'Empagliflozin',
+    brandNames: ['Jardiance'],
+    category: 'Cardiovascular',
+    dosage: '10mg - 25mg orally once daily in the morning',
+    dosageSchedule: 'Take once daily with or without food. Ensure adequate daytime hydration.',
+    indications: 'Type 2 Diabetes Mellitus glycemic management, reduction of cardiovascular death in adults with T2DM and established CVD, Heart Failure with preserved (HFpEF) and reduced ejection fraction (HFrEF), Chronic Kidney Disease progression delay.',
+    contraindications: 'Severe hypersensitivity to empagliflozin, patients on dialysis, acute metabolic ketoacidosis.',
+    sideEffects: [
+      { name: 'Mycotic Genital Infections / Vulvovaginal Candidiasis', percentage: 7 },
+      { name: 'Urinary Tract Infections (UTI)', percentage: 8 },
+      { name: 'Volume Depletion / Orthostatic Hypotension', percentage: 4 },
+      { name: 'Euglycemic Diabetic Ketoacidosis (euDKA)', percentage: 0.3 }
+    ],
+    efficacy: '38% relative risk reduction in cardiovascular death in the EMPA-REG OUTCOME trial; 25% risk reduction in HF hospitalization in EMPEROR-Preserved.',
+    fullDescription: 'Potent and selective sodium-glucose co-transporter 2 (SGLT2) inhibitor that reduces renal reabsorption of filtered glucose and lowers the renal threshold for glucose, promoting glycosuria, osmotic diuresis, and myocardial sodium-hydrogen exchanger inhibition.',
+    chemicalFormula: 'C23H27ClO7',
+    molarMass: '450.91 g/mol',
+    iupacName: '(2S,3R,4R,5S,6R)-2-[4-chloro-3-[[4-[(3S)-oxolan-3-yl]oxyphenyl]methyl]phenyl]-6-(hydroxymethyl)oxane-3,4,5-triol',
+    mechanismOfAction: 'Inhibits SGLT2 in the proximal renal tubules, decreasing renal reabsorption of glucose and sodium, thereby inducing glycosuria, natriuresis, lowering intraglomerular pressure, and improving cardiac energetics.',
+    targetReceptors: ['Sodium-Glucose Co-transporter 2 (SGLT2)', 'Myocardial NHE-1 (indirect)'],
+    organDistribution: {
+      primaryTarget: 'Proximal convoluted tubules of renal nephrons',
+      metabolismOrgan: 'Liver (UGT2B7, UGT1A3, UGT1A8, UGT1A9 glucuronidation)',
+      eliminationRoute: 'Feces (41%) and urine (54% mostly unchanged drug and glucuronides)'
+    },
+    pharmacology: {
+      metabolism: 'Extensive glucuronidation via UGT enzymes without major CYP involvement',
+      halfLife: '12.4 hours',
+      clearance: 'Renal and fecal excretion',
+      peakPlasma: '1.5 hours post oral administration',
+      bioavailability: '60 - 75%'
+    },
+    visualPill: {
+      shape: 'Round',
+      color: 'Yellow',
+      imprint: 'S 10',
+      score: 'None',
+      matchPct: 99.1,
+      svgColorPrimary: '#fef08a',
+      svgColorSecondary: '#eab308'
+    },
+    safetyWarnings: [
+      'Assess volume status and correct hypovolemia prior to initiating therapy',
+      'Temporarily withhold at least 3 days prior to major surgery to reduce euglycemic ketoacidosis risk',
+      'Monitor for necrotizing fasciitis of the perineum (Fournier gangrene)'
+    ],
+    foodInteractions: 'Administer with or without food. Maintain balanced dietary water intake.',
+    renalDosing: 'eGFR 30-60 mL/min: No dose reduction needed. eGFR 20-30 mL/min: 10mg once daily. eGFR <20 mL/min: Not recommended to initiate, but may continue for CV/kidney benefit.',
+    pregnancyRisk: 'Caution',
+    atcCode: 'A10BK03'
+  },
+  {
+    id: 'semaglutide',
+    name: 'Semaglutide',
+    genericName: 'Semaglutide',
+    brandNames: ['Ozempic', 'Wegovy', 'Rybelsus'],
+    category: 'Endocrine',
+    dosage: '0.25mg up to 2.4mg subcutaneous injection once weekly (or 3-14mg oral daily)',
+    dosageSchedule: 'Initiate at 0.25mg SQ weekly for 4 weeks, escalate to 0.5mg weekly; further titrate by monthly steps to target glycemic or cardiometabolic maintenance dose.',
+    indications: 'Type 2 diabetes glycemic control, reduction of major adverse cardiovascular events (MACE) in adults with T2DM and established CVD, chronic weight management in obesity with comorbidities.',
+    contraindications: 'Personal or family history of medullary thyroid carcinoma (MTC), multiple endocrine neoplasia syndrome type 2 (MEN 2), severe pancreatitis history.',
+    sideEffects: [
+      { name: 'Nausea and Vomiting', percentage: 20 },
+      { name: 'Diarrhea', percentage: 14 },
+      { name: 'Abdominal Pain / Dyspepsia', percentage: 10 },
+      { name: 'Constipation', percentage: 9 }
+    ],
+    efficacy: 'Significant HbA1c reduction (~1.5-2.0%) and up to 15-20% body weight reduction with 26% reduction in cardiovascular death/stroke/MI.',
+    fullDescription: 'Long-acting glucagon-like peptide-1 (GLP-1) receptor agonist with 94% amino acid homology to native human GLP-1. Engineered with a C18 di-acid chain that binds albumin, extending half-life to enable weekly dosing.',
+    chemicalFormula: 'C187H291N45O59',
+    molarMass: '4113.58 g/mol',
+    iupacName: 'N6,26-{18-[N-(17-carboxyheptadecanoyl)-L-gamma-glutamyl]-10-oxo-3,6,12,15-tetraoxa-9,18-diazaoctadecanoyl}-[Aib8,Arg34]GLP-1(7-37)',
+    mechanismOfAction: 'Selective GLP-1 receptor agonist; enhances glucose-dependent insulin secretion, suppresses inappropriate glucagon secretion, slows gastric emptying, and centrally decreases appetite.',
+    targetReceptors: ['Pancreatic Beta-cell GLP-1 Receptors', 'Hypothalamic POMC/CART Appetite Neurons'],
+    organDistribution: {
+      primaryTarget: 'Pancreatic endocrine islets, central nervous system satiety centers, vascular endothelium',
+      metabolismOrgan: 'Extensively cleaved by proteolytic enzymes with fatty acid beta-oxidation',
+      eliminationRoute: 'Urine (3%) and feces (3% unchanged parent peptide; remainder as fragments)'
+    },
+    pharmacology: {
+      metabolism: 'Proteolytic cleavage and fatty acid beta-oxidation',
+      halfLife: '168 hours (approximately 1 week)',
+      clearance: 'Systemic degradation over 5 weeks post cessation',
+      peakPlasma: '1 - 3 days post subcutaneous injection',
+      bioavailability: '89% subcutaneous (0.4-1.0% oral formulation Rybelsus)'
+    },
+    visualPill: {
+      shape: 'Oblong',
+      color: 'Teal',
+      imprint: 'OZEMPIC 1MG',
+      score: 'None',
+      matchPct: 99.4,
+      svgColorPrimary: '#0d9488',
+      svgColorSecondary: '#0284c7'
+    },
+    safetyWarnings: [
+      'Black Box Warning: Thyroid C-cell tumors in rodent studies; contraindicated in patients with history of MTC or MEN-2',
+      'Monitor for signs of acute pancreatitis (persistent severe abdominal pain radiating to back)',
+      'Assess for rapid worsening of diabetic retinopathy upon rapid HbA1c lowering'
+    ],
+    foodInteractions: 'Subcutaneous injections administered independent of meals. Oral Rybelsus MUST be taken upon waking with ≤4 oz plain water and nothing else for 30 minutes.',
+    renalDosing: 'No dose adjustment required across mild, moderate, or severe renal impairment; monitor renal function when initiating or escalating dose due to dehydration risk.',
+    pregnancyRisk: 'Contraindicated',
+    atcCode: 'A10BJ06'
+  },
+  {
+    id: 'entresto',
+    name: 'Sacubitril / Valsartan',
+    genericName: 'Sacubitril and Valsartan',
+    brandNames: ['Entresto'],
+    category: 'Cardiovascular',
+    dosage: '24/26mg to 97/103mg (target 200mg total) twice daily',
+    dosageSchedule: 'Double dose every 2 to 4 weeks as tolerated to the target maintenance dose of 97/103mg PO twice daily.',
+    indications: 'Heart failure with reduced ejection fraction (HFrEF, NYHA Class II-IV) to reduce the risk of cardiovascular death and hospitalization, heart failure with mildly reduced or preserved ejection fraction.',
+    contraindications: 'Hypersensitivity to any component, history of angioedema related to prior ACE inhibitor or ARB therapy, concomitant ACE inhibitor use (must observe 36-hour washout period), concomitant aliskiren in diabetes.',
+    sideEffects: [
+      { name: 'Symptomatic Hypotension', percentage: 18 },
+      { name: 'Hyperkalemia (Serum K > 5.4 mEq/L)', percentage: 12 },
+      { name: 'Renal Function Deterioration (Elevated Serum Cr)', percentage: 9 },
+      { name: 'Angioedema', percentage: 0.5 }
+    ],
+    efficacy: 'PARADIGM-HF trial demonstrated a 20% relative reduction in cardiovascular death or HF hospitalization compared to enalapril.',
+    fullDescription: 'First-in-class Angiotensin Receptor-Neprilysin Inhibitor (ARNI). Sacubitril is a prodrug metabolized to sacubitrilat (LBQ657), which inhibits neprilysin, while valsartan selectively blocks the angiotensin II AT1 receptor.',
+    chemicalFormula: 'C48H55N6Na3O8 * 2.5 H2O',
+    molarMass: '957.99 g/mol',
+    iupacName: 'trisodium;3-[[(1S,3R)-1-[(4-phenylphenyl)methyl]-3-(ethoxycarbonyl)propyl]amino]-4-oxobutanoate; (2S)-3-methyl-2-[pentanoyl-[[4-[2-(2H-tetrazol-5-yl)phenyl]phenyl]methyl]amino]butanoate',
+    mechanismOfAction: 'Sacubitrilat inhibits neutral endopeptidase (neprilysin), preventing degradation of natriuretic peptides (ANP, BNP, CNP, bradykinin); Valsartan blocks angiotensin II AT1 receptors, preventing vasoconstriction and aldosterone release.',
+    targetReceptors: ['Neutral Endopeptidase (Neprilysin)', 'Angiotensin II Type 1 Receptor (AT1)'],
+    organDistribution: {
+      primaryTarget: 'Myocardium, renal glomeruli, systemic vascular smooth muscle',
+      metabolismOrgan: 'Sacubitril undergoes rapid enzymatic esterase cleavage to sacubitrilat; Valsartan undergoes minimal hepatic metabolism (~20%)',
+      eliminationRoute: 'Sacubitrilat: urine 52-68%, feces 37-45%; Valsartan: feces 86%, urine 13%'
+    },
+    pharmacology: {
+      metabolism: 'Sacubitril converted by esterases to active sacubitrilat; valsartan minimally metabolized',
+      halfLife: 'Sacubitril: 1.4 hours; Sacubitrilat: 11.5 hours; Valsartan: 9.9 hours',
+      clearance: 'Dual renal and biliary excretion',
+      peakPlasma: 'Sacubitril 0.5h, Sacubitrilat 2h, Valsartan 1.5h',
+      bioavailability: 'Sacubitril ≥60%, Valsartan ~23%'
+    },
+    visualPill: {
+      shape: 'Oval',
+      color: 'Violet',
+      imprint: 'NVR L1',
+      score: 'None',
+      matchPct: 98.8,
+      svgColorPrimary: '#cbd5e1',
+      svgColorSecondary: '#a855f7'
+    },
+    safetyWarnings: [
+      'Black Box Warning: Fetal toxicity; discontinue immediately when pregnancy is detected',
+      'Strict 36-hour washout period required when switching between ACE inhibitors and Entresto to avoid life-threatening angioedema',
+      'Monitor baseline serum potassium and creatinine regularly during initiation and dose titration'
+    ],
+    foodInteractions: 'Administer with or without food. Avoid potassium-containing salt substitutes.',
+    renalDosing: 'eGFR < 30 mL/min: Reduce starting dose to 24/26mg PO twice daily; titrate cautiously.',
+    pregnancyRisk: 'Contraindicated',
+    atcCode: 'C09DX04'
+  },
+  {
+    id: 'rivaroxaban',
+    name: 'Rivaroxaban',
+    genericName: 'Rivaroxaban',
+    brandNames: ['Xarelto'],
+    category: 'Anticoagulant',
+    dosage: '10mg - 20mg orally once daily (or 15mg twice daily in initial acute VTE)',
+    dosageSchedule: '15mg twice daily with food for first 21 days for acute DVT/PE, then 20mg once daily with evening meal for maintenance.',
+    indications: 'Non-valvular atrial fibrillation stroke prevention, treatment and secondary prophylaxis of deep vein thrombosis (DVT) and pulmonary embolism (PE), venous thromboembolism prophylaxis post major orthopedic surgery.',
+    contraindications: 'Active pathological bleeding, severe hypersensitivity reaction to rivaroxaban, moderate-to-severe hepatic impairment associated with coagulopathy.',
+    sideEffects: [
+      { name: 'Major Bleeding (Gastrointestinal / Intracranial)', percentage: 3.5 },
+      { name: 'Epistaxis / Gingival Bleeding', percentage: 8 },
+      { name: 'Hematoma / Ecchymosis', percentage: 6 },
+      { name: 'Anemia', percentage: 5 }
+    ],
+    efficacy: 'Non-inferior to dose-adjusted warfarin in ROCKET-AF for stroke prevention with significant 33% reduction in intracranial hemorrhage.',
+    fullDescription: 'Direct Oral Anticoagulant (DOAC) that acts as a highly selective direct Factor Xa inhibitor, terminating the intrinsic and extrinsic pathways of the coagulation cascade.',
+    chemicalFormula: 'C19H18ClN3O5S',
+    molarMass: '435.88 g/mol',
+    iupacName: '5-chloro-N-[[(5S)-2-oxo-3-[4-(3-oxomorpholin-4-yl)phenyl]-1,3-oxazolidin-5-yl]methyl]thiophene-2-carboxamide',
+    mechanismOfAction: 'Direct, selective, reversible inhibitor of both free and clot-bound Factor Xa and prothrombinase activity, interrupting thrombin generation without requiring antithrombin III.',
+    targetReceptors: ['Activated Coagulation Factor X (Factor Xa)'],
+    organDistribution: {
+      primaryTarget: 'Systemic vascular circulation and thrombus interfaces',
+      metabolismOrgan: 'Liver (CYP3A4/3A5 and CYP2J2 oxidation ~66%)',
+      eliminationRoute: 'Renal (36% unchanged drug; total renal 66%) and fecal (28%)'
+    },
+    pharmacology: {
+      metabolism: 'Hepatic ~66% via CYP3A4 and CYP-independent hydrolysis',
+      halfLife: '5 - 9 hours in healthy young adults; 11 - 13 hours in elderly patients',
+      clearance: 'Renal and hepatobiliary',
+      peakPlasma: '2 - 4 hours post-dose',
+      bioavailability: '66% fasting (approaches 100% when taken with food for 15mg/20mg tablets)'
+    },
+    visualPill: {
+      shape: 'Triangle',
+      color: 'Red',
+      imprint: '20 / X',
+      score: 'None',
+      matchPct: 98.9,
+      svgColorPrimary: '#f87171',
+      svgColorSecondary: '#dc2626'
+    },
+    safetyWarnings: [
+      'Black Box Warning: Premature discontinuation increases the risk of thrombotic events',
+      'Black Box Warning: Epidural or spinal hematomas may occur in patients receiving neuraxial anesthesia or spinal puncture',
+      'Tablets of 15mg and 20mg MUST be taken with food to ensure adequate gastrointestinal absorption'
+    ],
+    foodInteractions: '15mg and 20mg doses must be taken with meals; food substantially increases bioavailability from 66% to ~100%.',
+    renalDosing: 'CrCl 15-50 mL/min: Reduce AF dose to 15mg once daily with food. CrCl <15 mL/min: Avoid use.',
+    pregnancyRisk: 'Contraindicated',
+    atcCode: 'B01AF01'
+  },
+  {
+    id: 'paxlovid',
+    name: 'Nirmatrelvir / Ritonavir (Paxlovid)',
+    genericName: 'Nirmatrelvir and Ritonavir',
+    brandNames: ['Paxlovid'],
+    category: 'Antiviral',
+    dosage: '300mg nirmatrelvir (two 150mg tablets) with 100mg ritonavir (one tablet) twice daily for 5 days',
+    dosageSchedule: 'Must be initiated as soon as possible after COVID-19 diagnosis and within 5 days of symptom onset.',
+    indications: 'Treatment of mild-to-moderate COVID-19 in adults at high risk for progression to severe disease, hospitalization, or death.',
+    contraindications: 'Severe renal impairment (eGFR <30 mL/min), severe hepatic impairment (Child-Pugh Class C), concomitant drugs highly dependent on CYP3A for clearance where elevated concentrations cause serious or life-threatening reactions.',
+    sideEffects: [
+      { name: 'Dysgeusia (Metallic / Bitter Taste)', percentage: 6 },
+      { name: 'Diarrhea', percentage: 3.5 },
+      { name: 'Headache', percentage: 2 },
+      { name: 'Hypertension', percentage: 1.5 }
+    ],
+    efficacy: 'EPIC-HR trial showed 89% relative risk reduction in COVID-19-related hospitalization or death compared to placebo in non-hospitalized high-risk patients.',
+    fullDescription: 'Co-packaged oral antiviral consisting of nirmatrelvir, a SARS-CoV-2 main protease (Mpro / 3CLpro) inhibitor, and ritonavir, a potent pharmacokinetic CYP3A booster that sustains therapeutic nirmatrelvir plasma concentrations.',
+    chemicalFormula: 'Nirmatrelvir: C23H32F3N5O4; Ritonavir: C37H48N6O5S2',
+    molarMass: 'Nirmatrelvir: 499.53 g/mol; Ritonavir: 720.95 g/mol',
+    iupacName: '(1R,2S,5S)-N-[(1S)-1-cyano-2-[(3S)-2-oxopyrrolidin-3-yl]ethyl]-3-[(2S)-3,3-dimethyl-2-(2,2,2-trifluoroacetamido)butanoyl]-6,6-dimethyl-3-azabicyclo[3.1.0]hexane-2-carboxamide',
+    mechanismOfAction: 'Nirmatrelvir binds reversibly to the catalytic Cys145 residue of SARS-CoV-2 main protease (Mpro/3CLpro), blocking viral polyprotein cleavage; Ritonavir irreversibly inhibits CYP3A4 to prevent nirmatrelvir degradation.',
+    targetReceptors: ['SARS-CoV-2 Main Protease (3CLpro / Mpro)', 'Human Hepatic Cytochrome P450 3A4 (inhibition)'],
+    organDistribution: {
+      primaryTarget: 'Respiratory epithelium, pharyngeal tissues, systemic viral replication sites',
+      metabolismOrgan: 'Nirmatrelvir: predominantly metabolised by CYP3A4 (blocked by ritonavir); Ritonavir: hepatic CYP3A4/CYP2D6',
+      eliminationRoute: 'Nirmatrelvir: renal (49.6%) and feces (35.3%); Ritonavir: feces (86.4%) and urine (11.3%)'
+    },
+    pharmacology: {
+      metabolism: 'Hepatic CYP3A4 mediated (substantially blunted by concurrent ritonavir)',
+      halfLife: 'Nirmatrelvir: 6.05 hours with ritonavir; Ritonavir: 6.1 hours',
+      clearance: 'Combined renal and fecal clearance',
+      peakPlasma: 'Nirmatrelvir: 3.0 hours post-dose; Ritonavir: 3.98 hours',
+      bioavailability: 'Significantly enhanced by ritonavir boosting'
+    },
+    visualPill: {
+      shape: 'Oval',
+      color: 'Pink',
+      imprint: '3CL / R9',
+      score: 'None',
+      matchPct: 99.2,
+      svgColorPrimary: '#f472b6',
+      svgColorSecondary: '#f8fafc'
+    },
+    safetyWarnings: [
+      'Severe Drug-Drug Interactions: Ritonavir is an ultra-potent CYP3A inhibitor; comprehensively review patient medication list before prescribing',
+      'Hepatotoxicity: Hepatic transaminase elevations, hepatitis, and jaundice have occurred with ritonavir',
+      'Risk of HIV-1 protease inhibitor resistance in patients with uncontrolled or undiagnosed HIV-1 infection'
+    ],
+    foodInteractions: 'Administer with or without food. Swallow tablets whole; do not chew, break, or crush.',
+    renalDosing: 'eGFR 30-59 mL/min: Reduce nirmatrelvir dose to 150mg (one tablet) with ritonavir 100mg (one tablet) twice daily for 5 days. eGFR <30 mL/min: Contraindicated.',
+    pregnancyRisk: 'Caution',
+    atcCode: 'J05AE30'
+  },
+  {
+    id: 'pembrolizumab',
+    name: 'Pembrolizumab',
+    genericName: 'Pembrolizumab',
+    brandNames: ['Keytruda'],
+    category: 'Oncology',
+    dosage: '200mg IV every 3 weeks or 400mg IV every 6 weeks',
+    dosageSchedule: 'Administer as an intravenous infusion over 30 minutes via a dedicated line with a sterile, non-pyrogenic, low-protein-binding 0.2 to 5 micron inline filter.',
+    indications: 'Metastatic melanoma, non-small cell lung cancer (NSCLC), head and neck squamous cell carcinoma, classical Hodgkin lymphoma, urothelial carcinoma, microsatellite instability-high (MSI-H) or mismatch repair deficient (dMMR) solid tumors.',
+    contraindications: 'Severe hypersensitivity to pembrolizumab or its excipients.',
+    sideEffects: [
+      { name: 'Immune-Mediated Pneumonitis', percentage: 4 },
+      { name: 'Immune-Mediated Colitis / Diarrhea', percentage: 11 },
+      { name: 'Immune-Mediated Endocrinopathies (Hypo/Hyperthyroidism, Hypophysitis)', percentage: 14 },
+      { name: 'Immune-Mediated Hepatitis (Elevated AST/ALT)', percentage: 3.5 }
+    ],
+    efficacy: 'Paradigm-shifting immunotherapy yielding durable complete responses and superior progression-free survival in KEYNOTE clinical trials across multiple oncologic indications.',
+    fullDescription: 'Humanized monoclonal IgG4-kappa isotype antibody directed against the Programmed Death-1 (PD-1) receptor. Disables the tumor immune evasion checkpoint, restoring cytotoxic T-lymphocyte antitumor immunity.',
+    chemicalFormula: 'C6504H10004N1716O2036S46 (approximate intact antibody)',
+    molarMass: '149 kDa (149,000 g/mol)',
+    iupacName: 'Immunoglobulin G4, anti-(human programmed cell death protein 1) (human-mouse monoclonal heavy chain), disulfide with human-mouse monoclonal light chain, dimer',
+    mechanismOfAction: 'Binds with high affinity to the PD-1 receptor on T cells, blocking interaction with its ligands PD-L1 and PD-L2 on tumor cells, releasing PD-1 pathway-mediated inhibition of the immune response.',
+    targetReceptors: ['Programmed Cell Death Protein 1 (PD-1 / CD279)'],
+    organDistribution: {
+      primaryTarget: 'Intratumoral immune microenvironment, lymphoid organs, systemic T-cell pool',
+      metabolismOrgan: 'Catabolized through non-specific protein degradation pathways into small peptides and amino acids',
+      eliminationRoute: 'Non-specific pinocytosis and reticuloendothelial degradation'
+    },
+    pharmacology: {
+      metabolism: 'Non-saturable non-specific proteolytic catabolism',
+      halfLife: '22 days (terminal elimination half-life)',
+      clearance: '0.2 L/day systemic clearance',
+      peakPlasma: 'Achieved immediately at end of 30-minute IV infusion',
+      bioavailability: '100% IV'
+    },
+    visualPill: {
+      shape: 'Oblong',
+      color: 'Clear',
+      imprint: 'KEYTRUDA 100MG',
+      score: 'None',
+      matchPct: 99.5,
+      svgColorPrimary: '#38bdf8',
+      svgColorSecondary: '#6366f1'
+    },
+    safetyWarnings: [
+      'Severe Immune-Mediated Adverse Reactions (imARs) can involve any organ system and may be fatal',
+      'Early identification and prompt administration of systemic corticosteroids (e.g. 1-2 mg/kg/day prednisone equivalent) are essential',
+      'Infusion-related reactions: Interrupt or slow rate of infusion for mild-moderate reactions; permanently discontinue for Grade 3 or 4'
+    ],
+    foodInteractions: 'IV administration; unaffected by dietary food intake.',
+    renalDosing: 'No dose adjustment required for mild to moderate renal impairment; limited data in severe impairment.',
+    pregnancyRisk: 'Contraindicated',
+    atcCode: 'L01FF02'
+  },
+  {
+    id: 'levothyroxine',
+    name: 'Levothyroxine Sodium',
+    genericName: 'Levothyroxine',
+    brandNames: ['Synthroid', 'Levoxyl', 'Tirosint'],
+    category: 'Endocrine',
+    dosage: '25mcg - 200mcg orally once daily in the morning',
+    dosageSchedule: 'Must be taken on an empty stomach with a full glass of water, at least 30-60 minutes before breakfast or caffeine intake.',
+    indications: 'Primary, secondary, and tertiary hypothyroidism, pituitary TSH suppression in thyroid cancer management, nontoxic goiter.',
+    contraindications: 'Uncorrected subclinical or overt thyrotoxicosis, uncorrected adrenal insufficiency, acute myocardial infarction.',
+    sideEffects: [
+      { name: 'Palpitations / Tachycardia (Overtreatment)', percentage: 6 },
+      { name: 'Insomnia and Restlessness', percentage: 4 },
+      { name: 'Weight Loss and Heat Intolerance', percentage: 5 },
+      { name: 'Accelerated Bone Mineral Loss (Long-term oversuppression)', percentage: 2 }
+    ],
+    efficacy: 'Gold standard synthetic thyroid hormone restoring serum TSH and free T4 euthyroid reference ranges in >95% of patients.',
+    fullDescription: 'Synthetic crystalline levo-isomer of thyroxine (T4) identical to the endogenous hormone produced by the human thyroid gland. Converted peripherally by deiodinases into the biologically active triiodothyronine (T3).',
+    chemicalFormula: 'C15H10I4NNaO4',
+    molarMass: '798.85 g/mol',
+    iupacName: 'sodium;4-(4-hydroxy-3,5-diiodophenoxy)-3,5-diiodophenylalanine',
+    mechanismOfAction: 'Binds to nuclear thyroid hormone receptors (TR-alpha and TR-beta) after peripheral monodeiodination to T3, regulating gene transcription responsible for metabolic rate, cardiac inotropy, and thermogenesis.',
+    targetReceptors: ['Nuclear Thyroid Hormone Receptors (TR-alpha, TR-beta)'],
+    organDistribution: {
+      primaryTarget: 'Cardiovascular system, skeletal muscle, liver, central nervous system',
+      metabolismOrgan: 'Liver (5-prime-monodeiodination to active T3 and inactive reverse T3; glucuronidation and sulfation)',
+      eliminationRoute: 'Kidneys (~80%) and feces (~20%)'
+    },
+    pharmacology: {
+      metabolism: 'Hepatic monodeiodination to active T3',
+      halfLife: '6 - 7 days in euthyroid patients (9-10 days in hypothyroid; 3-4 days in hyperthyroid)',
+      clearance: 'Biliary and urinary clearance of iodinated metabolites',
+      peakPlasma: '2 - 4 hours post oral dose',
+      bioavailability: '64 - 80% when fasting (decreases markedly with food, iron, calcium)'
+    },
+    visualPill: {
+      shape: 'Round',
+      color: 'Violet',
+      imprint: 'SYNTHROID 100',
+      score: 'Scored',
+      matchPct: 99.0,
+      svgColorPrimary: '#ddd6fe',
+      svgColorSecondary: '#8b5cf6'
+    },
+    safetyWarnings: [
+      'Black Box Warning: Not for use in the treatment of obesity or weight loss; supratherapeutic doses can produce lethal toxicity',
+      'In elderly patients or patients with cardiovascular disease, initiate at lower doses (e.g. 12.5-25 mcg/day) to avoid cardiac decompensation',
+      'Separate administration by at least 4 hours from calcium supplements, iron, sucralfate, or antacids'
+    ],
+    foodInteractions: 'Coffee, dietary fiber, calcium, and soybean flour significantly impair absorption; strictly take on an empty stomach.',
+    renalDosing: 'No dose adjustment required for renal impairment.',
+    pregnancyRisk: 'Safe',
+    atcCode: 'H03AA01'
+  },
+  {
+    id: 'spironolactone',
+    name: 'Spironolactone',
+    genericName: 'Spironolactone',
+    brandNames: ['Aldactone', 'CaroSpir'],
+    category: 'Cardiovascular',
+    dosage: '25mg - 100mg orally once or twice daily',
+    dosageSchedule: 'Take once daily in the morning with food to minimize nocturnal diuresis and enhance oral absorption.',
+    indications: 'Heart failure with reduced ejection fraction (HFrEF NYHA II-IV), primary hyperaldosteronism, resistant hypertension, cirrhosis with ascites and edema.',
+    contraindications: 'Severe renal impairment (eGFR <30 mL/min), hyperkalemia (serum K >5.0 mEq/L), Addison disease, concomitant eplerenone or potassium supplements.',
+    sideEffects: [
+      { name: 'Hyperkalemia', percentage: 10 },
+      { name: 'Gynecomastia / Breast Tenderness (Male)', percentage: 9 },
+      { name: 'Menstrual Irregularities', percentage: 4 },
+      { name: 'Dizziness and Hypotension', percentage: 5 }
+    ],
+    efficacy: 'RALES trial showed a 30% relative reduction in all-cause mortality in severe heart failure when added to standard therapy.',
+    fullDescription: 'Potent mineralocorticoid receptor antagonist (potassium-sparing diuretic) that competitively inhibits aldosterone binding in the distal convoluted tubule and collecting duct.',
+    chemicalFormula: 'C24H32O4S',
+    molarMass: '416.57 g/mol',
+    iupacName: '7alpha-acetylthio-3-oxospiro[androst-4-ene-17,5-oxolane]-2-one',
+    mechanismOfAction: 'Competitive antagonist of cytoplasmic aldosterone receptors in the late distal tubule and collecting ducts, increasing NaCl and water excretion while retaining potassium and hydrogen ions.',
+    targetReceptors: ['Cytoplasmic Mineralocorticoid (Aldosterone) Receptors', 'Androgen Receptors (partial antagonist)'],
+    organDistribution: {
+      primaryTarget: 'Distal convoluted tubules and cortical collecting ducts of renal nephrons',
+      metabolismOrgan: 'Liver (rapid and extensive hepatic conversion to active canrenone and 7alpha-thiomethylspironolactone)',
+      eliminationRoute: 'Urine (mostly as metabolites) and bile/feces'
+    },
+    pharmacology: {
+      metabolism: 'Rapid and extensive conversion to active canrenone',
+      halfLife: 'Spironolactone: 1.4 hours; Active metabolite canrenone: 16.5 hours',
+      clearance: 'Combined urinary and biliary',
+      peakPlasma: '2.6 to 4.3 hours',
+      bioavailability: '60 - 90% (food significantly increases absorption)'
+    },
+    visualPill: {
+      shape: 'Round',
+      color: 'Yellow',
+      imprint: 'ALDACTONE 25',
+      score: 'Scored',
+      matchPct: 98.6,
+      svgColorPrimary: '#fef9c3',
+      svgColorSecondary: '#ca8a04'
+    },
+    safetyWarnings: [
+      'Monitor serum potassium and creatinine within 1 week of initiation or dose escalation, then periodically',
+      'Discontinue or down-titrate if serum potassium exceeds 5.5 mEq/L',
+      'Avoid high-potassium foods and salt substitutes containing potassium chloride'
+    ],
+    foodInteractions: 'Taking with food markedly improves bioavailability and decreases gastric upset.',
+    renalDosing: 'eGFR 30-50 mL/min: Reduce dose to 12.5-25mg every other day or 25mg daily. eGFR <30 mL/min: Contraindicated.',
+    pregnancyRisk: 'Caution',
+    atcCode: 'C03DA01'
+  },
+  {
+    id: 'doxycycline',
+    name: 'Doxycycline Hyclate',
+    genericName: 'Doxycycline',
+    brandNames: ['Vibramycin', 'Doryx', 'Monodox'],
+    category: 'Antibiotic',
+    dosage: '100mg orally or IV every 12 hours on day 1, then 100mg once or twice daily',
+    dosageSchedule: 'Must be taken with a full 8 oz glass of water; patient must remain upright for at least 30 minutes to prevent pill-induced erosive esophagitis.',
+    indications: 'Community-acquired atypical pneumonia (Mycoplasma, Chlamydia, Legionella), tick-borne rickettsial diseases (Lyme disease, Rocky Mountain spotted fever), MRSA skin infections, malaria prophylaxis, severe acne vulgaris.',
+    contraindications: 'Hypersensitivity to tetracyclines, pregnancy (second and third trimesters), children under 8 years of age (except for life-threatening rickettsial infections).',
+    sideEffects: [
+      { name: 'Pill-Induced Esophagitis / Esophageal Ulceration', percentage: 4 },
+      { name: 'Photosensitivity / Exaggerated Sunburn', percentage: 9 },
+      { name: 'Nausea and Vomiting', percentage: 12 },
+      { name: 'Tooth Discoloration in pediatric development', percentage: 2 }
+    ],
+    efficacy: 'Highly effective broad-spectrum oral antimicrobial with superior tissue penetration and excellent bioavailability.',
+    fullDescription: 'Broad-spectrum synthetic tetracycline antibiotic that binds reversibly to the 30S bacterial ribosomal subunit, preventing protein synthesis in Gram-positive, Gram-negative, and atypical pathogens.',
+    chemicalFormula: 'C22H24N2O8',
+    molarMass: '444.43 g/mol',
+    iupacName: '(4S,4aR,5S,5aR,6R,12aS)-4-(dimethylamino)-3,5,10,12,12a-pentahydroxy-6-methyl-1,11-dioxo-1,4,4a,5,5a,6,11,12a-octahydrotetracene-2-carboxamide',
+    mechanismOfAction: 'Reversibly binds to the 30S ribosomal subunit, preventing access of aminoacyl-tRNA to the ribosomal acceptor (A) site, arresting protein translation.',
+    targetReceptors: ['Bacterial 30S Ribosomal Subunit (A-site)'],
+    organDistribution: {
+      primaryTarget: 'Lungs, bronchial secretions, skin, prostate, eye, intracellular pathogen niches',
+      metabolismOrgan: 'Partially metabolized in the liver; largely non-renal elimination via intestinal chelation',
+      eliminationRoute: 'Biliary and fecal excretion (~50%) and urine (~30-40%)'
+    },
+    pharmacology: {
+      metabolism: 'Partially metabolized by liver; safe in renal insufficiency due to intestinal elimination',
+      halfLife: '18 - 22 hours',
+      clearance: 'Hepato-intestinal and renal',
+      peakPlasma: '1.5 - 4 hours',
+      bioavailability: '90 - 100% oral absorption'
+    },
+    visualPill: {
+      shape: 'Capsule',
+      color: 'Blue',
+      imprint: 'VIBRA 100',
+      score: 'None',
+      matchPct: 98.7,
+      svgColorPrimary: '#bae6fd',
+      svgColorSecondary: '#0284c7'
+    },
+    safetyWarnings: [
+      'Take with copious fluid and remain upright for ≥30 minutes to prevent caustic esophageal ulcers',
+      'Advise patient to wear sunscreen and avoid ultraviolet light due to photosensitivity',
+      'Can bind polyvalent cations (aluminum, calcium, magnesium, iron); separate intake by 2-3 hours'
+    ],
+    foodInteractions: 'Can be taken with food or milk if gastric irritation occurs without substantially impeding clinical bioavailability (unlike older tetracyclines).',
+    renalDosing: 'No dosage adjustments required in renal dysfunction; preferred tetracycline in kidney disease.',
+    pregnancyRisk: 'Contraindicated',
+    atcCode: 'J01AA02'
+  },
+  {
+    id: 'duloxetine',
+    name: 'Duloxetine Hydrochloride',
+    genericName: 'Duloxetine',
+    brandNames: ['Cymbalta'],
+    category: 'Psychiatric / Antidepressant',
+    dosage: '30mg - 60mg orally once daily (Max 120mg/day)',
+    dosageSchedule: 'Swallow whole with or without meals; do not crush, chew, or open delayed-release capsules.',
+    indications: 'Major depressive disorder (MDD), generalized anxiety disorder (GAD), diabetic peripheral neuropathic pain, fibromyalgia, chronic musculoskeletal pain (osteoarthritis, chronic lower back pain).',
+    contraindications: 'Concomitant MAOIs, uncontrolled narrow-angle glaucoma, severe hepatic impairment or heavy alcohol consumption.',
+    sideEffects: [
+      { name: 'Nausea', percentage: 23 },
+      { name: 'Dry Mouth (Xerostomia)', percentage: 14 },
+      { name: 'Somnolence or Fatigue', percentage: 11 },
+      { name: 'Excessive Sweating (Diaphoresis)', percentage: 6 }
+    ],
+    efficacy: 'Clinically superior efficacy in treating painful somatic and neuropathic symptoms compared to selective serotonin reuptake inhibitors alone.',
+    fullDescription: 'Potent and balanced Serotonin and Norepinephrine Reuptake Inhibitor (SNRI) with weak dopamine reuptake inhibition. Modulates descending inhibitory pain pathways in the dorsal horn of the spinal cord.',
+    chemicalFormula: 'C18H19NOS',
+    molarMass: '297.41 g/mol',
+    iupacName: '(3S)-N-methyl-3-naphthalen-1-yloxy-3-thiophen-2-ylpropan-1-amine',
+    mechanismOfAction: 'Inhibits neuronal reuptake of serotonin (5-HT) and norepinephrine (NE), enhancing neurotransmission in central descending inhibitory nociceptive pathways.',
+    targetReceptors: ['Serotonin Transporter (SERT)', 'Norepinephrine Transporter (NET)'],
+    organDistribution: {
+      primaryTarget: 'Central nervous system, spinal dorsal horn pain gates, thalamic projections',
+      metabolismOrgan: 'Liver (extensively by CYP1A2 and CYP2D6 to multiple inactive glucuronide/sulfate conjugates)',
+      eliminationRoute: 'Urine (70%) and feces (20%)'
+    },
+    pharmacology: {
+      metabolism: 'Extensive hepatic CYP1A2 and CYP2D6 biotransformation',
+      halfLife: '12 hours',
+      clearance: 'Hepatic and renal metabolite clearance',
+      peakPlasma: '6 hours post-dose (delayed by 2 hours with food)',
+      bioavailability: '30 - 80% (enteric coated to protect from gastric acid degradation)'
+    },
+    visualPill: {
+      shape: 'Capsule',
+      color: 'Blue',
+      imprint: 'CYMBALTA 60',
+      score: 'None',
+      matchPct: 98.8,
+      svgColorPrimary: '#86efac',
+      svgColorSecondary: '#0284c7'
+    },
+    safetyWarnings: [
+      'Black Box Warning: Increased risk of suicidal thoughts and behaviors in pediatric and young adult patients',
+      'Monitor blood pressure; SNRIs can elevate systolic and diastolic blood pressure through adrenergic stimulation',
+      'Taper gradually when discontinuing to prevent severe SNRI discontinuation syndrome'
+    ],
+    foodInteractions: 'Administer with or without food. Food delays peak plasma concentrations without affecting total AUC.',
+    renalDosing: 'CrCl <30 mL/min: Avoid use due to substantial accumulation of glucuronide metabolites.',
+    pregnancyRisk: 'Caution',
+    atcCode: 'N06AX21'
+  },
+  {
+    id: 'lorazepam',
+    name: 'Lorazepam',
+    genericName: 'Lorazepam',
+    brandNames: ['Ativan'],
+    category: 'Emergency / Critical Care',
+    dosage: '0.5mg - 2mg orally or 2 - 4mg slow IV push every 4-6 hours PRN',
+    dosageSchedule: 'For status epilepticus: 4mg slow IV push over 2 minutes; repeat once at 10-15 minutes if seizure activity persists.',
+    indications: 'Status epilepticus termination, acute anxiety and panic agitation, pre-operative sedative anxiolysis, ICU mechanical ventilation agitation, alcohol withdrawal delirium tremens.',
+    contraindications: 'Severe respiratory depression, acute narrow-angle glaucoma, severe hypersensitivity to benzodiazepines, myasthenia gravis.',
+    sideEffects: [
+      { name: 'Sedation and Drowsiness', percentage: 16 },
+      { name: 'Respiratory Depression', percentage: 4 },
+      { name: 'Hypotension and Ataxia', percentage: 7 },
+      { name: 'Paradoxical Agitation', percentage: 1 }
+    ],
+    efficacy: 'First-line emergency standard of care for aborting prolonged epileptic seizures with superior duration of seizure control compared to diazepam.',
+    fullDescription: 'High-potency, intermediate-acting benzodiazepine that enhances the inhibitory action of gamma-aminobutyric acid (GABA) via allosteric binding to the GABA-A receptor complex.',
+    chemicalFormula: 'C15H10Cl2N2O2',
+    molarMass: '321.16 g/mol',
+    iupacName: '7-chloro-5-(2-chlorophenyl)-3-hydroxy-1,3-dihydro-1,4-benzodiazepin-2-one',
+    mechanismOfAction: 'Allosterically modulates GABA-A receptors, increasing channel opening frequency for chloride ions, hyperpolarizing neuronal membranes and dampening epileptiform excitability.',
+    targetReceptors: ['GABA-A Receptor Benzodiazepine Allosteric Site (Alpha-1/Gamma-2 interface)'],
+    organDistribution: {
+      primaryTarget: 'Cerebral cortex, limbic system, subcortical thalamic nuclei, reticular activating system',
+      metabolismOrgan: 'Liver (simple Phase II glucuronidation directly to inactive lorazepam glucuronide; bypasses CYP oxidation)',
+      eliminationRoute: 'Kidneys (inactive glucuronide metabolite ~75%)'
+    },
+    pharmacology: {
+      metabolism: 'Direct Phase II glucuronidation (safe in liver disease; no active oxidative metabolites)',
+      halfLife: '10 - 20 hours',
+      clearance: 'Renal clearance of glucuronide conjugate',
+      peakPlasma: '2 hours oral, 15-30 mins IM, immediately post IV',
+      bioavailability: '90% oral'
+    },
+    visualPill: {
+      shape: 'Round',
+      color: 'White',
+      imprint: 'ATIVAN 1',
+      score: 'Scored',
+      matchPct: 99.2,
+      svgColorPrimary: '#f8fafc',
+      svgColorSecondary: '#cbd5e1'
+    },
+    safetyWarnings: [
+      'Black Box Warning: Concomitant use with opioids may result in profound sedation, respiratory depression, coma, and death',
+      'Black Box Warning: Risk of abuse, misuse, addiction, and severe physical dependence; taper cautiously',
+      'Monitor continuous pulse oximetry and capnography when administering IV in acute care settings'
+    ],
+    foodInteractions: 'Oral formulation can be taken with or without food. Alcohol markedly potentiates CNS depression.',
+    renalDosing: 'No dosage adjustments necessary in mild-to-moderate renal failure; in continuous IV infusions monitor for propylene glycol vehicle toxicity.',
+    pregnancyRisk: 'Contraindicated',
+    atcCode: 'N05BA06'
+  },
+  {
+    id: 'esmolol',
+    name: 'Esmolol Hydrochloride',
+    genericName: 'Esmolol',
+    brandNames: ['Brevibloc'],
+    category: 'Cardiology / Antiarrhythmic',
+    dosage: 'Loading dose 500 mcg/kg IV over 1 min, followed by maintenance infusion of 50 - 200 mcg/kg/min',
+    dosageSchedule: 'Continuous IV micro-infusion with invasive arterial line hemodynamic monitoring; titrate by 50 mcg/kg/min increments every 4 minutes.',
+    indications: 'Rapid ventricular rate control in atrial fibrillation or flutter, perioperative supraventricular tachycardia, acute aortic dissection (in conjunction with nitroprusside), intraoperative hypertension.',
+    contraindications: 'Severe sinus bradycardia (HR <45 bpm), second- or third-degree heart block, cardiogenic shock, decompensated overt heart failure, severe bronchospasm.',
+    sideEffects: [
+      { name: 'Dose-Dependent Hypotension', percentage: 25 },
+      { name: 'Bradycardia', percentage: 8 },
+      { name: 'Infusion Site Phlebitis', percentage: 5 },
+      { name: 'Bronchospasm', percentage: 2 }
+    ],
+    efficacy: 'Rapid onset within 2 minutes and ultra-short duration of action (effects resolve within 10-20 minutes after infusion cessation).',
+    fullDescription: 'Ultra-short-acting, cardioselective beta-1 adrenergic receptor antagonist administered exclusively by continuous intravenous infusion. Rapidly hydrolyzed by red blood cell esterases.',
+    chemicalFormula: 'C16H25NO4 * HCl',
+    molarMass: '331.83 g/mol',
+    iupacName: 'methyl 3-[4-[2-hydroxy-3-(propan-2-ylamino)propoxy]phenyl]propanoate hydrochloride',
+    mechanismOfAction: 'Competitively and selectively blocks cardiac beta-1 adrenergic receptors, diminishing sympathomimetic chronotropy, inotropy, and AV nodal conduction velocity.',
+    targetReceptors: ['Cardiac Beta-1 Adrenergic Receptors'],
+    organDistribution: {
+      primaryTarget: 'Sinoatrial node, atrioventricular node, ventricular myocardium',
+      metabolismOrgan: 'Red blood cell cytosolic esterases (independent of hepatic or renal enzymatic clearance)',
+      eliminationRoute: 'Urine (as free acid metabolite ~75-80%)'
+    },
+    pharmacology: {
+      metabolism: 'Rapid hydrolysis by erythrocyte cytosol esterases',
+      halfLife: '9 minutes (terminal elimination half-life)',
+      clearance: 'Red blood cell esterase hydrolysis (20 L/kg/h)',
+      peakPlasma: 'Steadily reached within 5 minutes with loading bolus',
+      bioavailability: '100% IV'
+    },
+    visualPill: {
+      shape: 'Oblong',
+      color: 'Clear',
+      imprint: 'BREVIBLOC 10MG/ML',
+      score: 'None',
+      matchPct: 99.6,
+      svgColorPrimary: '#2dd4bf',
+      svgColorSecondary: '#0f766e'
+    },
+    safetyWarnings: [
+      'Frequent blood pressure and ECG monitoring required; hypotension is the most common adverse effect and quickly reverses on down-titration',
+      'Infuse through central vein or large peripheral vein; extravasation can cause localized tissue necrosis',
+      'In acute aortic dissection, beta-blocker must be administered PRIOR to vasodilator to avoid reflex tachycardia'
+    ],
+    foodInteractions: 'Exclusively administered via continuous IV infusion in monitored hospital ICU/OR settings.',
+    renalDosing: 'No dose adjustment required for renal impairment (metabolite accumulates but possesses 1500-fold weaker affinity).',
+    pregnancyRisk: 'Caution',
+    atcCode: 'C07AB09'
+  },
+  {
+    id: 'hydroxychloroquine',
+    name: 'Hydroxychloroquine Sulfate',
+    genericName: 'Hydroxychloroquine',
+    brandNames: ['Plaquenil'],
+    category: 'Rheumatology / Immunology',
+    dosage: '200mg - 400mg orally once daily (Max 5.0 mg/kg actual body weight/day)',
+    dosageSchedule: 'Take with food or a glass of milk to prevent gastrointestinal upset; annual baseline and maintenance ophthalmologic screening mandatory.',
+    indications: 'Systemic lupus erythematosus (SLE) acute flare suppression and organ damage prevention, active rheumatoid arthritis, chronic discoid lupus, malaria chemoprophylaxis.',
+    contraindications: 'Pre-existing retinopathy or retinal macular pathology, known hypersensitivity to 4-aminoquinoline compounds.',
+    sideEffects: [
+      { name: 'Retinal Toxicity / Bullseye Maculopathy', percentage: 2 },
+      { name: 'Gastrointestinal Cramping & Nausea', percentage: 8 },
+      { name: 'Skin Hyperpigmentation', percentage: 4 },
+      { name: 'QT Interval Prolongation', percentage: 1.5 }
+    ],
+    efficacy: 'Essential foundation therapy for SLE; proven in landmark cohort trials to halve mortality, prevent lupus nephritis, and lower thrombosis risk.',
+    fullDescription: 'Disease-Modifying Antirheumatic Drug (DMARD) and antimalarial that concentrates in intracellular lysosomes, raising endosomal pH and dampening autoantigen presentation and toll-like receptor activation.',
+    chemicalFormula: 'C18H26ClN3O * H2SO4',
+    molarMass: '433.95 g/mol',
+    iupacName: '2-[[4-[(7-chloroquinolin-4-yl)amino]pentyl](ethyl)amino]ethanol sulfate',
+    mechanismOfAction: 'Accumulates in intracellular acidic vacuoles, raising endosomal/lysosomal pH, blocking toll-like receptor (TLR7/9) signaling and antigen processing in dendritic cells.',
+    targetReceptors: ['Endosomal Toll-Like Receptors 7 and 9 (TLR-7, TLR-9)', 'Lysosomal Vacuolar H+-ATPase'],
+    organDistribution: {
+      primaryTarget: 'Monocytes, macrophages, dendritic cells, hepatic tissue, melanin-rich retinal pigment epithelium',
+      metabolismOrgan: 'Liver (CYP3A4, CYP2C8, CYP2D6 to desethylhydroxychloroquine)',
+      eliminationRoute: 'Kidneys (15-25% unchanged drug) and feces'
+    },
+    pharmacology: {
+      metabolism: 'Extensive hepatic dealkylation and conversion to active desethyl metabolite',
+      halfLife: '40 - 50 days (due to massive tissue distribution and cellular accumulation)',
+      clearance: 'Slow renal and biliary elimination over several months',
+      peakPlasma: '2 - 4 hours',
+      bioavailability: '74%'
+    },
+    visualPill: {
+      shape: 'Round',
+      color: 'White',
+      imprint: 'PLAQUENIL 200',
+      score: 'Scored',
+      matchPct: 98.9,
+      svgColorPrimary: '#f8fafc',
+      svgColorSecondary: '#94a3b8'
+    },
+    safetyWarnings: [
+      'Retinal Toxicity: Baseline dilated ophthalmologic exam and visual field testing within 1st year, then annually after 5 years',
+      'Dosing must not exceed 5.0 mg/kg actual body weight per day to prevent irreversible macular damage',
+      'Assess baseline ECG and caution in patients with congenital long QT syndrome or concomitant QT-prolonging drugs'
+    ],
+    foodInteractions: 'Administer with food or milk to minimize gastrointestinal discomfort.',
+    renalDosing: 'eGFR <30 mL/min: Reduce dose by 25-50% or monitor drug concentrations due to prolonged excretion.',
+    pregnancyRisk: 'Safe',
+    atcCode: 'P01BA02'
+  },
+  {
+    id: 'dapagliflozin',
+    name: 'Dapagliflozin',
+    genericName: 'Dapagliflozin',
+    brandNames: ['Farxiga'],
+    category: 'Cardiovascular',
+    dosage: '5mg - 10mg orally once daily in the morning',
+    dosageSchedule: 'Take once daily with or without food. Do not double doses if missed.',
+    indications: 'Heart failure with reduced or preserved ejection fraction to reduce hospitalization, chronic kidney disease (CKD) at risk of progression, type 2 diabetes mellitus glycemic management.',
+    contraindications: 'Severe hypersensitivity reaction to dapagliflozin, patients on ongoing dialysis therapy.',
+    sideEffects: [
+      { name: 'Genital Mycotic Infections', percentage: 6 },
+      { name: 'Urinary Tract Infections', percentage: 7 },
+      { name: 'Volume Depletion', percentage: 3 },
+      { name: 'Hypoglycemia (when combined with sulfonylureas or insulin)', percentage: 4 }
+    ],
+    efficacy: 'DAPA-HF and DAPA-CKD trials established significant 26% reduction in cardiovascular death/HF hospitalization and 39% reduction in renal disease progression.',
+    fullDescription: 'Selective sodium-glucose cotransporter 2 (SGLT2) inhibitor delivering organ-protective cardiovascular and nephron hemodynamic benefits independent of diabetes status.',
+    chemicalFormula: 'C21H25ClO6',
+    molarMass: '408.87 g/mol',
+    iupacName: '(2S,3R,4R,5S,6R)-2-[4-chloro-3-[(4-ethoxyphenyl)methyl]phenyl]-6-(hydroxymethyl)oxane-3,4,5-triol',
+    mechanismOfAction: 'Inhibits SGLT2 in the S1 segment of proximal renal tubules, reducing glucose and sodium reabsorption, promoting osmotic diuresis and restoring tubuloglomerular feedback to lower intraglomerular pressure.',
+    targetReceptors: ['Sodium-Glucose Cotransporter 2 (SGLT2)'],
+    organDistribution: {
+      primaryTarget: 'Proximal convoluted tubules of renal glomeruli',
+      metabolismOrgan: 'Liver (primarily UGT1A9 to inactive dapagliflozin 3-O-glucuronide)',
+      eliminationRoute: 'Urine (75% primarily as inactive glucuronide) and feces (21%)'
+    },
+    pharmacology: {
+      metabolism: 'Extensive glucuronidation via UGT1A9; no significant CYP450 involvement',
+      halfLife: '12.9 hours',
+      clearance: 'Renal and fecal elimination',
+      peakPlasma: '2 hours post-dose fasting',
+      bioavailability: '78%'
+    },
+    visualPill: {
+      shape: 'Diamond',
+      color: 'Yellow',
+      imprint: '10 / 1428',
+      score: 'None',
+      matchPct: 99.1,
+      svgColorPrimary: '#fef08a',
+      svgColorSecondary: '#f59e0b'
+    },
+    safetyWarnings: [
+      'Maintain adequate fluid intake to avoid symptomatic dehydration and postural hypotension',
+      'Assess for euglycemic diabetic ketoacidosis in symptomatic patients even with normal blood glucose levels',
+      'Withhold medication for at least 3 days before elective surgical procedures'
+    ],
+    foodInteractions: 'Administer with or without food.',
+    renalDosing: 'eGFR 25-45 mL/min: 10mg once daily for HF/CKD benefits. eGFR <25 mL/min: Initiation not recommended, but may be continued to reduce CKD progression until dialysis.',
+    pregnancyRisk: 'Caution',
+    atcCode: 'A10BK01'
   }
 ];

@@ -42,14 +42,14 @@ export const Footer: React.FC = () => {
         {/* Center: Legal Disclaimer & Copyright Notice matching Video */}
         <div className="text-xs text-slate-500 max-w-md space-y-2 text-center">
           <p className="leading-relaxed">
-            © 2026 tpis.agies Clinical Intelligence. Engineered for Personal Medicine Management. All diagnostic parameters are local-compliant and secure.
+            © 2026 tpis.agies Clinical Intelligence. Educational & clinical decision-support reference tool. Not a substitute for professional medical advice, formal physician diagnosis, or specialized treatment.
           </p>
           <div className="flex items-center justify-center gap-4 text-[11px] font-semibold text-slate-400">
-            <span className="hover:text-slate-600 transition-colors cursor-pointer">HIPAA Standards</span>
+            <span className="hover:text-slate-600 transition-colors">Evidence-Based Monographs</span>
             <span>•</span>
-            <span className="hover:text-slate-600 transition-colors cursor-pointer">Pharmacopeia Synced</span>
+            <span className="hover:text-slate-600 transition-colors">Secure Firestore EMR</span>
             <span>•</span>
-            <span className="hover:text-slate-600 transition-colors cursor-pointer">Audit 3.2.1</span>
+            <span className="hover:text-slate-600 transition-colors">Decision Support Tool</span>
           </div>
         </div>
 

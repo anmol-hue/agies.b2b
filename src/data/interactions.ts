@@ -213,6 +213,102 @@ export const KNOWN_INTERACTIONS: DrugInteraction[] = [
       monitoring: 'Standard clinical vital signs.'
     },
     clinicalAdvice: 'Safe to administer concurrently in hospital inpatient wards.'
+  },
+  {
+    drugAId: 'entresto',
+    drugBId: 'lisinopril',
+    drugAName: 'Entresto (Sacubitril/Valsartan)',
+    drugBName: 'Lisinopril',
+    severity: 'Severe',
+    title: 'Contraindicated: Life-Threatening Angioedema & Dual RAS Inhibition',
+    mechanism: 'Neprilysin inhibition prevents bradykinin breakdown, while ACE inhibition also impairs bradykinin degradation. Dual blockade causes massive bradykinin accumulation and fatal airway angioedema.',
+    clinicalOverlay: 'Absolute contraindication: Simultaneous or overlapping use triggers severe angioedema. A strict 36-hour washout period is legally mandated when switching between an ACE inhibitor and Entresto.',
+    reasoning: {
+      pathway: 'Synergistic prevention of bradykinin degradation via ACE and neutral endopeptidase (neprilysin).',
+      physiological: 'Submucosal and laryngeal vascular extravasation causing rapid acute asphyxiation.',
+      monitoring: 'Emergency airway equipment on standby if accidental exposure occurs; monitor facial edema.'
+    },
+    clinicalAdvice: 'NEVER administer concurrently. Observe strict 36-hour washout interval when transitioning from Lisinopril to Entresto.'
+  },
+  {
+    drugAId: 'paxlovid',
+    drugBId: 'amiodarone',
+    drugAName: 'Paxlovid',
+    drugBName: 'Amiodarone',
+    severity: 'Severe',
+    title: 'Lethal Toxicity Hazard: Ritonavir-Induced Amiodarone Surge',
+    mechanism: 'Ritonavir is an ultra-potent irreversible inhibitor of CYP3A4, causing massive accumulation of amiodarone and precipitating fatal ventricular arrhythmias or heart block.',
+    clinicalOverlay: 'Severe contraindicated interaction: Amiodarone concentrations spike unpredictably, provoking Torsades de Pointes, severe bradycardia, or sudden cardiac arrest.',
+    reasoning: {
+      pathway: 'Mechanism-based inactivation of hepatic CYP3A4 and enterocyte P-gp by ritonavir.',
+      physiological: 'Excessive prolongation of myocardial action potential duration and cardiac sodium/potassium channel blockade.',
+      monitoring: 'Continuous 12-lead ECG telemetry monitoring; amiodarone serum level if already ingested.'
+    },
+    clinicalAdvice: 'Contraindicated. Choose alternative antiviral therapies (such as Remdesivir IV or Molnupiravir) in patients taking Amiodarone.'
+  },
+  {
+    drugAId: 'rivaroxaban',
+    drugBId: 'ibuprofen',
+    drugAName: 'Rivaroxaban',
+    drugBName: 'Ibuprofen',
+    severity: 'Severe',
+    title: 'Severe Potentiation: Multiplied Major Gastrointestinal Hemorrhage Risk',
+    mechanism: 'Direct Factor Xa inhibition combined with NSAID-induced gastric mucosal cyclooxygenase-1 inhibition and primary platelet aggregation dysfunction.',
+    clinicalOverlay: 'High-risk interaction: Co-prescribing a DOAC with systemic NSAIDs quadruples the risk of major upper gastrointestinal bleeding and hemorrhagic transformation.',
+    reasoning: {
+      pathway: 'Factor Xa enzymatic blockade + COX-1 suppression of thromboxane A2 and protective mucosal prostaglandins.',
+      physiological: 'Compromised hemostatic plug formation at sites of microvascular erosions.',
+      monitoring: 'Complete blood count (CBC), hemoglobin/hematocrit baseline, stool guaiac, blood pressure.'
+    },
+    clinicalAdvice: 'Avoid combination. Recommend topical NSAIDs or acetaminophen for acute analgesia; consider gastroprotective PPI if unavoidable.'
+  },
+  {
+    drugAId: 'lorazepam',
+    drugBId: 'morphine',
+    drugAName: 'Lorazepam',
+    drugBName: 'Morphine',
+    severity: 'Severe',
+    title: 'FDA Black Box Warning: Profound CNS & Lethal Respiratory Depression',
+    mechanism: 'Synergistic central nervous system depression: GABA-A receptor positive allosteric modulation combined with mu-opioid receptor agonism in the brainstem respiratory rhythm generator.',
+    clinicalOverlay: 'High-risk clinical synergy: Dual sedation causes hypoventilation, hypercapnic respiratory arrest, severe hypotension, and coma.',
+    reasoning: {
+      pathway: 'GABA-A hyperpolarization plus pre-Botzinger complex mu-opioid inhibition in the ventrolateral medulla.',
+      physiological: 'Blunting of central chemoreceptor sensitivity to arterial carbon dioxide tension.',
+      monitoring: 'Continuous pulse oximetry, end-tidal CO2 (capnography), and bedside naloxone/flumazenil availability.'
+    },
+    clinicalAdvice: 'Limit dosages and duration to the minimum required. Avoid co-prescribing outside monitored inpatient settings with continuous capnography.'
+  },
+  {
+    drugAId: 'spironolactone',
+    drugBId: 'lisinopril',
+    drugAName: 'Spironolactone',
+    drugBName: 'Lisinopril',
+    severity: 'Moderate',
+    title: 'Electrolyte Surveillance: Additive Potassium-Retention & Hyperkalemia',
+    mechanism: 'Concurrent mineralocorticoid receptor antagonism and angiotensin converting enzyme inhibition synergistically suppress renal potassium elimination.',
+    clinicalOverlay: 'Guideline-directed medical therapy in HFrEF, but requires rigorous electrolyte monitoring due to the threat of life-threatening hyperkalemia (K+ > 5.5 mEq/L).',
+    reasoning: {
+      pathway: 'Aldosterone inhibition in cortical collecting tubules combined with reduced efferent arteriolar resistance.',
+      physiological: 'Inhibition of renal tubular principal cell potassium excretion.',
+      monitoring: 'Check serum potassium and creatinine at baseline, 1 week, 4 weeks, and every 3-6 months.'
+    },
+    clinicalAdvice: 'Allowed under close supervision in heart failure. Hold or reduce if serum potassium exceeds 5.2 mEq/L; educate patient on low-potassium diet.'
+  },
+  {
+    drugAId: 'empagliflozin',
+    drugBId: 'furosemide',
+    drugAName: 'Empagliflozin',
+    drugBName: 'Furosemide',
+    severity: 'Moderate',
+    title: 'Volume Depletion Warning: Synergistic Natriuresis & Orthostatic Dehydration',
+    mechanism: 'SGLT2 osmotic glycosuria combines with loop diuretic sodium wasting, increasing total urine output and potentially precipitating prerenal azotemia.',
+    clinicalOverlay: 'Patients receiving both an SGLT2 inhibitor and loop diuretic have heightened risk of symptomatic orthostatic hypotension, syncope, and acute kidney injury in hot weather or illness.',
+    reasoning: {
+      pathway: 'Proximal tubule glucose/sodium wasting + Thick ascending limb NKCC2 transporter inhibition.',
+      physiological: 'Contracted intravascular volume with reflex tachycardia and reduced renal perfusion pressure.',
+      monitoring: 'Daily weight, sitting/standing blood pressure, serum BUN and creatinine.'
+    },
+    clinicalAdvice: 'Consider preemptively reducing loop diuretic dose by 20-50% when initiating SGLT2 inhibitor in euvolemic patients; counsel on adequate hydration.'
   }
 ];
 
