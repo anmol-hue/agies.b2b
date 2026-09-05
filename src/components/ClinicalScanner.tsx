@@ -354,14 +354,14 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-100">
               AI Clinical & Diagnostic Scanner
             </h1>
-            <span className="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[10px] font-bold tracking-wider uppercase font-mono">
+            <span className="px-2 py-0.5 rounded-md bg-blue-900 text-blue-300 text-[10px] font-bold tracking-wider uppercase font-mono border border-blue-500/30">
               Auto-Sync
             </span>
           </div>
-          <p className="text-sm text-slate-600 max-w-3xl">
+          <p className="text-sm text-slate-400 max-w-3xl">
             Multimodal clinical intelligence engine with 3D anatomical organ chamber exploration, disease propagation mapping, and document scan analysis.
           </p>
         </div>
@@ -493,12 +493,16 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             
             {/* Left Column: Inputs & Attachments (5 cols) */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="glass-panel-noise border-beam bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm">
+              <div className="glass-panel-noise border-beam bg-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative">
+                <div className="hud-corner hud-tl" />
+                <div className="hud-corner hud-tr" />
+                <div className="hud-corner hud-bl" />
+                <div className="hud-corner hud-br" />
 
                 {/* 1. Free-text Symptom Description */}
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <label className="block text-sm font-extrabold text-slate-900 tracking-tight">
+                    <label className="block text-sm font-extrabold text-slate-100 tracking-tight">
                       Describe Patient Symptoms
                     </label>
                     {symptomText && (
@@ -519,7 +523,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     }}
                     rows={3}
                     placeholder="Type symptoms here (e.g. sore throat with white patches, low-grade fever, dry cough, abdominal reflux after meals...)"
-                    className="w-full p-3.5 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-2xs leading-relaxed"
+                    className="w-full p-3.5 rounded-2xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-2xs leading-relaxed"
                   />
 
                   {/* Quick symptom tags */}
@@ -551,8 +555,8 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                 {/* 2. Attach Scan Files (PDF, Word, Text, Images) */}
                 <div className="space-y-2.5 pt-2 border-t border-slate-100">
                   <div className="flex items-center justify-between">
-                    <label className="block text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
-                      <Paperclip className="w-4 h-4 text-blue-600" />
+                    <label className="block text-sm font-extrabold text-slate-100 tracking-tight flex items-center gap-1.5">
+                      <Paperclip className="w-4 h-4 text-blue-400" />
                       <span>Attach Scan Files & Reports</span>
                     </label>
                     <span className="text-[10px] font-mono text-slate-400">PDF, Word, Images</span>
@@ -638,7 +642,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     whileTap={{ scale: 0.98 }}
                     onClick={handleRunAnalysis}
                     disabled={loading}
-                    className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-extrabold text-xs tracking-wider uppercase transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-extrabold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] flex items-center justify-center gap-2 cursor-pointer border border-blue-400/30"
                   >
                     {loading ? (
                       <>
@@ -724,17 +728,21 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="glass-panel-noise border-beam data-stream bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative z-10"
+                  className="glass-panel-noise border-beam data-stream bg-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative z-10"
                 >
+                  <div className="hud-corner hud-tl" />
+                  <div className="hud-corner hud-tr" />
+                  <div className="hud-corner hud-bl" />
+                  <div className="hud-corner hud-br" />
                   {/* Header Status & Match Score */}
                   <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-4 gap-2">
                     <div className="flex items-center gap-2">
                       <span className={`w-2.5 h-2.5 rounded-full ${result.isDangerous === 'Dangerous' ? 'bg-rose-600' : 'bg-blue-600'} animate-pulse`}></span>
-                      <span className={`text-xs font-extrabold tracking-wider uppercase ${result.isDangerous === 'Dangerous' ? 'text-rose-700' : 'text-blue-700'}`}>
+                      <span className={`text-xs font-extrabold tracking-wider uppercase ${result.isDangerous === 'Dangerous' ? 'text-rose-400' : 'text-blue-400'}`}>
                         Triage: {result.isDangerous === 'Dangerous' ? 'Emergency / Urgent' : 'Stable / Routine'}
                       </span>
                       {result.affectedOrganSystem && (
-                        <span className="text-[10px] font-mono font-bold text-slate-700 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] font-mono font-bold text-slate-300 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">
                           {result.affectedOrganSystem}
                         </span>
                       )}
@@ -757,18 +765,18 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                   {/* Primary Diagnostic Hypothesis & ICD-10 */}
                   <div className="space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+                      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
                         {result.primaryHypothesis}
                       </h2>
                       {result.icd10Code && (
-                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold shadow-xs">
+                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-900/40 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold shadow-xs">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                           <span>ICD-10-CM: {result.icd10Code}</span>
                         </div>
                       )}
                     </div>
-                    
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80">
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
                       {result.empatheticNarrative}
                     </p>
                   </div>
@@ -776,23 +784,23 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                   {/* PHYSICIAN CLINICAL DECISION SUPPORT: Workup & Pharmacotherapy */}
                   <div className="space-y-4 pt-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-extrabold text-base text-slate-900 tracking-tight flex items-center gap-2">
-                        <Activity className="w-4 h-4 text-blue-600" />
+                      <h3 className="font-extrabold text-base text-slate-100 tracking-tight flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-blue-400" />
                         <span>Physician Diagnostic Workup & Order Panel</span>
                       </h3>
-                      <span className="text-[11px] font-mono text-slate-500">Evidence-Based Clinical Guidance</span>
+                      <span className="text-[11px] font-mono text-slate-400">Evidence-Based Clinical Guidance</span>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {/* Priority Labs */}
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
+                      <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+                          <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
                             <span>🧪</span> Priority Lab Orders
                           </span>
                           <span className="text-[10px] font-mono text-slate-500 font-bold">STAT/Urgent</span>
                         </div>
-                        <ul className="space-y-1.5 text-xs text-slate-700">
+                        <ul className="space-y-1.5 text-xs text-slate-300">
                           {(result.clinicalWorkup?.labTests && result.clinicalWorkup.labTests.length > 0 ? result.clinicalWorkup.labTests : [
                             'Complete Blood Count (CBC) with diff',
                             'Comprehensive Metabolic Panel (CMP)',
@@ -807,14 +815,14 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </div>
 
                       {/* Imaging Modalities */}
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
+                      <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-sky-800 flex items-center gap-1.5">
+                          <span className="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                             <span>🩻</span> Imaging Modalities
                           </span>
                           <span className="text-[10px] font-mono text-slate-500 font-bold">Radiology</span>
                         </div>
-                        <ul className="space-y-1.5 text-xs text-slate-700">
+                        <ul className="space-y-1.5 text-xs text-slate-300">
                           {(result.clinicalWorkup?.imagingStudies && result.clinicalWorkup.imagingStudies.length > 0 ? result.clinicalWorkup.imagingStudies : [
                             'Targeted Point-of-Care Ultrasound (POCUS)',
                             'Plain Radiographs (AP/Lateral)',
@@ -829,14 +837,14 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </div>
 
                       {/* Physical Exam Signs */}
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
+                      <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-amber-800 flex items-center gap-1.5">
+                          <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                             <span>🩺</span> Physical Maneuvers
                           </span>
                           <span className="text-[10px] font-mono text-slate-500 font-bold">Objective</span>
                         </div>
-                        <ul className="space-y-1.5 text-xs text-slate-700">
+                        <ul className="space-y-1.5 text-xs text-slate-300">
                           {(result.clinicalWorkup?.physicalSigns && result.clinicalWorkup.physicalSigns.length > 0 ? result.clinicalWorkup.physicalSigns : [
                             'Targeted palpation for point tenderness and swelling',
                             'Regional auscultation and perfusion check',
@@ -855,41 +863,41 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                   {/* Pharmacotherapy & Guideline Therapeutics */}
                   <div className="space-y-3 pt-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-extrabold text-base text-slate-900 tracking-tight flex items-center gap-2">
-                        <Pill className="w-4 h-4 text-blue-600" />
+                      <h3 className="font-extrabold text-base text-slate-100 tracking-tight flex items-center gap-2">
+                        <Pill className="w-4 h-4 text-blue-400" />
                         <span>Guideline Pharmacotherapy & Dosing Regimens</span>
                       </h3>
-                      <span className="text-[11px] font-mono text-slate-500">
-                        Consult Specialist: <strong className="text-slate-800">{result.recDoctor || 'Internal Medicine'}</strong>
+                      <span className="text-[11px] font-mono text-slate-400">
+                        Consult Specialist: <strong className="text-slate-100">{result.recDoctor || 'Internal Medicine'}</strong>
                       </span>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200/80 space-y-1.5">
-                        <span className="text-[11px] font-bold text-blue-800 font-mono uppercase tracking-wider block">
+                      <div className="p-4 rounded-2xl bg-blue-900/30 border border-blue-500/30 space-y-1.5">
+                        <span className="text-[11px] font-bold text-blue-300 font-mono uppercase tracking-wider block">
                           First-Line Regimen
                         </span>
-                        <p className="text-xs text-slate-800 leading-relaxed font-semibold">
+                        <p className="text-xs text-slate-200 leading-relaxed font-semibold">
                           {result.pharmacotherapy?.firstLine || 'Initiate standard first-line guideline therapy tailored to renal and hepatic function.'}
                         </p>
                       </div>
 
-                      <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1.5">
-                        <span className="text-[11px] font-bold text-amber-800 font-mono uppercase tracking-wider block">
+                      <div className="p-4 rounded-2xl bg-amber-900/30 border border-amber-500/30 space-y-1.5">
+                        <span className="text-[11px] font-bold text-amber-300 font-mono uppercase tracking-wider block">
                           Alternative Regimen (Allergy / Intolerance)
                         </span>
-                        <p className="text-xs text-slate-800 leading-relaxed font-semibold">
+                        <p className="text-xs text-slate-200 leading-relaxed font-semibold">
                           {result.pharmacotherapy?.alternative || 'Second-line allergy-sparing agent based on patient tolerance.'}
                         </p>
                       </div>
                     </div>
 
                     {result.pharmacotherapy?.contraindications && result.pharmacotherapy.contraindications.length > 0 && (
-                      <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
-                        <span className="text-[11px] font-bold text-rose-800 font-mono uppercase tracking-wider block">
+                      <div className="p-3.5 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-1">
+                        <span className="text-[11px] font-bold text-rose-300 font-mono uppercase tracking-wider block">
                           Contraindications & Safety Screening
                         </span>
-                        <ul className="list-disc list-inside text-xs text-rose-900 space-y-0.5">
+                        <ul className="list-disc list-inside text-xs text-rose-200 space-y-0.5">
                           {result.pharmacotherapy.contraindications.map((contra, idx) => (
                             <li key={idx}>{contra}</li>
                           ))}
@@ -985,7 +993,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
                   {/* Differential Diagnoses List */}
                   <div className="space-y-4 pt-2">
-                    <h3 className="font-extrabold text-base text-slate-900 tracking-tight">
+                    <h3 className="font-extrabold text-base text-slate-100 tracking-tight">
                       Differential Diagnoses Matrix
                     </h3>
 
@@ -993,11 +1001,11 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       {result.matches.map((diff, idx) => (
                         <div
                           key={idx}
-                          className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-blue-300 transition-colors"
+                          className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2 hover:border-blue-500/50 transition-colors"
                         >
                           <div className="flex items-center justify-between">
-                            <div className="font-bold text-sm text-slate-900">{diff.condition}</div>
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded-md">
+                            <div className="font-bold text-sm text-slate-100">{diff.condition}</div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-900/50 px-2 py-0.5 rounded-md border border-blue-500/30">
                               {diff.urgency}
                             </span>
                           </div>
@@ -1018,12 +1026,12 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
                   {/* Warning Signs Box */}
                   {result.warningSigns && result.warningSigns.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-2 text-xs text-rose-950">
-                      <div className="font-extrabold uppercase tracking-wider text-[11px] text-rose-700 flex items-center gap-1.5">
+                    <div className="p-4 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-2 text-xs text-rose-200">
+                      <div className="font-extrabold uppercase tracking-wider text-[11px] text-rose-400 flex items-center gap-1.5">
                         <ShieldAlert className="w-4 h-4" />
                         <span>Emergency Warning Signs (Seek Urgent Care If Present)</span>
                       </div>
-                      <ul className="space-y-1 list-disc list-inside font-medium text-[11px] text-rose-900">
+                      <ul className="space-y-1 list-disc list-inside font-medium text-[11px] text-rose-300">
                         {result.warningSigns.map((w, i) => (
                           <li key={i}>{w}</li>
                         ))}
