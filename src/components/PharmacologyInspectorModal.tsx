@@ -5,24 +5,24 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  X, 
-  Pill, 
-  Atom, 
-  Activity, 
-  Layers, 
-  Sparkles, 
-  ShieldCheck, 
-  AlertTriangle, 
-  Share2, 
-  Download, 
-  Plus, 
-  Check, 
-  Eye, 
-  RotateCw, 
-  Sliders, 
-  Compass, 
-  Sun, 
+import {
+  X,
+  Pill,
+  Atom,
+  Activity,
+  Layers,
+  Sparkles,
+  ShieldCheck,
+  AlertTriangle,
+  Share2,
+  Download,
+  Plus,
+  Check,
+  Eye,
+  RotateCw,
+  Sliders,
+  Compass,
+  Sun,
   Maximize2,
   Info,
   CheckCircle2,
@@ -105,40 +105,40 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
   const { points: pkPoints, cMax, tMax } = calculatePkPoints();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 animate-fadeIn">
       <motion.div
         initial={{ opacity: 0, scale: 0.94, y: 14 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94, y: 14 }}
         transition={{ duration: 0.26, ease: "easeOut" }}
-        className="bg-white rounded-2xl shadow-2xl border border-slate-200/90 w-full max-w-5xl max-h-[92vh] flex flex-col overflow-hidden text-slate-900"
+        className="clinical-panel rounded-2xl shadow-2xl border border-slate-800 w-full max-w-5xl max-h-[92vh] flex flex-col overflow-hidden text-slate-100"
       >
         {/* MODAL HEADER */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
               <Pill className="w-5 h-5 animate-pulse" />
             </div>
-            <div>
+            <div className="clinical-text-sans">
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold text-slate-900 tracking-tight">{medicine.name}</h2>
-                <span className="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-[11px] font-semibold uppercase tracking-wider">
+                <h2 className="text-lg font-bold text-slate-100 tracking-tight">{medicine.name}</h2>
+                <span className="px-2 py-0.5 rounded-md bg-blue-900/40 border border-blue-500/30 text-blue-400 text-[11px] font-semibold uppercase tracking-wider">
                   {medicine.category}
                 </span>
                 {medicine.atcCode && (
-                  <span className="hidden sm:inline-block px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-mono">
+                  <span className="hidden sm:inline-block px-2 py-0.5 rounded-md bg-slate-800 text-slate-400 text-[11px] font-mono border border-slate-700">
                     ATC: {medicine.atcCode}
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-500 flex items-center gap-2">
-                <span>Generic: <strong className="text-slate-700 font-medium">{medicine.genericName}</strong></span>
+              <p className="text-xs text-slate-400 flex items-center gap-2">
+                <span>Generic: <strong className="text-slate-300 font-medium">{medicine.genericName}</strong></span>
                 <span>•</span>
-                <span>Formula: <strong className="text-slate-700 font-mono">{medicine.chemicalFormula || 'C₁₆H₁₉N₃O₅S'}</strong></span>
+                <span>Formula: <strong className="text-slate-300 font-mono">{medicine.chemicalFormula || 'C₁₆H₁₉N₃O₅S'}</strong></span>
                 {medicine.molarMass && (
                   <>
                     <span>•</span>
-                    <span>Mass: <strong className="text-slate-700 font-mono">{medicine.molarMass}</strong></span>
+                    <span>Mass: <strong className="text-slate-300 font-mono">{medicine.molarMass}</strong></span>
                   </>
                 )}
               </p>
@@ -148,17 +148,17 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
           <div className="flex items-center gap-2">
             <button
               onClick={handleShare}
-              className="p-2 text-slate-500 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-slate-500 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
               title="Copy Clinical Citation"
             >
-              {copiedNotification ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+              {copiedNotification ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
             </button>
             <button
               onClick={() => {
                 soundFx.click();
                 onClose();
               }}
-              className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -166,8 +166,8 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
         </div>
 
         {/* MODAL STUDIO TAB NAVIGATION */}
-        <div className="px-6 py-2 bg-slate-100/60 border-b border-slate-200/80 flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200/80 shadow-xs">
+        <div className="px-6 py-2 bg-slate-900/50 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800 shadow-xs">
             <button
               onClick={() => {
                 soundFx.click();
@@ -176,7 +176,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeStudioTab === 'morphology'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  : 'text-slate-500 hover:text-slate-100 hover:bg-slate-800'
               }`}
             >
               <Pill className="w-3.5 h-3.5" />
@@ -191,7 +191,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeStudioTab === 'molecule'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  : 'text-slate-500 hover:text-slate-100 hover:bg-slate-800'
               }`}
             >
               <Atom className="w-3.5 h-3.5" />
@@ -206,7 +206,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeStudioTab === 'receptor'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  : 'text-slate-500 hover:text-slate-100 hover:bg-slate-800'
               }`}
             >
               <FlaskConical className="w-3.5 h-3.5" />
@@ -221,7 +221,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeStudioTab === 'pharmacokinetics'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  : 'text-slate-500 hover:text-slate-100 hover:bg-slate-800'
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
@@ -236,9 +236,9 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
                 onSelectForInteraction(medicine);
                 onClose();
               }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition-colors text-xs font-semibold cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-900/30 border border-amber-500/30 text-amber-400 hover:bg-amber-900/50 transition-colors text-xs font-semibold cursor-pointer"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-500" />
               <span>Contraindication Screen</span>
             </button>
 
@@ -269,17 +269,17 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* TOP 3D STAGE & QUICK SPECS */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            
+
             {/* 3D VISUALIZATION VIEWPORT */}
             <div className="lg:col-span-7 bg-slate-950 rounded-2xl p-4 border border-slate-800 relative overflow-hidden shadow-inner flex flex-col items-center justify-center min-h-[360px]">
-              
+
               {/* TOP OVERLAY BADGES */}
               <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-blue-400 text-[11px] font-mono flex items-center gap-1.5 backdrop-blur-xs">
+                <span className="px-2.5 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-blue-400 text-[11px] font-mono flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   WebGL 2.0 • 60 FPS
                 </span>
-                <span className="px-2.5 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 text-[11px] font-medium backdrop-blur-xs">
+                <span className="px-2.5 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 text-[11px] font-medium">
                   {activeStudioTab === 'morphology' && `Pill: ${medicine.visualPill.shape} (${medicine.visualPill.color})`}
                   {activeStudioTab === 'molecule' && `Structure: ${medicine.chemicalFormula || 'Empirical'}`}
                   {activeStudioTab === 'receptor' && `Pocket: ${medicine.targetReceptors?.[0] || 'Enzymatic active site'}`}
@@ -326,7 +326,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
                       <span className="text-[9px] text-emerald-400 font-semibold">Kd: 2.4 nM</span>
                     </div>
                   </div>
-                  
+
                   <div className="max-w-md px-4 text-left bg-slate-900/90 rounded-xl p-3 border border-slate-800 text-xs space-y-1.5">
                     <div className="flex items-center justify-between text-slate-300">
                       <span className="font-semibold text-white">Target Receptors:</span>
@@ -425,132 +425,132 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
                     </div>
                   </div>
                 </div>
-              )}
 
-              {/* BOTTOM FOOTER INFO */}
-              <div className="w-full mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 px-2">
-                <span>Hold & Drag to rotate • Scroll to zoom</span>
-                <span className="text-blue-400 font-mono">Precision 3D Bio-Engine</span>
-              </div>
-            </div>
-
-            {/* CLINICAL PHARMACOLOGY SPEC SHEET */}
-            <div className="lg:col-span-5 space-y-4">
-              
-              {/* PRIMARY DOSING & SCHEDULE CARD */}
-              <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-blue-900 uppercase tracking-wider">Standard Clinical Dosage</span>
-                  <span className="px-2 py-0.5 rounded-full bg-blue-200/80 text-blue-900 text-[11px] font-semibold">
-                    {medicine.dosageSchedule.includes('daily') ? 'Daily Regimen' : 'Clinical Protocol'}
-                  </span>
+                {/* BOTTOM FOOTER INFO */}
+                <div className="w-full mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 px-2">
+                  <span>Hold & Drag to rotate • Scroll to zoom</span>
+                  <span className="text-blue-400 font-mono">Precision 3D Bio-Engine</span>
                 </div>
-                <div className="text-base font-bold text-blue-950 font-mono">{medicine.dosage}</div>
-                <p className="text-xs text-blue-800/90 leading-relaxed">{medicine.dosageSchedule}</p>
               </div>
 
-              {/* PHARMACOKINETICS METRICS GRID */}
-              <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                  <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">Pharmacokinetic Profile</span>
-                  <span className="text-[11px] font-mono text-slate-500">ADME Analysis</span>
+              {/* CLINICAL PHARMACOLOGY SPEC SHEET */}
+              <div className="lg:col-span-5 space-y-4">
+
+                {/* PRIMARY DOSING & SCHEDULE CARD */}
+                <div className="bg-blue-900/20 border border-blue-500/30 rounded-2xl p-4 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Standard Clinical Dosage</span>
+                    <span className="px-2 py-0.5 rounded-full bg-blue-900/40 text-blue-300 text-[11px] font-semibold border border-blue-500/30">
+                      {medicine.dosageSchedule.includes('daily') ? 'Daily Regimen' : 'Clinical Protocol'}
+                    </span>
+                  </div>
+                  <div className="text-base font-bold text-slate-100 font-mono">{medicine.dosage}</div>
+                  <p className="text-xs text-slate-400 leading-relaxed">{medicine.dosageSchedule}</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 text-xs">
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="text-slate-500 text-[11px] block">Bioavailability</span>
-                    <strong className="text-slate-800 font-semibold">{medicine.pharmacology?.bioavailability || '75-90%'}</strong>
+                {/* PHARMACOKINETICS METRICS GRID */}
+                <div className="clinical-panel border border-slate-800 rounded-2xl p-4 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                    <span className="text-xs font-bold text-slate-100 uppercase tracking-wider">Pharmacokinetic Profile</span>
+                    <span className="text-[11px] font-mono text-slate-500">ADME Analysis</span>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="text-slate-500 text-[11px] block">Half-Life (t½)</span>
-                    <strong className="text-slate-800 font-semibold">{medicine.pharmacology?.halfLife || '1.5 - 2.0h'}</strong>
+
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="p-2.5 rounded-xl clinical-surface-inner border border-slate-800">
+                      <span className="text-slate-500 text-[11px] block">Bioavailability</span>
+                      <strong className="text-slate-300 font-semibold">{medicine.pharmacology?.bioavailability || '75-90%'}</strong>
+                    </div>
+                    <div className="p-2.5 rounded-xl clinical-surface-inner border border-slate-800">
+                      <span className="text-slate-500 text-[11px] block">Half-Life (t½)</span>
+                      <strong className="text-slate-300 font-semibold">{medicine.pharmacology?.halfLife || '1.5 - 2.0h'}</strong>
+                    </div>
+                    <div className="p-2.5 rounded-xl clinical-surface-inner border border-slate-800">
+                      <span className="text-slate-500 text-[11px] block">Peak Plasma (Tmax)</span>
+                      <strong className="text-slate-300 font-semibold">{medicine.pharmacology?.peakPlasma || '1 - 2 hours'}</strong>
+                    </div>
+                    <div className="p-2.5 rounded-xl clinical-surface-inner border border-slate-800">
+                      <span className="text-slate-500 text-[11px] block">Primary Clearance</span>
+                      <strong className="text-slate-300 font-semibold truncate block" title={medicine.pharmacology?.clearance}>
+                        {medicine.pharmacology?.clearance || 'Renal / Hepatic'}
+                      </strong>
+                    </div>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="text-slate-500 text-[11px] block">Peak Plasma (Tmax)</span>
-                    <strong className="text-slate-800 font-semibold">{medicine.pharmacology?.peakPlasma || '1 - 2 hours'}</strong>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="text-slate-500 text-[11px] block">Primary Clearance</span>
-                    <strong className="text-slate-800 font-semibold truncate block" title={medicine.pharmacology?.clearance}>
-                      {medicine.pharmacology?.clearance || 'Renal / Hepatic'}
-                    </strong>
-                  </div>
+
+                  {medicine.organDistribution && (
+                    <div className="pt-2 border-t border-slate-800 text-xs space-y-1">
+                      <div className="text-slate-400 flex items-start gap-1.5">
+                        <strong className="text-slate-300 min-w-[70px]">Target Site:</strong>
+                        <span className="text-slate-400">{medicine.organDistribution.primaryTarget}</span>
+                      </div>
+                      <div className="text-slate-400 flex items-start gap-1.5">
+                        <strong className="text-slate-300 min-w-[70px]">Metabolism:</strong>
+                        <span className="text-slate-400">{medicine.organDistribution.metabolismOrgan}</span>
+                      </div>
+                      <div className="text-slate-400 flex items-start gap-1.5">
+                        <strong className="text-slate-300 min-w-[70px]">Elimination:</strong>
+                        <span className="text-slate-400">{medicine.organDistribution.eliminationRoute}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {medicine.organDistribution && (
-                  <div className="pt-2 border-t border-slate-100 text-xs space-y-1">
-                    <div className="text-slate-600 flex items-start gap-1.5">
-                      <strong className="text-slate-800 min-w-[70px]">Target Site:</strong>
-                      <span className="text-slate-600">{medicine.organDistribution.primaryTarget}</span>
+                {/* BLACK BOX OR CONTRAINDICATION ALERT IF PRESENT */}
+                {medicine.blackBoxWarning && (
+                  <div className="bg-rose-900/20 border border-rose-500/30 rounded-2xl p-4 text-xs space-y-1.5">
+                    <div className="flex items-center gap-1.5 font-bold text-rose-400">
+                      <AlertTriangle className="w-4 h-4 text-rose-500" />
+                      <span>FDA BLACK BOX WARNING</span>
                     </div>
-                    <div className="text-slate-600 flex items-start gap-1.5">
-                      <strong className="text-slate-800 min-w-[70px]">Metabolism:</strong>
-                      <span className="text-slate-600">{medicine.organDistribution.metabolismOrgan}</span>
-                    </div>
-                    <div className="text-slate-600 flex items-start gap-1.5">
-                      <strong className="text-slate-800 min-w-[70px]">Elimination:</strong>
-                      <span className="text-slate-600">{medicine.organDistribution.eliminationRoute}</span>
-                    </div>
+                    <p className="text-rose-300 leading-relaxed font-medium">{medicine.blackBoxWarning}</p>
                   </div>
                 )}
               </div>
-
-              {/* BLACK BOX OR CONTRAINDICATION ALERT IF PRESENT */}
-              {medicine.blackBoxWarning && (
-                <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-xs space-y-1.5">
-                  <div className="flex items-center gap-1.5 font-bold text-rose-900">
-                    <AlertTriangle className="w-4 h-4 text-rose-600" />
-                    <span>FDA BLACK BOX WARNING</span>
-                  </div>
-                  <p className="text-rose-800 leading-relaxed font-medium">{medicine.blackBoxWarning}</p>
-                </div>
-              )}
             </div>
           </div>
 
           {/* LOWER DETAILED PHARMACOTHERAPY SECTIONS */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-            
+
             {/* INDICATIONS & CONTRAINDICATIONS */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+            <div className="clinical-panel border border-slate-800 rounded-2xl p-5 shadow-xs space-y-4">
               <div>
-                <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                   Clinical Indications
                 </h4>
-                <p className="text-xs text-slate-700 leading-relaxed">{medicine.indications}</p>
+                <p className="text-xs text-slate-400 leading-relaxed">{medicine.indications}</p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100">
-                <h4 className="text-xs font-bold text-rose-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                  <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+              <div className="pt-3 border-t border-slate-800">
+                <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 text-rose-500" />
                   Contraindications & Warnings
                 </h4>
-                <p className="text-xs text-slate-700 leading-relaxed">{medicine.contraindications}</p>
+                <p className="text-xs text-slate-400 leading-relaxed">{medicine.contraindications}</p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100">
-                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <div className="pt-3 border-t border-slate-800">
+                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                   Renal Dosing Adjustments
                 </h4>
-                <p className="text-xs text-slate-600 leading-relaxed font-mono">{medicine.renalDosing}</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-mono">{medicine.renalDosing}</p>
               </div>
             </div>
 
             {/* ADVERSE EFFECTS & FOOD INTERACTIONS */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+            <div className="clinical-panel border border-slate-800 rounded-2xl p-5 shadow-xs space-y-4">
               <div>
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
+                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                   Documented Adverse Reactions
                 </h4>
                 <div className="space-y-2">
                   {medicine.sideEffects.map((se, idx) => (
                     <div key={idx} className="space-y-1">
-                      <div className="flex justify-between text-xs text-slate-700">
+                      <div className="flex justify-between text-xs text-slate-400">
                         <span>{se.name}</span>
-                        <span className="font-semibold text-slate-900 font-mono">{se.percentage}%</span>
+                        <span className="font-semibold text-slate-200 font-mono">{se.percentage}%</span>
                       </div>
-                      <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                      <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-slate-800">
                         <div
                           className={`h-full rounded-full ${
                             se.percentage > 15 ? 'bg-rose-500' : se.percentage > 8 ? 'bg-amber-500' : 'bg-blue-500'
@@ -563,20 +563,20 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-slate-100">
-                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+              <div className="pt-3 border-t border-slate-800">
+                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                   Food & Dietary Interactions
                 </h4>
-                <p className="text-xs text-slate-600 leading-relaxed">{medicine.foodInteractions}</p>
+                <p className="text-xs text-slate-400 leading-relaxed">{medicine.foodInteractions}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* MODAL FOOTER */}
-        <div className="px-6 py-3 border-t border-slate-200/80 bg-slate-50 flex items-center justify-between">
+        <div className="px-6 py-3 border-t border-slate-800 bg-slate-900/50 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <ShieldCheck className="w-4 h-4 text-emerald-500" />
             <span>Standardized Pharmacopeia Indexed • Evidence-Based</span>
           </div>
 
@@ -585,7 +585,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
               soundFx.click();
               onClose();
             }}
-            className="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold text-xs transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors cursor-pointer"
           >
             Close Monograph
           </button>

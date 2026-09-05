@@ -190,38 +190,38 @@ export const FloatingMedicalElements: React.FC = () => {
             )}
 
             {item.type === 'stethoscope' && (
-              <div className="p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-indigo-200/90 shadow-xl text-indigo-600 hover:scale-115 transition-transform pointer-events-auto">
+              <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl text-indigo-600 hover:scale-115 transition-transform pointer-events-auto">
                 <Stethoscope className="w-6 h-6" />
                 <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-indigo-500 rounded-full ring-2 ring-white animate-ping" />
               </div>
             )}
 
             {item.type === 'dna' && (
-              <div className="p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-cyan-200/90 shadow-xl text-cyan-600 hover:scale-115 transition-transform pointer-events-auto">
+              <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl text-cyan-400 hover:scale-115 transition-transform pointer-events-auto">
                 <Dna className="w-6 h-6 animate-pulse" />
               </div>
             )}
 
             {item.type === 'syringe' && (
-              <div className="p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-rose-200/90 shadow-xl text-rose-500 hover:scale-115 transition-transform pointer-events-auto">
+              <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl text-rose-400 hover:scale-115 transition-transform pointer-events-auto">
                 <Syringe className="w-6 h-6" />
               </div>
             )}
 
             {item.type === 'pulse' && (
-              <div className="p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-blue-200/90 shadow-xl text-blue-600 hover:scale-115 transition-transform pointer-events-auto">
+              <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl text-blue-400 hover:scale-115 transition-transform pointer-events-auto">
                 <Activity className="w-6 h-6" />
               </div>
             )}
 
             {item.type === 'molecule' && (
-              <div className="p-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-amber-200/90 shadow-xl text-amber-600 hover:scale-115 transition-transform pointer-events-auto flex items-center justify-center">
+              <div className="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl text-amber-400 hover:scale-115 transition-transform pointer-events-auto flex items-center justify-center">
                 <Microscope className="w-5 h-5" />
               </div>
             )}
 
             {item.type === 'iv-bag' && (
-              <div className="p-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-violet-200/90 shadow-xl text-violet-600 hover:scale-115 transition-transform pointer-events-auto flex items-center justify-center">
+              <div className="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl text-violet-400 hover:scale-115 transition-transform pointer-events-auto flex items-center justify-center">
                 <Layers className="w-5 h-5" />
               </div>
             )}

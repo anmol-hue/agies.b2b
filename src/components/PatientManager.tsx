@@ -5,33 +5,33 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Users, 
-  UserPlus, 
-  Search, 
-  Filter, 
-  Activity, 
-  FileText, 
-  Paperclip, 
-  Stethoscope, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Clock, 
-  Heart, 
-  ShieldAlert, 
-  Upload, 
-  Pill, 
-  ChevronRight, 
-  Calendar, 
-  Bed, 
-  Building2, 
-  Zap, 
-  ExternalLink, 
-  Sparkles, 
-  Trash2, 
-  Plus, 
-  FileCheck, 
-  Maximize2, 
+import {
+  Users,
+  UserPlus,
+  Search,
+  Filter,
+  Activity,
+  FileText,
+  Paperclip,
+  Stethoscope,
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  Heart,
+  ShieldAlert,
+  Upload,
+  Pill,
+  ChevronRight,
+  Calendar,
+  Bed,
+  Building2,
+  Zap,
+  ExternalLink,
+  Sparkles,
+  Trash2,
+  Plus,
+  FileCheck,
+  Maximize2,
   X,
   Droplet,
   Thermometer,
@@ -40,13 +40,13 @@ import {
   Printer,
   ChevronDown
 } from 'lucide-react';
-import { 
-  Patient, 
-  PatientStatus, 
-  TriageUrgency, 
-  PatientAttachment, 
-  DoctorSoapNote, 
-  CabinetItem, 
+import {
+  Patient,
+  PatientStatus,
+  TriageUrgency,
+  PatientAttachment,
+  DoctorSoapNote,
+  CabinetItem,
   UserAccount,
   Medicine
 } from '../types';
@@ -75,7 +75,7 @@ export function PatientManager({
   setActiveTab
 }: PatientManagerProps) {
   const patients = user.patients || [];
-  
+
   // Status filter tab
   const [selectedStatusTab, setSelectedStatusTab] = useState<'Pending' | 'Consulted' | 'Treated' | 'All'>('Pending');
   const [departmentFilter, setDepartmentFilter] = useState<string>('All');
@@ -84,11 +84,11 @@ export function PatientManager({
 
   // EMR Tab Navigation State: 'overview' | 'scans' | 'prescriptions' | 'soap' | 'differential' | 'all'
   const [activeEmrTab, setActiveEmrTab] = useState<'overview' | 'scans' | 'prescriptions' | 'soap' | 'differential' | 'all'>('overview');
-  
+
   // Delete Modals
   const [patientToDelete, setPatientToDelete] = useState<Patient | null>(null);
   const [isClearAllConfirmOpen, setIsClearAllConfirmOpen] = useState<boolean>(false);
-  
+
   // Modals
   const [isAddPatientOpen, setIsAddPatientOpen] = useState<boolean>(false);
   const [isAddAttachmentOpen, setIsAddAttachmentOpen] = useState<boolean>(false);
@@ -146,7 +146,7 @@ export function PatientManager({
   const filteredPatients = patients.filter(p => {
     const matchesStatus = selectedStatusTab === 'All' || p.status === selectedStatusTab;
     const matchesDept = departmentFilter === 'All' || p.department === departmentFilter;
-    const matchesSearch = searchQuery.trim() === '' || 
+    const matchesSearch = searchQuery.trim() === '' ||
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.mrn.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.chiefComplaint.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -296,7 +296,7 @@ export function PatientManager({
           subjective: `Initial admission intake for ${newPatName}. Chief complaint: ${newPatComplaint}`,
           objective: `Initial Vitals: HR ${newPatHR}, BP ${newPatBP}, RR ${newPatRR}, Temp ${newPatTemp}°F, SpO2 ${newPatSpO2}%.`,
           assessment: `Patient triaged as ${newPatTriage} in ${newPatDept}.`,
-          plan: '1. Initiate continuous vital telemetry.\n2. Complete initial clinical workup and laboratory screening.\n3. Clinical review pending.'
+          plan: '1. Initiate continuous vital telemetry.\\n2. Complete initial clinical workup and laboratory screening.\\n3. Clinical review pending.'
         }
       ],
       diagnosticHistory: [],
@@ -408,7 +408,7 @@ export function PatientManager({
 
   // Quick SOAP macro insertion helper
   const insertSoapMacro = (macroText: string) => {
-    setNewSoapPlan(prev => prev ? `${prev}\n• ${macroText}` : `• ${macroText}`);
+    setNewSoapPlan(prev => prev ? `${prev}\\n• ${macroText}` : `• ${macroText}`);
   };
 
   return (
@@ -418,7 +418,7 @@ export function PatientManager({
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-panel-noise rounded-2xl p-5 shadow-sm relative overflow-hidden border-blue-500/30"
+        className="clinical-panel rounded-2xl p-5 shadow-sm relative overflow-hidden border-blue-500/30"
       >
         <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-blue-500/10 to-transparent pointer-events-none" />
         <div className="hud-corner hud-tl"></div>
@@ -472,7 +472,7 @@ export function PatientManager({
 
         {/* 3 Status Filter Tabs + Counter Pills */}
         <div className="mt-6 pt-5 border-t border-blue-500/20 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 bg-slate-950/80 p-1.5 rounded-xl border border-blue-500/30">
+          <div className="flex items-center gap-1.5 clinical-surface-inner p-1.5 rounded-xl border border-blue-500/30">
             {/* PENDING TAB */}
             <button
               onClick={() => setSelectedStatusTab('Pending')}
@@ -575,158 +575,9 @@ export function PatientManager({
         </div>
       </motion.div>
 
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 relative z-10">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-blue-100/80 text-blue-800 border border-blue-200/60">
-                <Building2 className="w-3.5 h-3.5 text-blue-600" />
-                {user.doctorProfile?.hospital || 'Metropolitan General Hospital'}
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-slate-100 text-slate-700">
-                <Stethoscope className="w-3.5 h-3.5 text-slate-500" />
-                {user.doctorProfile?.specialty || 'Internal Medicine & Critical Care'}
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950 flex items-center gap-2">
-              Hospital Clinical EMR & Patient Diagnostics
-              <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                Live B2B Station
-              </span>
-            </h1>
-            <p className="text-sm text-slate-600 mt-1 max-w-2xl">
-              Direct patient intake, high-resolution scans, multi-drug contraindication screenings, and AI differential diagnostics in one unified clinician suite.
-            </p>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsAddPatientOpen(true)}
-              id="btn-admit-patient"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl shadow-sm shadow-blue-500/20 transition-all active:scale-[0.98]"
-            >
-              <UserPlus className="w-4 h-4" />
-              Admit New Patient
-            </button>
-            <button
-              onClick={() => window.print()}
-              title="Print Clinical Summary Report"
-              className="inline-flex items-center gap-1.5 px-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition-all"
-            >
-              <Printer className="w-4 h-4 text-slate-600" />
-              <span className="hidden sm:inline">Export EMR</span>
-            </button>
-          </div>
-        </div>
-
-        {/* 3 Status Filter Tabs + Counter Pills */}
-        <div className="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/60">
-            {/* PENDING TAB */}
-            <button
-              onClick={() => setSelectedStatusTab('Pending')}
-              id="tab-status-pending"
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all relative ${
-                selectedStatusTab === 'Pending'
-                  ? 'bg-amber-500 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-              }`}
-            >
-              <Clock className="w-4 h-4" />
-              <span>Pending Intake</span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                selectedStatusTab === 'Pending' ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-800'
-              }`}>
-                {pendingCount}
-              </span>
-              {pendingCount > 0 && selectedStatusTab !== 'Pending' && (
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping absolute -top-0.5 -right-0.5" />
-              )}
-            </button>
-
-            {/* CONSULTED TAB */}
-            <button
-              onClick={() => setSelectedStatusTab('Consulted')}
-              id="tab-status-consulted"
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
-                selectedStatusTab === 'Consulted'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-              }`}
-            >
-              <Activity className="w-4 h-4" />
-              <span>Consulted / Active</span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                selectedStatusTab === 'Consulted' ? 'bg-blue-700 text-white' : 'bg-blue-100 text-blue-800'
-              }`}>
-                {consultedCount}
-              </span>
-            </button>
-
-            {/* TREATED TAB */}
-            <button
-              onClick={() => setSelectedStatusTab('Treated')}
-              id="tab-status-treated"
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
-                selectedStatusTab === 'Treated'
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-              }`}
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Treated / Discharged</span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                selectedStatusTab === 'Treated' ? 'bg-emerald-700 text-white' : 'bg-emerald-100 text-emerald-800'
-              }`}>
-                {treatedCount}
-              </span>
-            </button>
-
-            {/* ALL TAB */}
-            <button
-              onClick={() => setSelectedStatusTab('All')}
-              id="tab-status-all"
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                selectedStatusTab === 'All'
-                  ? 'bg-slate-800 text-white shadow-sm'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-white/60'
-              }`}
-            >
-              <span>All ({patients.length})</span>
-            </button>
-          </div>
-
-          {/* Quick Search & Department Filter */}
-          <div className="flex items-center gap-2.5 w-full sm:w-auto">
-            <div className="relative flex-1 sm:w-64">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search patient, MRN, room..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-              />
-            </div>
-            <select
-              value={departmentFilter}
-              onChange={(e) => setDepartmentFilter(e.target.value)}
-              className="py-1.5 px-2.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            >
-              <option value="All">All Departments</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Pulmonology">Pulmonology</option>
-              <option value="Emergency & Trauma">Emergency & Trauma</option>
-              <option value="Endocrinology">Endocrinology</option>
-              <option value="Infectious Disease">Infectious Disease</option>
-            </select>
-          </div>
-        </div>
-      </motion.div>
-
       {/* Main 2-Column Clinical Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         {/* Left Column: Patients List / Queue (5 Cols) */}
         <div className="lg:col-span-4 space-y-3">
           <div className="flex items-center justify-between px-1">
@@ -751,15 +602,15 @@ export function PatientManager({
 
           <div className="space-y-2.5 max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
             {filteredPatients.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-8 text-center">
-                <Users className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm font-semibold text-slate-700">No Patients in this status</p>
-                <p className="text-xs text-slate-400 mt-1">
+              <div className="clinical-panel rounded-2xl border border-dashed border-slate-800 p-8 text-center">
+                <Users className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+                <p className="text-sm font-semibold text-slate-300">No Patients in this status</p>
+                <p className="text-xs text-slate-500 mt-1">
                   Adjust your filter or admit a new patient.
                 </p>
                 <button
                   onClick={() => setIsAddPatientOpen(true)}
-                  className="mt-4 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-semibold rounded-lg transition-colors"
+                  className="mt-4 px-3 py-1.5 bg-blue-900/30 text-blue-400 hover:bg-blue-900/50 text-xs font-semibold rounded-lg transition-colors"
                 >
                   + Admit Patient
                 </button>
@@ -779,33 +630,33 @@ export function PatientManager({
                     onClick={() => setSelectedPatientId(pat.id)}
                     className={`p-4 rounded-xl border cursor-pointer transition-all relative ${
                       isSelected
-                        ? 'bg-blue-50/70 border-blue-500 shadow-sm ring-2 ring-blue-500/20'
-                        : 'bg-white/60 backdrop-blur-sm border-slate-200/80 hover:border-slate-300 hover:bg-white/80'
+                        ? 'clinical-panel-active'
+                        : 'clinical-panel hover:border-slate-700'
                     }`}
                   >
                     {/* Header Row */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2">
                         <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs ${
-                          pat.gender === 'Female' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+                          pat.gender === 'Female' ? 'bg-pink-900/40 text-pink-400' : 'bg-blue-900/40 text-blue-400'
                         }`}>
                           {pat.name.split(' ').map(n => n[0]).join('')}
                         </div>
-                        <div>
+                        <div className="clinical-text-sans">
                           <div className="flex items-center gap-1.5">
-                            <h3 className="text-sm font-bold text-slate-900 leading-tight">
+                            <h3 className="text-sm font-bold text-slate-100 leading-tight">
                               {pat.name}
                             </h3>
-                            <span className="text-[11px] font-mono text-slate-400">
+                            <span className="text-[11px] font-mono text-slate-500">
                               {pat.mrn}
                             </span>
                           </div>
-                          <p className="text-[10px] font-bold tracking-wider uppercase text-slate-600 flex items-center gap-1 mt-0.5">
+                          <p className="text-[10px] font-bold tracking-wider uppercase text-slate-400 flex items-center gap-1 mt-0.5">
                             <span>{pat.age}y, {pat.gender}</span>
-                            <span>•</span>
-                            <span className="font-semibold text-slate-700">{pat.bloodType}</span>
-                            <span>•</span>
-                            <span className="text-slate-600">{pat.roomBed}</span>
+                            <span className="text-slate-600">•</span>
+                            <span className="font-semibold text-slate-300">{pat.bloodType}</span>
+                            <span className="text-slate-600">•</span>
+                            <span className="text-slate-400">{pat.roomBed}</span>
                           </p>
                         </div>
                       </div>
@@ -814,10 +665,10 @@ export function PatientManager({
                       <div className="flex items-center gap-1">
                         <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${
                           isCritical
-                            ? 'bg-rose-100 text-rose-700 border border-rose-200'
+                            ? 'bg-rose-900/40 text-rose-400 border border-rose-500/30'
                             : pat.triageLevel === 'Urgent'
-                            ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                            : 'bg-slate-100 text-slate-700 border border-slate-200'
+                            ? 'bg-amber-900/40 text-amber-400 border border-amber-500/30'
+                            : 'bg-slate-800 text-slate-400 border border-slate-700'
                         }`}>
                           {pat.triageLevel}
                         </span>
@@ -828,7 +679,7 @@ export function PatientManager({
                             soundFx.click();
                             setPatientToDelete(pat);
                           }}
-                          className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                          className="p-1 text-slate-500 hover:text-rose-400 hover:bg-rose-900/20 rounded-md transition-colors cursor-pointer"
                           title={`Delete ${pat.name}`}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -837,36 +688,32 @@ export function PatientManager({
                     </div>
 
                     {/* Complaint & Symptoms */}
-                    <p className="text-xs text-slate-600 line-clamp-2 mt-2 bg-slate-50/80 p-2 rounded-lg border border-slate-100">
-                      <span className="font-semibold text-slate-700">Complaint:</span> {pat.chiefComplaint}
+                    <p className="text-xs text-slate-400 line-clamp-2 mt-2 clinical-surface-inner p-2 rounded-lg border border-slate-800">
+                      <span className="font-semibold text-slate-300">Complaint:</span> {pat.chiefComplaint}
                     </p>
 
                     {/* Micro Vitals & Attachments Count */}
-                    <div className="mt-3 flex items-center justify-between text-[10px] font-bold tracking-wider uppercase text-slate-600 pt-2 border-t border-slate-100">
-                      <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-1 font-mono">
+                    <div className="mt-3 flex items-center justify-between text-[10px] font-bold tracking-wider uppercase text-slate-500 pt-2 border-t border-slate-800">
+                      <div className="flex items-center gap-3 font-mono">
+                        <span className="flex items-center gap-1">
                           <Heart className={`w-3.5 h-3.5 ${isCritical ? 'text-rose-500' : 'text-emerald-500'}`} />
                           {pat.vitals.heartRate} bpm
                         </span>
-                        <span className="font-mono">
-                          BP {pat.vitals.bloodPressure}
-                        </span>
-                        <span className="font-mono">
-                          SpO2 {pat.vitals.oxygenSat}%
-                        </span>
+                        <span>BP {pat.vitals.bloodPressure}</span>
+                        <span>SpO2 {pat.vitals.oxygenSat}%</span>
                       </div>
 
                       <div className="flex items-center gap-1.5">
                         {(pat.attachments || []).length > 0 && (
-                          <span className="inline-flex items-center gap-0.5 text-blue-600 font-medium">
+                          <span className="inline-flex items-center gap-0.5 text-blue-400 font-medium">
                             <Paperclip className="w-3 h-3" />
                             {pat.attachments.length}
                           </span>
                         )}
                         <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
-                          pat.status === 'Pending' ? 'bg-amber-100 text-amber-800' :
-                          pat.status === 'Consulted' ? 'bg-blue-100 text-blue-800' :
-                          'bg-emerald-100 text-emerald-800'
+                          pat.status === 'Pending' ? 'bg-amber-900/40 text-amber-400' :
+                          pat.status === 'Consulted' ? 'bg-blue-900/40 text-blue-400' :
+                          'bg-emerald-900/40 text-emerald-400'
                         }`}>
                           {pat.status}
                         </span>
@@ -883,37 +730,37 @@ export function PatientManager({
         <div className="lg:col-span-8">
           {activePatient ? (
             <div className="space-y-6">
-              
+
               {/* Patient Profile & Direct Action Banner */}
-              <motion.div 
+              <motion.div
                 key={activePatient.id}
                 initial={{ opacity: 0, scale: 0.99 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="glass-panel rounded-2xl p-5 shadow-sm space-y-5"
+                className="clinical-panel rounded-2xl p-5 shadow-sm space-y-5"
               >
                 {/* Header Info */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-slate-100">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-slate-800">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-bold text-lg shadow-sm">
                       {activePatient.name.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div>
+                    <div className="clinical-text-sans">
                       <div className="flex items-center gap-2">
-                        <h2 className="text-xl font-extrabold text-slate-900">
+                        <h2 className="text-xl font-extrabold text-slate-100">
                           {activePatient.name}
                         </h2>
-                        <span className="font-mono text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md font-semibold">
+                        <span className="font-mono text-xs px-2 py-0.5 bg-slate-950 text-slate-400 rounded-md font-semibold border border-slate-800">
                           {activePatient.mrn}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 flex flex-wrap items-center gap-2 mt-0.5">
+                      <p className="text-xs text-slate-400 flex flex-wrap items-center gap-2 mt-0.5">
                         <span>{activePatient.age} Years Old ({activePatient.gender})</span>
                         <span>•</span>
-                        <span className="text-slate-700 font-medium">{activePatient.department}</span>
+                        <span className="text-slate-300 font-medium">{activePatient.department}</span>
                         <span>•</span>
-                        <span className="text-blue-600 font-medium">{activePatient.roomBed}</span>
+                        <span className="text-blue-400 font-medium">{activePatient.roomBed}</span>
                         <span>•</span>
-                        <span>Blood: <strong className="text-rose-600">{activePatient.bloodType}</strong></span>
+                        <span>Blood: <strong className="text-rose-500">{activePatient.bloodType}</strong></span>
                       </p>
                     </div>
                   </div>
@@ -921,7 +768,7 @@ export function PatientManager({
                   {/* Status Progression Control & Delete Patient */}
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-slate-500 font-medium">Status:</span>
-                    <div className="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200">
+                    <div className="inline-flex rounded-xl bg-slate-950 p-1 border border-slate-800">
                       {(['Pending', 'Consulted', 'Treated'] as PatientStatus[]).map((statusOption) => (
                         <button
                           key={statusOption}
@@ -931,7 +778,7 @@ export function PatientManager({
                               ? statusOption === 'Pending' ? 'bg-amber-500 text-white shadow-sm' :
                                 statusOption === 'Consulted' ? 'bg-blue-600 text-white shadow-sm' :
                                 'bg-emerald-600 text-white shadow-sm'
-                              : 'text-slate-600 hover:text-slate-900'
+                              : 'text-slate-500 hover:text-slate-100'
                           }`}
                         >
                           {statusOption}
@@ -945,17 +792,17 @@ export function PatientManager({
                         soundFx.click();
                         setPatientToDelete(activePatient);
                       }}
-                      className="px-3 py-1.5 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl border border-rose-900/50 bg-rose-900/20 hover:bg-rose-900/40 text-rose-400 text-xs font-bold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
                       title="Delete Patient Record"
                     >
-                      <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                      <Trash2 className="w-3.5 h-3.5 text-rose-500" />
                       <span>Delete Patient</span>
                     </button>
                   </div>
                 </div>
 
                 {/* EMR Sub-Navigation Tab Bar */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs font-bold">
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-800 text-xs font-bold">
                   {[
                     { id: 'all', label: 'All EMR Sections', icon: Layers },
                     { id: 'overview', label: 'Telemetry & Vitals', icon: Activity },
@@ -976,7 +823,7 @@ export function PatientManager({
                         className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all whitespace-nowrap cursor-pointer ${
                           isActive
                             ? 'bg-blue-600 text-white shadow-xs'
-                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                            : 'text-slate-500 hover:text-slate-100 hover:bg-slate-800'
                         }`}
                       >
                         <Icon className="w-3.5 h-3.5" />
@@ -992,7 +839,7 @@ export function PatientManager({
                         soundFx.click();
                         setPatientToDelete(activePatient);
                       }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 text-rose-400 hover:bg-rose-900/20 border border-rose-900/50 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3 h-3" />
                       <span>Delete Patient</span>
@@ -1042,12 +889,12 @@ export function PatientManager({
                 {(activeEmrTab === 'all' || activeEmrTab === 'overview') && (
                 <div>
                   <div className="flex items-center justify-between mb-2.5">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
                       <Activity className="w-4 h-4 text-rose-500" />
                       Real-Time Vitals & Rhythm Telemetry
                     </span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-slate-400 font-mono">
+                      <span className="text-xs text-slate-500 font-mono">
                         Ward Sensor Hub #08 • Active
                       </span>
                       <button
@@ -1056,7 +903,7 @@ export function PatientManager({
                           soundFx.click();
                           setPatientToDelete(activePatient);
                         }}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-md text-[11px] font-semibold transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 text-rose-400 hover:bg-rose-900/20 border border-rose-900/50 rounded-md text-[11px] font-semibold transition-colors cursor-pointer"
                         title="Delete Patient"
                       >
                         <Trash2 className="w-3 h-3" />
@@ -1068,28 +915,28 @@ export function PatientManager({
                   {/* Vitals 4-Grid + ECG Canvas */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
                     {/* Heart Rate */}
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+                    <div className="clinical-surface-inner border border-slate-800 rounded-xl p-3">
                       <div className="flex items-center justify-between text-xs text-slate-500">
                         <span>Heart Rate</span>
                         <Heart className="w-3.5 h-3.5 text-rose-500 animate-pulse" />
                       </div>
-                      <div className="text-xl font-extrabold text-slate-900 font-mono mt-1">
+                      <div className="text-xl font-extrabold text-slate-100 font-mono mt-1">
                         {activePatient.vitals.heartRate} <span className="text-xs font-normal text-slate-500">bpm</span>
                       </div>
                       <span className={`text-[10px] font-semibold ${
-                        activePatient.vitals.heartRate > 100 ? 'text-rose-600' : 'text-emerald-600'
+                        activePatient.vitals.heartRate > 100 ? 'text-rose-500' : 'text-emerald-500'
                       }`}>
                         {activePatient.vitals.heartRate > 100 ? 'Tachycardia' : 'Normal Sinus'}
                       </span>
                     </div>
 
                     {/* Blood Pressure */}
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+                    <div className="clinical-surface-inner border border-slate-800 rounded-xl p-3">
                       <div className="flex items-center justify-between text-xs text-slate-500">
                         <span>Blood Pressure</span>
                         <Droplet className="w-3.5 h-3.5 text-blue-500" />
                       </div>
-                      <div className="text-xl font-extrabold text-slate-900 font-mono mt-1">
+                      <div className="text-xl font-extrabold text-slate-100 font-mono mt-1">
                         {activePatient.vitals.bloodPressure} <span className="text-xs font-normal text-slate-500">mmHg</span>
                       </div>
                       <span className="text-[10px] text-slate-500">
@@ -1098,31 +945,31 @@ export function PatientManager({
                     </div>
 
                     {/* Oxygen Saturation */}
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+                    <div className="clinical-surface-inner border border-slate-800 rounded-xl p-3">
                       <div className="flex items-center justify-between text-xs text-slate-500">
                         <span>SpO2 Oxygen</span>
                         <Wind className="w-3.5 h-3.5 text-cyan-500" />
                       </div>
-                      <div className="text-xl font-extrabold text-slate-900 font-mono mt-1">
+                      <div className="text-xl font-extrabold text-slate-100 font-mono mt-1">
                         {activePatient.vitals.oxygenSat}%
                       </div>
                       <span className={`text-[10px] font-semibold ${
-                        activePatient.vitals.oxygenSat < 93 ? 'text-rose-600' : 'text-emerald-600'
+                        activePatient.vitals.oxygenSat < 93 ? 'text-rose-500' : 'text-emerald-500'
                       }`}>
                         {activePatient.vitals.oxygenSat < 93 ? 'Hypoxic Flag' : 'Adequate'}
                       </span>
                     </div>
 
                     {/* Temperature & GFR */}
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+                    <div className="clinical-surface-inner border border-slate-800 rounded-xl p-3">
                       <div className="flex items-center justify-between text-xs text-slate-500">
                         <span>Temp / eGFR</span>
                         <Thermometer className="w-3.5 h-3.5 text-amber-500" />
                       </div>
-                      <div className="text-sm font-bold text-slate-900 font-mono mt-1">
+                      <div className="text-sm font-bold text-slate-100 font-mono mt-1">
                         {activePatient.vitals.temperature}°F
                       </div>
-                      <span className="text-[10px] text-slate-600 font-mono">
+                      <span className="text-[10px] text-slate-500 font-mono">
                         eGFR: {activePatient.vitals.gfr} mL/min
                       </span>
                     </div>
@@ -1137,10 +984,10 @@ export function PatientManager({
                       </span>
                       <span>Gain: 10mm/mV • Sweep: 25mm/s</span>
                     </div>
-                    <canvas 
-                      ref={ecgCanvasRef} 
-                      width={640} 
-                      height={90} 
+                    <canvas
+                      ref={ecgCanvasRef}
+                      width={640}
+                      height={90}
                       className="w-full h-[90px] rounded block bg-slate-950"
                     />
                   </div>
@@ -1149,30 +996,30 @@ export function PatientManager({
 
                 {/* Chief Complaint, Symptoms & Allergies */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                  <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
-                    <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1">
+                  <div className="clinical-surface-inner rounded-xl p-3.5 border border-slate-800">
+                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1">
                       Chief Complaint & Presentation
                     </span>
-                    <p className="text-xs text-slate-800 leading-relaxed">
+                    <p className="text-xs text-slate-400 leading-relaxed">
                       {activePatient.chiefComplaint}
                     </p>
                     <div className="mt-2.5 flex flex-wrap gap-1.5">
                       {activePatient.symptoms.map((sym, idx) => (
-                        <span key={idx} className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-white text-slate-700 border border-slate-200">
+                        <span key={idx} className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-900 text-slate-300 border border-slate-800">
                           {sym}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-rose-50/50 rounded-xl p-3.5 border border-rose-200/60">
-                    <span className="text-xs font-bold text-rose-800 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                      <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
+                  <div className="bg-rose-900/20 border border-rose-500/30 rounded-xl p-3.5">
+                    <span className="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                      <ShieldAlert className="w-3.5 h-3.5 text-rose-500" />
                       Known Allergies & Critical Contraindications
                     </span>
                     <div className="space-y-1 mt-2">
                       {activePatient.allergies.map((alg, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-rose-900 font-semibold">
+                        <div key={idx} className="flex items-center gap-2 text-xs text-rose-300 font-semibold">
                           <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                           {alg}
                         </div>
@@ -1184,11 +1031,11 @@ export function PatientManager({
 
               {/* ATTACHMENTS & SCANS VIEWER (Direct Doctor Scans, X-Rays, MRIs, CTs) */}
               {(activeEmrTab === 'all' || activeEmrTab === 'scans') && (
-              <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm space-y-4">
+              <div className="clinical-panel rounded-2xl border border-slate-800 p-5 shadow-sm space-y-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                      <Paperclip className="w-4 h-4 text-blue-600" />
+                  <div className="clinical-text-sans">
+                    <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                      <Paperclip className="w-4 h-4 text-blue-400" />
                       Diagnostic Imaging Scans & Lab Attachments
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -1200,7 +1047,7 @@ export function PatientManager({
                     <button
                       onClick={() => setIsAddAttachmentOpen(true)}
                       id="btn-upload-scan-modal"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-lg border border-blue-200 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-900/30 hover:bg-blue-900/50 text-blue-400 text-xs font-semibold rounded-lg border border-blue-500/30 transition-colors"
                     >
                       <Upload className="w-3.5 h-3.5" />
                       Attach New Scan / Lab
@@ -1211,7 +1058,7 @@ export function PatientManager({
                         soundFx.click();
                         setPatientToDelete(activePatient);
                       }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-rose-400 hover:bg-rose-900/20 border border-rose-900/50 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
                       title="Delete this patient"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -1223,12 +1070,12 @@ export function PatientManager({
                 {/* Attachments Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {(activePatient.attachments || []).length === 0 ? (
-                    <div className="col-span-full py-8 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
-                      <Paperclip className="w-6 h-6 text-slate-300 mx-auto mb-1.5" />
+                    <div className="col-span-full py-8 text-center clinical-surface-inner rounded-xl border border-dashed border-slate-800">
+                      <Paperclip className="w-6 h-6 text-slate-600 mx-auto mb-1.5" />
                       <p className="text-xs text-slate-500 font-medium">No imaging scans attached yet.</p>
                       <button
                         onClick={() => setIsAddAttachmentOpen(true)}
-                        className="mt-2 text-xs text-blue-600 font-semibold hover:underline"
+                        className="mt-2 text-xs text-blue-400 font-semibold hover:underline"
                       >
                         + Upload First Scan
                       </button>
@@ -1237,11 +1084,11 @@ export function PatientManager({
                     activePatient.attachments.map((att) => (
                       <div
                         key={att.id}
-                        className="group bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200/80 p-3 transition-all cursor-pointer relative overflow-hidden"
+                        className="group clinical-surface-inner hover:border-slate-700 rounded-xl border border-slate-800 p-3 transition-all cursor-pointer relative overflow-hidden"
                         onClick={() => setPreviewAttachment(att)}
                       >
                         {/* Thumbnail */}
-                        <div className="relative h-28 w-full rounded-lg overflow-hidden bg-slate-900 mb-2.5">
+                        <div className="relative h-28 w-full rounded-lg overflow-hidden bg-slate-950 mb-2.5">
                           <img
                             src={att.fileUrl}
                             alt={att.title}
@@ -1263,14 +1110,14 @@ export function PatientManager({
                         </div>
 
                         {/* Title & Date */}
-                        <h4 className="text-xs font-bold text-slate-900 truncate">
+                        <h4 className="text-xs font-bold text-slate-100 truncate">
                           {att.title}
                         </h4>
                         <p className="text-[10px] text-slate-500 flex items-center justify-between mt-0.5 font-mono">
                           <span>{att.date}</span>
                           <span>{att.fileSize || '3.2 MB'}</span>
                         </p>
-                        <p className="text-[11px] text-slate-600 line-clamp-2 mt-1.5 italic">
+                        <p className="text-[11px] text-slate-400 line-clamp-2 mt-1.5 italic">
                           "{att.findings}"
                         </p>
                       </div>
@@ -1282,11 +1129,11 @@ export function PatientManager({
 
               {/* ACTIVE PRESCRIPTIONS & PHARMACY FORMULARY */}
               {(activeEmrTab === 'all' || activeEmrTab === 'prescriptions') && (
-              <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm space-y-4">
+              <div className="clinical-panel rounded-2xl border border-slate-800 p-5 shadow-sm space-y-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                      <Pill className="w-4 h-4 text-emerald-600" />
+                  <div className="clinical-text-sans">
+                    <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                      <Pill className="w-4 h-4 text-emerald-400" />
                       Active Inpatient & Discharge Prescriptions
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -1298,7 +1145,7 @@ export function PatientManager({
                     <button
                       onClick={() => setIsPrescribeOpen(true)}
                       id="btn-prescribe-modal"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-lg border border-emerald-200 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-900/30 hover:bg-emerald-900/50 text-emerald-400 text-xs font-semibold rounded-lg border border-emerald-500/30 transition-colors"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       Prescribe Medication
@@ -1309,7 +1156,7 @@ export function PatientManager({
                         soundFx.click();
                         setPatientToDelete(activePatient);
                       }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-rose-400 hover:bg-rose-900/20 border border-rose-900/50 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
                       title="Delete this patient"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -1318,9 +1165,9 @@ export function PatientManager({
                   </div>
                 </div>
 
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-slate-800">
                   {activePatient.prescriptions.length === 0 ? (
-                    <div className="py-6 text-center text-xs text-slate-400">
+                    <div className="py-6 text-center text-xs text-slate-500">
                       No active medications currently ordered for this patient.
                     </div>
                   ) : (
@@ -1330,20 +1177,20 @@ export function PatientManager({
                       return (
                         <div key={rx.id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
+                            <div className="w-8 h-8 rounded-lg bg-emerald-900/30 text-emerald-400 flex items-center justify-center font-bold text-xs">
                               Rx
                             </div>
-                            <div>
+                            <div className="clinical-text-sans">
                               <div className="flex items-center gap-2">
-                                <h4 className="text-xs font-bold text-slate-900">{rx.name}</h4>
-                                <span className="text-[11px] px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded font-mono">
+                                <h4 className="text-xs font-bold text-slate-100">{rx.name}</h4>
+                                <span className="text-[11px] px-1.5 py-0.5 bg-slate-950 text-slate-400 rounded font-mono border border-slate-800">
                                   {rx.dosage}
                                 </span>
-                                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-medium">
+                                <span className="text-[10px] text-emerald-400 bg-emerald-900/30 px-1.5 py-0.5 rounded font-medium border border-emerald-500/30">
                                   {rx.frequency}
                                 </span>
                               </div>
-                              <p className="text-[10px] font-bold tracking-wider uppercase text-slate-600 mt-0.5">
+                              <p className="text-[10px] font-bold tracking-wider uppercase text-slate-500 mt-0.5">
                                 {rx.instructions} • <span className="italic">{rx.prescribedBy || 'Attending MD'}</span>
                               </p>
                             </div>
@@ -1359,7 +1206,7 @@ export function PatientManager({
                                   lastUpdated: 'Just now'
                                 });
                               }}
-                              className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                              className="text-slate-500 hover:text-rose-400 p-1.5 rounded-lg hover:bg-rose-900/20 transition-colors"
                               title="Discontinue Medication"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -1375,11 +1222,11 @@ export function PatientManager({
 
               {/* DOCTOR SOAP CLINICAL PROGRESS NOTES */}
               {(activeEmrTab === 'all' || activeEmrTab === 'soap') && (
-              <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm space-y-4">
+              <div className="clinical-panel rounded-2xl border border-slate-800 p-5 shadow-sm space-y-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-indigo-600" />
+                  <div className="clinical-text-sans">
+                    <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-indigo-400" />
                       Doctor SOAP Clinical Progress Notes
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -1391,7 +1238,7 @@ export function PatientManager({
                     <button
                       onClick={() => setIsWritingSoap(!isWritingSoap)}
                       id="btn-toggle-soap-form"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-200 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-900/30 hover:bg-indigo-900/50 text-indigo-400 text-xs font-semibold rounded-lg border border-indigo-500/30 transition-colors"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       {isWritingSoap ? 'Cancel Note' : 'Write Progress Note'}
@@ -1402,7 +1249,7 @@ export function PatientManager({
                         soundFx.click();
                         setPatientToDelete(activePatient);
                       }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-rose-400 hover:bg-rose-900/20 border border-rose-900/50 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
                       title="Delete this patient"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -1419,30 +1266,30 @@ export function PatientManager({
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       onSubmit={handleAddSoapNote}
-                      className="bg-indigo-50/40 rounded-xl border border-indigo-200/70 p-4 space-y-3"
+                      className="bg-indigo-900/20 rounded-xl border border-indigo-500/30 p-4 space-y-3"
                     >
-                      <div className="flex items-center justify-between text-xs font-bold text-indigo-900">
+                      <div className="flex items-center justify-between text-xs font-bold text-indigo-300">
                         <span>New SOAP Note Entry</span>
                         <div className="flex items-center gap-1">
-                          <span className="text-[10px] text-indigo-600 font-normal">Quick Macros:</span>
-                          <button 
-                            type="button" 
+                          <span className="text-[10px] text-indigo-400 font-normal">Quick Macros:</span>
+                          <button
+                            type="button"
                             onClick={() => insertSoapMacro('Renal dose adjustment verified.')}
-                            className="px-2 py-0.5 bg-white text-indigo-700 rounded text-[10px] border border-indigo-200 hover:bg-indigo-50"
+                            className="px-2 py-0.5 bg-slate-900 text-indigo-300 rounded text-[10px] border border-indigo-500/30 hover:bg-slate-800"
                           >
                             + Renal Adj.
                           </button>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             onClick={() => insertSoapMacro('Follow-up CT Angiogram ordered.')}
-                            className="px-2 py-0.5 bg-white text-indigo-700 rounded text-[10px] border border-indigo-200 hover:bg-indigo-50"
+                            className="px-2 py-0.5 bg-slate-900 text-indigo-300 rounded text-[10px] border border-indigo-500/30 hover:bg-slate-800"
                           >
                             + Order CT
                           </button>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             onClick={() => insertSoapMacro('Discharge planning with 48h outpatient review.')}
-                            className="px-2 py-0.5 bg-white text-indigo-700 rounded text-[10px] border border-indigo-200 hover:bg-indigo-50"
+                            className="px-2 py-0.5 bg-slate-900 text-indigo-300 rounded text-[10px] border border-indigo-500/30 hover:bg-slate-800"
                           >
                             + Discharge Plan
                           </button>
@@ -1451,7 +1298,7 @@ export function PatientManager({
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
                             (S) Subjective - Patient Symptoms & History
                           </label>
                           <textarea
@@ -1459,11 +1306,11 @@ export function PatientManager({
                             value={newSoapSubjective}
                             onChange={(e) => setNewSoapSubjective(e.target.value)}
                             placeholder="Patient states pain is improved, denies nausea or dizziness..."
-                            className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white focus:ring-2 focus:ring-indigo-500/20"
+                            className="w-full text-xs p-2.5 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 focus:ring-2 focus:ring-indigo-500/20"
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
                             (O) Objective - Physical Exam & Lab Findings
                           </label>
                           <textarea
@@ -1471,11 +1318,11 @@ export function PatientManager({
                             value={newSoapObjective}
                             onChange={(e) => setNewSoapObjective(e.target.value)}
                             placeholder={`HR ${activePatient.vitals.heartRate}, BP ${activePatient.vitals.bloodPressure}, SpO2 ${activePatient.vitals.oxygenSat}%...`}
-                            className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white focus:ring-2 focus:ring-indigo-500/20"
+                            className="w-full text-xs p-2.5 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 focus:ring-2 focus:ring-indigo-500/20"
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
                             (A) Assessment - Clinical Diagnostic Impression
                           </label>
                           <textarea
@@ -1483,19 +1330,19 @@ export function PatientManager({
                             value={newSoapAssessment}
                             onChange={(e) => setNewSoapAssessment(e.target.value)}
                             placeholder="Primary clinical assessment and differential ranking..."
-                            className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white focus:ring-2 focus:ring-indigo-500/20"
+                            className="w-full text-xs p-2.5 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 focus:ring-2 focus:ring-indigo-500/20"
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
                             (P) Plan - Interventions, Meds, & Follow-up
                           </label>
                           <textarea
                             rows={2}
                             value={newSoapPlan}
                             onChange={(e) => setNewSoapPlan(e.target.value)}
-                            placeholder="1. Continue therapy\n2. Repeat labs in AM..."
-                            className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white focus:ring-2 focus:ring-indigo-500/20"
+                            placeholder="1. Continue therapy\\n2. Repeat labs in AM..."
+                            className="w-full text-xs p-2.5 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 focus:ring-2 focus:ring-indigo-500/20"
                           />
                         </div>
                       </div>
@@ -1504,7 +1351,7 @@ export function PatientManager({
                         <button
                           type="button"
                           onClick={() => setIsWritingSoap(false)}
-                          className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900"
+                          className="px-3 py-1.5 text-xs text-slate-400 hover:text-slate-100"
                         >
                           Cancel
                         </button>
@@ -1522,30 +1369,30 @@ export function PatientManager({
                 {/* Progress Notes Timeline */}
                 <div className="space-y-3">
                   {(activePatient.doctorNotes || []).map((note) => (
-                    <div key={note.id} className="bg-slate-50/80 rounded-xl border border-slate-200/70 p-4 space-y-2">
-                      <div className="flex items-center justify-between text-xs text-slate-500 pb-2 border-b border-slate-200/50">
-                        <span className="font-bold text-slate-900 flex items-center gap-1.5">
-                          <Stethoscope className="w-3.5 h-3.5 text-blue-600" />
+                    <div key={note.id} className="clinical-surface-inner rounded-xl border border-slate-800 p-4 space-y-2">
+                      <div className="flex items-center justify-between text-xs text-slate-500 pb-2 border-b border-slate-800/50">
+                        <span className="font-bold text-slate-300 flex items-center gap-1.5">
+                          <Stethoscope className="w-3.5 h-3.5 text-blue-400" />
                           {note.author}
                         </span>
                         <span className="font-mono">{note.date}</span>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-700">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-400">
                         <div>
-                          <strong className="text-slate-900 block font-semibold">Subjective:</strong>
+                          <strong className="text-slate-300 block font-semibold">Subjective:</strong>
                           <p className="mt-0.5">{note.subjective}</p>
                         </div>
                         <div>
-                          <strong className="text-slate-900 block font-semibold">Objective:</strong>
+                          <strong className="text-slate-300 block font-semibold">Objective:</strong>
                           <p className="mt-0.5">{note.objective}</p>
                         </div>
                         <div>
-                          <strong className="text-slate-900 block font-semibold">Assessment:</strong>
-                          <p className="mt-0.5 text-blue-950 font-medium">{note.assessment}</p>
+                          <strong className="text-slate-300 block font-semibold">Assessment:</strong>
+                          <p className="mt-0.5 text-blue-400 font-medium">{note.assessment}</p>
                         </div>
                         <div>
-                          <strong className="text-slate-900 block font-semibold">Plan:</strong>
+                          <strong className="text-slate-300 block font-semibold">Plan:</strong>
                           <p className="mt-0.5 whitespace-pre-line">{note.plan}</p>
                         </div>
                       </div>
@@ -1556,13 +1403,13 @@ export function PatientManager({
               )}
 
               {/* DANGER ZONE: PATIENT DELETION / DISCHARGE CARD */}
-              <div className="bg-rose-50/60 rounded-2xl border border-rose-200 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="bg-rose-900/20 border border-rose-500/30 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h4 className="text-xs font-bold text-rose-900 flex items-center gap-1.5">
-                    <Trash2 className="w-4 h-4 text-rose-600" />
+                  <h4 className="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+                    <Trash2 className="w-4 h-4 text-rose-500" />
                     Discharge & Permanent EMR Deletion
                   </h4>
-                  <p className="text-[11px] text-rose-700 mt-0.5">
+                  <p className="text-[11px] text-rose-300/80 mt-0.5">
                     Permanently discharge {activePatient.name} and remove all vitals, prescription orders, and radiology scans from the hospital record.
                   </p>
                 </div>
@@ -1578,18 +1425,17 @@ export function PatientManager({
                   <span>Delete Patient Record</span>
                 </button>
               </div>
-
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-12 text-center shadow-xs">
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-4">
+            <div className="clinical-panel rounded-2xl border border-slate-800 p-12 text-center shadow-xs">
+              <div className="w-14 h-14 rounded-2xl bg-blue-900/30 text-blue-400 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">
+              <h3 className="text-base font-bold text-slate-100">
                 {patients.length === 0 ? 'No Patients in Ward Queue' : 'Select a Patient to View EMR'}
               </h3>
               <p className="text-xs text-slate-500 mt-1.5 max-w-sm mx-auto leading-relaxed">
-                {patients.length === 0 
+                {patients.length === 0
                   ? 'Your clinical patient list is currently clean. Admit a new patient to track live vitals, attached radiology scans, and initiate AI diagnostics.'
                   : 'Choose a patient from the ward triage list on the left to inspect live vitals, attached radiology scans, and initiate AI diagnostics.'
                 }
@@ -1606,27 +1452,26 @@ export function PatientManager({
             </div>
           )}
         </div>
-
       </div>
 
       {/* MODAL 1: ADMIT NEW PATIENT */}
       <AnimatePresence>
         {isAddPatientOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-slate-200"
+              className="clinical-panel rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-slate-800"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                 <div className="flex items-center gap-2">
-                  <UserPlus className="w-5 h-5 text-blue-600" />
-                  <h3 className="text-lg font-bold text-slate-900">Hospital Patient Admission Intake</h3>
+                  <UserPlus className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-lg font-bold text-slate-100">Hospital Patient Admission Intake</h3>
                 </div>
                 <button
                   onClick={() => setIsAddPatientOpen(false)}
-                  className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+                  className="text-slate-500 hover:text-slate-300 p-1 rounded-lg"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -1635,29 +1480,29 @@ export function PatientManager({
               <form onSubmit={handleSubmitNewPatient} className="space-y-4 mt-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Patient Full Name *</label>
+                    <label className="block font-bold text-slate-300 mb-1">Patient Full Name *</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Jonathan Hayes"
                       value={newPatName}
                       onChange={(e) => setNewPatName(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500/20"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 focus:ring-2 focus:ring-blue-500/20"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Age & Gender</label>
+                    <label className="block font-bold text-slate-300 mb-1">Age & Gender</label>
                     <div className="flex gap-2">
                       <input
                         type="number"
                         value={newPatAge}
                         onChange={(e) => setNewPatAge(Number(e.target.value))}
-                        className="w-20 p-2 rounded-lg border border-slate-200"
+                        className="w-20 p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                       />
                       <select
                         value={newPatGender}
                         onChange={(e) => setNewPatGender(e.target.value as any)}
-                        className="flex-1 p-2 rounded-lg border border-slate-200"
+                        className="flex-1 p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                       >
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -1666,23 +1511,23 @@ export function PatientManager({
                     </div>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Medical Record # (MRN)</label>
+                    <label className="block font-bold text-slate-300 mb-1">Medical Record # (MRN)</label>
                     <input
                       type="text"
                       value={newPatMrn}
                       onChange={(e) => setNewPatMrn(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200 font-mono"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 font-mono"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Clinical Department</label>
+                    <label className="block font-bold text-slate-300 mb-1">Clinical Department</label>
                     <select
                       value={newPatDept}
                       onChange={(e) => setNewPatDept(e.target.value as any)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="Cardiology">Cardiology</option>
                       <option value="Pulmonology">Pulmonology</option>
@@ -1695,20 +1540,20 @@ export function PatientManager({
                     </select>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Room / Bed Assignment</label>
+                    <label className="block font-bold text-slate-300 mb-1">Room / Bed Assignment</label>
                     <input
                       type="text"
                       value={newPatRoom}
                       onChange={(e) => setNewPatRoom(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Blood Type</label>
+                    <label className="block font-bold text-slate-300 mb-1">Blood Type</label>
                     <select
                       value={newPatBlood}
                       onChange={(e) => setNewPatBlood(e.target.value as any)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="O+">O+</option>
                       <option value="O-">O-</option>
@@ -1724,11 +1569,11 @@ export function PatientManager({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Initial Status</label>
+                    <label className="block font-bold text-slate-300 mb-1">Initial Status</label>
                     <select
                       value={newPatStatus}
                       onChange={(e) => setNewPatStatus(e.target.value as any)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="Pending">Pending Intake</option>
                       <option value="Consulted">Consulted / Active</option>
@@ -1736,11 +1581,11 @@ export function PatientManager({
                     </select>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Triage Urgency</label>
+                    <label className="block font-bold text-slate-300 mb-1">Triage Urgency</label>
                     <select
                       value={newPatTriage}
                       onChange={(e) => setNewPatTriage(e.target.value as any)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="Critical">Critical (Immediate)</option>
                       <option value="Urgent">Urgent (Within 1h)</option>
@@ -1751,43 +1596,43 @@ export function PatientManager({
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Chief Complaint *</label>
+                  <label className="block font-bold text-slate-300 mb-1">Chief Complaint *</label>
                   <textarea
                     rows={2}
                     required
                     placeholder="Describe presentation reason..."
                     value={newPatComplaint}
                     onChange={(e) => setNewPatComplaint(e.target.value)}
-                    className="w-full p-2 rounded-lg border border-slate-200"
+                    className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Symptoms (Comma Separated)</label>
+                    <label className="block font-bold text-slate-300 mb-1">Symptoms (Comma Separated)</label>
                     <input
                       type="text"
                       placeholder="Chest pain, Shortness of breath, Cough"
                       value={newPatSymptoms}
                       onChange={(e) => setNewPatSymptoms(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Known Drug Allergies</label>
+                    <label className="block font-bold text-slate-300 mb-1">Known Drug Allergies</label>
                     <input
                       type="text"
                       placeholder="Penicillin, Sulfa, NKDA"
                       value={newPatAllergies}
                       onChange={(e) => setNewPatAllergies(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     />
                   </div>
                 </div>
 
                 {/* Vitals Baseline */}
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <span className="block font-bold text-slate-800 mb-2">Baseline Triage Vitals</span>
+                <div className="clinical-surface-inner p-3 rounded-xl border border-slate-800">
+                  <span className="block font-bold text-slate-100 mb-2">Baseline Triage Vitals</span>
                   <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                     <div>
                       <span className="text-[10px] text-slate-500 block">HR (bpm)</span>
@@ -1795,7 +1640,7 @@ export function PatientManager({
                         type="number"
                         value={newPatHR}
                         onChange={(e) => setNewPatHR(Number(e.target.value))}
-                        className="w-full p-1.5 rounded border border-slate-200 bg-white"
+                        className="w-full p-1.5 rounded border border-slate-800 bg-slate-950 text-slate-100"
                       />
                     </div>
                     <div>
@@ -1804,7 +1649,7 @@ export function PatientManager({
                         type="text"
                         value={newPatBP}
                         onChange={(e) => setNewPatBP(e.target.value)}
-                        className="w-full p-1.5 rounded border border-slate-200 bg-white"
+                        className="w-full p-1.5 rounded border border-slate-800 bg-slate-950 text-slate-100"
                       />
                     </div>
                     <div>
@@ -1813,7 +1658,7 @@ export function PatientManager({
                         type="number"
                         value={newPatRR}
                         onChange={(e) => setNewPatRR(Number(e.target.value))}
-                        className="w-full p-1.5 rounded border border-slate-200 bg-white"
+                        className="w-full p-1.5 rounded border border-slate-800 bg-slate-950 text-slate-100"
                       />
                     </div>
                     <div>
@@ -1823,7 +1668,7 @@ export function PatientManager({
                         step="0.1"
                         value={newPatTemp}
                         onChange={(e) => setNewPatTemp(Number(e.target.value))}
-                        className="w-full p-1.5 rounded border border-slate-200 bg-white"
+                        className="w-full p-1.5 rounded border border-slate-800 bg-slate-950 text-slate-100"
                       />
                     </div>
                     <div>
@@ -1832,7 +1677,7 @@ export function PatientManager({
                         type="number"
                         value={newPatSpO2}
                         onChange={(e) => setNewPatSpO2(Number(e.target.value))}
-                        className="w-full p-1.5 rounded border border-slate-200 bg-white"
+                        className="w-full p-1.5 rounded border border-slate-800 bg-slate-950 text-slate-100"
                       />
                     </div>
                     <div>
@@ -1841,17 +1686,17 @@ export function PatientManager({
                         type="number"
                         value={newPatGfr}
                         onChange={(e) => setNewPatGfr(Number(e.target.value))}
-                        className="w-full p-1.5 rounded border border-slate-200 bg-white"
+                        className="w-full p-1.5 rounded border border-slate-800 bg-slate-950 text-slate-100"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
                   <button
                     type="button"
                     onClick={() => setIsAddPatientOpen(false)}
-                    className="px-4 py-2 text-slate-600 hover:text-slate-800"
+                    className="px-4 py-2 text-slate-400 hover:text-slate-100"
                   >
                     Cancel
                   </button>
@@ -1871,21 +1716,21 @@ export function PatientManager({
       {/* MODAL 2: ATTACH NEW SCAN / LAB */}
       <AnimatePresence>
         {isAddAttachmentOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200"
+              className="clinical-panel rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-800"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                 <div className="flex items-center gap-2">
-                  <Upload className="w-5 h-5 text-blue-600" />
-                  <h3 className="text-base font-bold text-slate-900">Attach Radiology / Pathology Scan</h3>
+                  <Upload className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-base font-bold text-slate-100">Attach Radiology / Pathology Scan</h3>
                 </div>
                 <button
                   onClick={() => setIsAddAttachmentOpen(false)}
-                  className="text-slate-400 hover:text-slate-600"
+                  className="text-slate-500 hover:text-slate-300"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -1893,24 +1738,24 @@ export function PatientManager({
 
               <form onSubmit={handleAddAttachment} className="space-y-3.5 mt-4 text-xs">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Scan Title / Study Name *</label>
+                  <label className="block font-bold text-slate-300 mb-1">Scan Title / Study Name *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Axial Brain MRI (T1/T2 Flair)"
                     value={newAttTitle}
                     onChange={(e) => setNewAttTitle(e.target.value)}
-                    className="w-full p-2 rounded-lg border border-slate-200"
+                    className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Category</label>
+                    <label className="block font-bold text-slate-300 mb-1">Category</label>
                     <select
                       value={newAttCategory}
                       onChange={(e) => setNewAttCategory(e.target.value as any)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="CT Scan">CT Scan</option>
                       <option value="MRI Scan">MRI Scan</option>
@@ -1921,11 +1766,11 @@ export function PatientManager({
                     </select>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Clinical Urgency</label>
+                    <label className="block font-bold text-slate-300 mb-1">Clinical Urgency</label>
                     <select
                       value={newAttUrgency}
                       onChange={(e) => setNewAttUrgency(e.target.value as any)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="Critical Flag">Critical Flag</option>
                       <option value="Abnormal">Abnormal Finding</option>
@@ -1935,31 +1780,31 @@ export function PatientManager({
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Imaging System / Modality</label>
+                  <label className="block font-bold text-slate-300 mb-1">Imaging System / Modality</label>
                   <input
                     type="text"
                     value={newAttModality}
                     onChange={(e) => setNewAttModality(e.target.value)}
-                    className="w-full p-2 rounded-lg border border-slate-200"
+                    className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Radiologist / Lab Findings Summary</label>
+                  <label className="block font-bold text-slate-300 mb-1">Radiologist / Lab Findings Summary</label>
                   <textarea
                     rows={3}
                     placeholder="Document anatomical observations, lesions, density changes..."
                     value={newAttFindings}
                     onChange={(e) => setNewAttFindings(e.target.value)}
-                    className="w-full p-2 rounded-lg border border-slate-200"
+                    className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
                   <button
                     type="button"
                     onClick={() => setIsAddAttachmentOpen(false)}
-                    className="px-3 py-1.5 text-slate-600"
+                    className="px-3 py-1.5 text-slate-400"
                   >
                     Cancel
                   </button>
@@ -1979,21 +1824,21 @@ export function PatientManager({
       {/* MODAL 3: PRESCRIBE MEDICATION */}
       <AnimatePresence>
         {isPrescribeOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200"
+              className="clinical-panel rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-800"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                 <div className="flex items-center gap-2">
-                  <Pill className="w-5 h-5 text-emerald-600" />
-                  <h3 className="text-base font-bold text-slate-900">Hospital Formulary Prescription Order</h3>
+                  <Pill className="w-5 h-5 text-emerald-400" />
+                  <h3 className="text-base font-bold text-slate-100">Hospital Formulary Prescription Order</h3>
                 </div>
                 <button
                   onClick={() => setIsPrescribeOpen(false)}
-                  className="text-slate-400 hover:text-slate-600"
+                  className="text-slate-500 hover:text-slate-300"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -2001,7 +1846,7 @@ export function PatientManager({
 
               <form onSubmit={handlePrescribeMedicine} className="space-y-3.5 mt-4 text-xs">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Select Medicine from Hospital Formulary</label>
+                  <label className="block font-bold text-slate-300 mb-1">Select Medicine from Hospital Formulary</label>
                   <select
                     value={selectedMedIdToPrescribe}
                     onChange={(e) => {
@@ -2011,7 +1856,7 @@ export function PatientManager({
                         setPrescribeDosage(m.dosage.split('(')[0].trim());
                       }
                     }}
-                    className="w-full p-2 rounded-lg border border-slate-200 font-semibold"
+                    className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 font-semibold"
                   >
                     {MEDICINES.map((med) => (
                       <option key={med.id} value={med.id}>
@@ -2023,20 +1868,20 @@ export function PatientManager({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Dosage</label>
+                    <label className="block font-bold text-slate-300 mb-1">Dosage</label>
                     <input
                       type="text"
                       value={prescribeDosage}
                       onChange={(e) => setPrescribeDosage(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200 font-mono"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100 font-mono"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Frequency</label>
+                    <label className="block font-bold text-slate-300 mb-1">Frequency</label>
                     <select
                       value={prescribeFrequency}
                       onChange={(e) => setPrescribeFrequency(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-200"
+                      className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                     >
                       <option value="Daily">Once Daily</option>
                       <option value="2x Daily">Twice Daily (BID)</option>
@@ -2048,20 +1893,20 @@ export function PatientManager({
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Clinical Administration Instructions</label>
+                  <label className="block font-bold text-slate-300 mb-1">Clinical Administration Instructions</label>
                   <textarea
                     rows={2}
                     value={prescribeInstructions}
                     onChange={(e) => setPrescribeInstructions(e.target.value)}
-                    className="w-full p-2 rounded-lg border border-slate-200"
+                    className="w-full p-2 rounded-lg border border-slate-800 bg-slate-950 text-slate-100"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
                   <button
                     type="button"
                     onClick={() => setIsPrescribeOpen(false)}
-                    className="px-3 py-1.5 text-slate-600"
+                    className="px-3 py-1.5 text-slate-400"
                   >
                     Cancel
                   </button>
@@ -2081,7 +1926,7 @@ export function PatientManager({
       {/* MODAL 4: SCAN LIGHTBOX PREVIEW */}
       <AnimatePresence>
         {previewAttachment && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -2128,27 +1973,27 @@ export function PatientManager({
       {/* MODAL 5: DELETE PATIENT CONFIRMATION */}
       <AnimatePresence>
         {patientToDelete && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4"
+              className="clinical-panel rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-800 space-y-4"
             >
-              <div className="flex items-center gap-3 text-rose-600">
-                <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+              <div className="flex items-center gap-3 text-rose-400">
+                <div className="w-10 h-10 rounded-xl bg-rose-900/30 flex items-center justify-center">
                   <Trash2 className="w-5 h-5" />
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">Confirm Patient Deletion</h3>
-                  <p className="text-xs text-slate-500">Permanent EMR Discharge & Purge</p>
+                <div className="clinical-text-sans">
+                  <h3 className="text-base font-bold text-slate-100">Confirm Patient Deletion</h3>
+                  <p className="text-xs text-slate-400">Permanent EMR Discharge & Purge</p>
                 </div>
               </div>
 
-              <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 text-xs space-y-1.5">
-                <div className="font-bold text-slate-800">{patientToDelete.name}</div>
-                <div className="text-slate-500 font-mono text-[11px]">MRN: {patientToDelete.mrn} • Room: {patientToDelete.roomBed}</div>
-                <div className="text-slate-600 text-[11px]">
+              <div className="clinical-surface-inner rounded-xl p-3.5 border border-slate-800 text-xs space-y-1.5">
+                <div className="font-bold text-slate-100">{patientToDelete.name}</div>
+                <div className="text-slate-400 font-mono text-[11px]">MRN: {patientToDelete.mrn} • Room: {patientToDelete.roomBed}</div>
+                <div className="text-slate-500 text-[11px]">
                   This will permanently delete this patient from the ward queue and database, including all vitals telemetry, {patientToDelete.prescriptions.length} prescriptions, and {patientToDelete.attachments?.length || 0} attached radiology scans.
                 </div>
               </div>
@@ -2157,7 +2002,7 @@ export function PatientManager({
                 <button
                   type="button"
                   onClick={() => setPatientToDelete(null)}
-                  className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-slate-100 rounded-xl transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -2182,24 +2027,24 @@ export function PatientManager({
       {/* MODAL 6: CLEAR ALL PATIENTS CONFIRMATION */}
       <AnimatePresence>
         {isClearAllConfirmOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4"
+              className="clinical-panel rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-800 space-y-4"
             >
-              <div className="flex items-center gap-3 text-rose-600">
-                <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+              <div className="flex items-center gap-3 text-rose-400">
+                <div className="w-10 h-10 rounded-xl bg-rose-900/30 flex items-center justify-center">
                   <Trash2 className="w-5 h-5" />
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">Clear All Patients</h3>
-                  <p className="text-xs text-slate-500">Reset ward queue to 0 patients</p>
+                <div className="clinical-text-sans">
+                  <h3 className="text-base font-bold text-slate-100">Clear All Patients</h3>
+                  <p className="text-xs text-slate-400">Reset ward queue to 0 patients</p>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-slate-400">
                 Are you sure you want to remove all {patients.length} patients currently in the clinical queue? All patient records will be permanently removed from your session and Firestore database.
               </p>
 
@@ -2207,7 +2052,7 @@ export function PatientManager({
                 <button
                   type="button"
                   onClick={() => setIsClearAllConfirmOpen(false)}
-                  className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-slate-100 rounded-xl transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

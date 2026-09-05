@@ -263,7 +263,7 @@ export const ThreeBiometricRings: React.FC<ThreeBiometricRingsProps> = ({
       </div>
 
       {/* Metric Selector Tabs Bottom */}
-      <div className="absolute bottom-2.5 inset-x-3 z-10 flex items-center justify-between gap-1 bg-slate-900/85 p-1 rounded-xl border border-slate-800/80">
+      <div className="absolute bottom-2.5 inset-x-3 z-10 flex items-center justify-between gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800/80">
         {metricsData.map((m, idx) => {
           const Icon = m.icon;
           const isSelected = activeMetric === idx;

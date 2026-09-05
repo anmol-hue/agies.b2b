@@ -237,7 +237,7 @@ export const ThreeCabinetDispenser: React.FC<ThreeCabinetDispenserProps> = ({
 
       {/* Top Overlay */}
       <div className="absolute top-3 inset-x-3 pointer-events-none flex items-center justify-between">
-        <div className="flex items-center gap-2 bg-slate-900/85 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
           <Briefcase className="w-3.5 h-3.5 text-blue-400" />
           <span className="font-extrabold font-mono uppercase tracking-wider text-slate-200">
             3D Smart Pharmaceutical Bottle
@@ -249,7 +249,7 @@ export const ThreeCabinetDispenser: React.FC<ThreeCabinetDispenserProps> = ({
             soundFx.click();
             setIsRotating(!isRotating);
           }}
-          className="pointer-events-auto p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
+          className="pointer-events-auto p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
           title="Toggle 360° Rotation"
         >
           <RotateCw className={`w-3.5 h-3.5 ${isRotating ? 'animate-spin' : ''}`} />
@@ -257,7 +257,7 @@ export const ThreeCabinetDispenser: React.FC<ThreeCabinetDispenserProps> = ({
       </div>
 
       {/* Bottom Adherence Banner */}
-      <div className="absolute bottom-3 inset-x-3 pointer-events-none flex items-center justify-between bg-slate-900/85 px-3 py-2 rounded-xl border border-slate-800 text-xs">
+      <div className="absolute bottom-3 inset-x-3 pointer-events-none flex items-center justify-between bg-slate-900 px-3 py-2 rounded-xl border border-slate-800 text-xs">
         <div className="flex items-center gap-2">
           <Trophy className="w-4 h-4 text-emerald-400" />
           <span className="font-semibold text-slate-300">

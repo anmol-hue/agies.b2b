@@ -389,7 +389,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
           >
             <History className="w-3.5 h-3.5" />
             <span>Scans Archive</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-blue-900/40 text-blue-300 text-[10px] font-mono border border-blue-500/30">
+            <span className="px-1.5 py-0.2 rounded-full bg-slate-900 text-blue-300 text-[10px] font-mono border border-blue-500/30">
               {savedScans.length}
             </span>
           </button>
@@ -473,7 +473,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             >
               <span className="flex items-center gap-1.5">
                 <span>AI DERMAL & TISSUE SCAN</span>
-                <span className="px-1.5 py-0.5 rounded text-[9px] bg-blue-900/40 text-blue-300 font-mono border border-blue-500/30">VISION 2.0</span>
+                <span className="px-1.5 py-0.5 rounded text-[9px] bg-slate-900 text-blue-300 font-mono border border-blue-500/30">VISION 2.0</span>
               </span>
               {activeSubTab === 'skin' && (
                 <motion.div layoutId="scannertab-active" className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full" />
@@ -588,7 +588,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
                         <button
                           onClick={handleRemoveAttachedFile}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-900/20 cursor-pointer transition-colors"
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-slate-900 cursor-pointer transition-colors"
                           title="Remove attachment"
                         >
                           <X className="w-4 h-4" />
@@ -614,7 +614,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                         soundFx.click();
                         docInputRef.current?.click();
                       }}
-                      className="rounded-2xl border-2 border-dashed border-slate-800 hover:border-blue-500 hover:bg-blue-600/10 p-5 text-center space-y-2 cursor-pointer transition-all group"
+                      className="rounded-2xl border-2 border-dashed border-slate-800 hover:border-blue-500 hover:bg-slate-900 p-5 text-center space-y-2 cursor-pointer transition-all group"
                     >
                       <div className="w-10 h-10 rounded-xl bg-slate-900 text-blue-400 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform border border-slate-800">
                         <Upload className="w-5 h-5" />
@@ -760,7 +760,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                         {result.primaryHypothesis}
                       </h2>
                       {result.icd10Code && (
-                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-900/40 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold shadow-xs">
+                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-900 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold shadow-xs">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                           <span>ICD-10-CM: {result.icd10Code}</span>
                         </div>
@@ -863,7 +863,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="p-4 rounded-2xl bg-blue-900/30 border border-blue-500/30 space-y-1.5">
+                        <div className="p-4 rounded-2xl bg-slate-900 border border-blue-500/30 space-y-1.5">
                           <span className="text-[11px] font-bold text-blue-300 font-mono uppercase tracking-wider block">
                             First-Line Regimen
                           </span>
@@ -872,7 +872,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                           </p>
                         </div>
 
-                        <div className="p-4 rounded-2xl bg-amber-900/30 border border-amber-500/30 space-y-1.5">
+                        <div className="p-4 rounded-2xl bg-slate-900 border border-amber-500/30 space-y-1.5">
                           <span className="text-[11px] font-bold text-amber-300 font-mono uppercase tracking-wider block">
                             Alternative Regimen (Allergy / Intolerance)
                           </span>
@@ -883,7 +883,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </div>
 
                       {result.pharmacotherapy?.contraindications && result.pharmacotherapy.contraindications.length > 0 && (
-                        <div className="p-3.5 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-1">
+                        <div className="p-3.5 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-1">
                           <span className="text-[11px] font-bold text-rose-300 font-mono uppercase tracking-wider block">
                             Contraindications & Safety Screening
                           </span>
@@ -995,7 +995,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                           >
                             <div className="flex items-center justify-between">
                               <div className="font-bold text-sm text-slate-100">{diff.condition}</div>
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-900/50 px-2 py-0.5 rounded-md border border-blue-500/30">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-slate-900 px-2 py-0.5 rounded-md border border-blue-500/30">
                                 {diff.urgency}
                               </span>
                             </div>
@@ -1016,7 +1016,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
                     {/* Warning Signs Box */}
                     {result.warningSigns && result.warningSigns.length > 0 && (
-                      <div className="p-4 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-2 text-xs text-rose-200">
+                      <div className="p-4 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-2 text-xs text-rose-200">
                         <div className="font-extrabold uppercase tracking-wider text-[11px] text-rose-400 flex items-center gap-1.5">
                           <ShieldAlert className="w-4 h-4" />
                           <span>Emergency Warning Signs (Seek Urgent Care If Present)</span>
@@ -1097,7 +1097,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                         <Calendar className="w-3 h-3" />
                         {new Date(scan.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-blue-900/40 text-blue-300 font-mono border border-blue-500/30">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-slate-900 text-blue-300 font-mono border border-blue-500/30">
                         {scan.confidence}% Match
                       </span>
                     </div>
@@ -1122,7 +1122,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </span>
                       <button
                         onClick={(e) => handleDeleteScan(scan.id, e)}
-                        className="text-slate-500 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-900/20 transition-colors"
+                        className="text-slate-500 hover:text-rose-600 p-1.5 rounded-lg hover:bg-slate-900 transition-colors"
                         title="Delete record from Cloud"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -1139,7 +1139,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       {/* Archive Modal Inspection Dialog */}
       <AnimatePresence>
         {selectedArchiveScan && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -1155,7 +1155,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-md bg-blue-900/40 text-blue-300 text-[10px] font-mono font-bold border border-blue-500/30">
+                  <span className="px-2.5 py-0.5 rounded-md bg-slate-900 text-blue-300 text-[10px] font-mono font-bold border border-blue-500/30">
                     CLOUD ARCHIVED RECORD
                   </span>
                   <span className="text-xs text-slate-500 font-mono">
@@ -1194,7 +1194,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
               </div>
 
               {selectedArchiveScan.warningSigns && selectedArchiveScan.warningSigns.length > 0 && (
-                <div className="p-4 rounded-2xl bg-rose-900/30 border border-rose-500/30 text-xs text-rose-200 space-y-1.5">
+                <div className="p-4 rounded-2xl bg-slate-900 border border-rose-500/30 text-xs text-rose-200 space-y-1.5">
                   <div className="font-bold flex items-center gap-1 text-rose-400">
                     <ShieldAlert className="w-4 h-4" />
                     <span>Warning Signs:</span>

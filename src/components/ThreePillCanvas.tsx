@@ -515,7 +515,7 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full rounded-2xl overflow-hidden select-none bg-gradient-to-b from-slate-900/5 via-slate-900/[0.02] to-transparent border border-slate-200/80 ${className}`}
+      className={`relative w-full rounded-2xl overflow-hidden select-none bg-slate-950 border border-slate-800 ${className}`}
       style={{ height }}
     >
       {/* Three.js Canvas */}
@@ -530,11 +530,11 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
 
       {/* Floating 3D HUD Badge */}
       <div className="absolute top-3 left-3 flex items-center gap-2 pointer-events-none">
-        <div className="px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md text-white text-[10px] font-mono font-bold flex items-center gap-1.5 shadow-sm">
+        <div className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-white text-[10px] font-mono font-bold flex items-center gap-1.5 shadow-sm">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
           <span>3D WebGL Model: {currentShape}</span>
         </div>
-        <div className="text-[10px] font-bold text-slate-500 bg-white/80 backdrop-blur-xs px-2 py-0.5 rounded border border-slate-200">
+        <div className="text-[10px] font-bold text-slate-400 bg-slate-900 border border-slate-800 px-2 py-0.5 rounded">
           Drag to rotate 360°
         </div>
       </div>
@@ -543,7 +543,7 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
       {showControls && (
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-auto">
           {/* Render Mode Pills */}
-          <div className="flex items-center gap-1 p-1 bg-white/90 backdrop-blur-md rounded-xl border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl shadow-sm">
             {(['solid', 'wireframe', 'xray', 'exploded'] as RenderMode3D[]).map((mode) => (
               <button
                 key={mode}
@@ -551,7 +551,7 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
                 className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
                   renderMode === mode
                     ? 'bg-blue-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800'
                 }`}
               >
                 {mode === 'xray' ? 'X-Ray Core' : mode}
@@ -564,10 +564,10 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
             <button
               onClick={handleToggleAutoRotate}
               title={isAutoRotating ? 'Pause auto-spin' : 'Start auto-spin'}
-              className={`p-2 rounded-xl backdrop-blur-md border transition-all cursor-pointer ${
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
                 isAutoRotating
-                  ? 'bg-blue-50 border-blue-300 text-blue-700'
-                  : 'bg-white/90 border-slate-200 text-slate-600 hover:bg-slate-50'
+                  ? 'bg-blue-600 border-blue-400 text-white shadow-blue-500/30'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
               }`}
             >
               <RotateCw className={`w-3.5 h-3.5 ${isAutoRotating ? 'animate-spin' : ''}`} />
@@ -576,7 +576,7 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
             <button
               onClick={handleResetView}
               title="Reset 3D Camera"
-              className="p-2 rounded-xl bg-white/90 backdrop-blur-md border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
+              className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
             </button>
@@ -584,10 +584,10 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
             <button
               onClick={() => setShowOptionsBar(!showOptionsBar)}
               title="Customize 3D parameters"
-              className={`p-2 rounded-xl backdrop-blur-md border transition-all cursor-pointer ${
-                showOptionsBar 
-                  ? 'bg-blue-600 text-white border-blue-600' 
-                  : 'bg-white/90 border-slate-200 text-slate-600 hover:bg-slate-50'
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                showOptionsBar
+                  ? 'bg-blue-600 text-white border-blue-600'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
               }`}
             >
               <Sliders className="w-3.5 h-3.5" />
@@ -598,9 +598,9 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
 
       {/* Expanded 3D Customizer Drawer */}
       {showOptionsBar && (
-        <div className="absolute top-12 right-3 z-20 w-64 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 p-4 shadow-xl space-y-3 animate-in fade-in slide-in-from-top-2">
+        <div className="absolute top-12 right-3 z-20 w-64 bg-slate-900 rounded-2xl border border-slate-800 p-4 shadow-xl space-y-3 animate-in fade-in slide-in-from-top-2">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-            <span className="text-xs font-extrabold text-slate-900">3D Morphology Engine</span>
+            <span className="text-xs font-extrabold text-slate-100">3D Morphology Engine</span>
             <span className="text-[10px] font-mono text-blue-600 font-bold">Studio v3.4</span>
           </div>
 
@@ -617,8 +617,8 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
                   }}
                   className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
                     currentShape === s
-                      ? 'bg-blue-50 border border-blue-300 text-blue-700'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200/60'
+                      ? 'bg-blue-600 border border-blue-400 text-white'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
                   }`}
                 >
                   {s}
@@ -629,7 +629,7 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
 
           {/* Explode / Separation slider */}
           <div className="space-y-1">
-            <div className="flex justify-between text-[10px] font-bold text-slate-600">
+            <div className="flex justify-between text-[10px] font-bold text-slate-400">
               <span>Capsule Separation</span>
               <span className="font-mono">{Math.round(explosionAmount * 100)}%</span>
             </div>
@@ -640,13 +640,13 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
               step="0.05"
               value={explosionAmount}
               onChange={(e) => setExplosionAmount(parseFloat(e.target.value))}
-              className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
           </div>
 
           {/* Studio Light Intensity */}
           <div className="space-y-1">
-            <div className="flex justify-between text-[10px] font-bold text-slate-600">
+            <div className="flex justify-between text-[10px] font-bold text-slate-400">
               <span>Studio Key Light</span>
               <span className="font-mono">{lightIntensity.toFixed(1)}x</span>
             </div>
@@ -661,7 +661,7 @@ export const ThreePillCanvas: React.FC<ThreePillCanvasProps> = ({
                 setLightIntensity(val);
                 if (dirLightRef.current) dirLightRef.current.intensity = val;
               }}
-              className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
           </div>
         </div>

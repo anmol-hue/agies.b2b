@@ -510,7 +510,7 @@ export const ThreeMoleculeViewer: React.FC<ThreeMoleculeViewerProps> = ({
 
       {/* Element Legend Bottom */}
       <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-        <div className="flex items-center gap-3 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-800 text-[10px] font-mono">
+        <div className="flex items-center gap-3 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-[10px] font-mono">
           <div className="flex items-center gap-1">
             <span className="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
             <span>C</span>
@@ -538,7 +538,7 @@ export const ThreeMoleculeViewer: React.FC<ThreeMoleculeViewerProps> = ({
             soundFx.click();
             setIsRotating(!isRotating);
           }}
-          className="pointer-events-auto p-2 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
+          className="pointer-events-auto p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
           title="Toggle rotation"
         >
           <RotateCw className={`w-3.5 h-3.5 ${isRotating ? 'animate-spin' : ''}`} />
