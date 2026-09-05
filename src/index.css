@@ -76,7 +76,8 @@
 
   .scan-line {
     position: absolute;
-    inset-x-0;
+    left: 0;
+    right: 0;
     height: 1px;
     background: linear-gradient(to right, transparent, #3b82f6, transparent);
     box-shadow: 0 0 8px #3b82f6;
