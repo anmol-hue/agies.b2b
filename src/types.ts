@@ -139,6 +139,57 @@ export interface DiagnosticResult {
   };
   isPlanAFallback?: boolean;
   timestamp?: string;
+  consensusScore?: number;
+  specialistPanels?: {
+    internist?: {
+      faculty?: string;
+      specialistTitle?: string;
+      hypothesis?: string;
+      confidence?: number;
+      rationale?: string;
+      keyIndicators?: string[];
+      keyFindings?: string;
+      differentials?: Array<{ condition: string; icd10?: string; probabilityScore?: number; rationale?: string }>;
+    };
+    pathologist?: {
+      faculty?: string;
+      specialistTitle?: string;
+      lesionSite?: string;
+      anatomicalSite?: string;
+      cellularPathology?: string;
+      cellularMechanism?: string;
+      downstreamRisks?: string[];
+      downstreamRisk?: string;
+    };
+    toxicologist?: {
+      faculty?: string;
+      specialistTitle?: string;
+      firstLineAgent?: string;
+      secondLineAgent?: string;
+      contraindications?: string[];
+      monitoringProtocol?: string;
+      priorityLabOrders?: string[];
+    };
+    pharmacologist?: {
+      faculty?: string;
+      specialistTitle?: string;
+      firstLineAgent?: string;
+      secondLineAgent?: string;
+      contraindications?: string[];
+      monitoringProtocol?: string;
+      priorityLabOrders?: string[];
+    };
+  };
+  creditShieldMeta?: {
+    cached: boolean;
+    tokensSaved?: number;
+    tokensSavedEstimate?: number;
+    engineTier?: string;
+    quotaProtected?: boolean;
+    mode?: 'tri-model-consensus' | 'credit-shield-cache' | 'evidence-fallback';
+    source?: string;
+    protectedStatus?: string;
+  };
 }
 
 export interface CabinetItem {

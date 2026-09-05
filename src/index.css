@@ -9,131 +9,42 @@
     scrollbar-width: none;
   }
 
-  /* Precision Clinical OS Surface System */
-  .clinical-panel {
-    @apply bg-slate-900 border border-slate-800 shadow-none;
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-xl border border-slate-200/80 shadow-[0_8px_32px_0_rgba(15,23,42,0.06)];
   }
 
-  .clinical-panel-active {
-    @apply bg-slate-900 border-blue-500/50 shadow-[0_0_12px_rgba(59,130,246,0.15)];
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:border-blue-400/40 hover:-translate-y-0.5;
   }
 
-  .clinical-surface-inner {
-    @apply bg-slate-950 border border-slate-800;
+  .glow-cyan {
+    box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.4);
   }
 
-  /* Precision Typography */
-  .clinical-text-mono {
-    @apply font-mono tracking-tight;
+  .glow-blue {
+    box-shadow: 0 0 30px -5px rgba(59, 130, 246, 0.4);
   }
 
-  .clinical-text-sans {
-    @apply font-['Plus_Jakarta_Sans',sans-serif];
+  .glow-emerald {
+    box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
   }
 
-  .hud-corner {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-color: #3b82f6;
-    border-style: solid;
-    border-width: 1px;
-    pointer-events: none;
-  }
-  .hud-tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
-  .hud-tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
-  .hud-bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
-  .hud-br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
-
-  /* Precision Animations */
-  .border-beam {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .border-beam::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: 1px solid transparent;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, #60a5fa, transparent) border-box;
-    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: destination-out;
-    animation: beam 4s linear infinite;
-  }
-
-  @keyframes beam {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  .scan-line-container {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scan-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #3b82f6, transparent);
-    box-shadow: 0 0 8px #3b82f6;
-    z-index: 20;
-    animation: scan 3s linear infinite;
-    pointer-events: none;
-  }
-
-  @keyframes scan {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(1000%); }
-  }
-
-  .holo-glow {
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), inset 0 0 10px rgba(59, 130, 246, 0.2);
-    text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
-  }
-
-  .data-stream {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .data-stream::before {
-    content: "010110101011010101101011010101011010101011010101";
-    position: absolute;
-    inset: 0;
-    font-family: monospace;
-    font-size: 10px;
-    color: rgba(59, 130, 246, 0.05);
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 0;
-    animation: stream 20s linear infinite;
-  }
-
-  @keyframes stream {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
-  }
-
-  .holo-flicker {
-    animation: flicker 0.15s infinite;
-  }
-
-  @keyframes flicker {
-    0% { opacity: 0.95; }
-    50% { opacity: 1; }
-    100% { opacity: 0.97; }
+  .scanner-laser {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(59, 130, 246, 0.2) 60%,
+      rgba(59, 130, 246, 0.9) 98%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.7);
   }
 
   .shimmer-effect {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.4) 50%,
       transparent 100%
     );
     background-size: 200% 100%;
@@ -143,6 +54,16 @@
   @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.08); opacity: 0.3; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
+  .animate-pulse-ring {
+    animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
 

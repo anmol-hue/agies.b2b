@@ -1373,13 +1373,6 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
         });
       }
 
-      // Holographic Pulsing Effect: Subtle emissive flicker
-      cardMeshes.forEach((mesh, i) => {
-        const mat = mesh.material as THREE.MeshStandardMaterial;
-        const flicker = 0.08 + Math.sin(elapsed * 2 + i) * 0.03;
-        mat.emissiveIntensity = flicker;
-      });
-
       renderer.render(scene, camera);
     };
 
@@ -1517,8 +1510,8 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
   };
 
   return (
-    <div className={`relative w-full rounded-3xl bg-slate-950 border border-slate-800 text-white overflow-hidden shadow-2xl holo-flicker ${className}`}>
-
+    <div className={`relative w-full rounded-3xl bg-slate-950 border border-slate-800 text-white overflow-hidden shadow-2xl ${className}`}>
+      
       {/* 3D WebGL Canvas Viewport */}
       <div ref={containerRef} className="w-full relative select-none" style={{ height }}>
         <canvas 
@@ -1542,7 +1535,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
           {/* Status Badge */}
           <div className="flex items-center gap-2 pointer-events-auto">
             {hasDiagnosedResult ? (
-              <div className="flex items-center gap-1.5 bg-blue-950 border border-blue-500/50 text-blue-200 px-3 py-1.5 rounded-xl text-xs font-mono font-bold shadow-lg">
+              <div className="flex items-center gap-1.5 bg-blue-950/90 border border-blue-500/50 text-blue-200 px-3 py-1.5 rounded-xl backdrop-blur-md text-xs font-mono font-bold shadow-lg">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
@@ -1550,7 +1543,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
                 <span>3D Guide: {conditionTitle}</span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 bg-slate-900 border border-slate-700/80 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-mono font-bold shadow-md">
+              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 text-slate-200 px-3 py-1.5 rounded-xl backdrop-blur-md text-xs font-mono font-bold shadow-md">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>3D Health Reference Atlas • Standby</span>
               </div>
@@ -1560,7 +1553,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
           {/* Mode Switcher + Confidence pill */}
           <div className="flex items-center gap-2 pointer-events-auto">
             {/* View Mode Toggle */}
-            <div className="flex items-center p-0.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-md text-xs">
+            <div className="flex items-center p-0.5 bg-slate-900/90 border border-slate-700/80 rounded-xl backdrop-blur-md shadow-md text-xs">
               <button
                 type="button"
                 onClick={() => {
@@ -1603,7 +1596,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
                 <span>{confidence}% Match</span>
               </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-1.5 bg-slate-900 border border-slate-700/60 text-slate-400 px-2.5 py-1 rounded-xl text-[11px] font-mono">
+              <div className="hidden sm:flex items-center gap-1.5 bg-slate-900/80 border border-slate-700/60 text-slate-400 px-2.5 py-1 rounded-xl text-[11px] font-mono backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 <span>Awaiting Symptoms</span>
               </div>
@@ -1614,7 +1607,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
 
         {/* Secondary Bar: Active 3D Card Info & Direct Lightbox Button */}
         <div className="flex items-center justify-between gap-2 pointer-events-auto">
-          <div className="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 shadow-md text-xs">
+          <div className="flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-md text-xs">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: activeCard.accentHex }} />
             <span className="text-slate-400 font-mono hidden sm:inline">Card {activeCardIndex + 1}/6:</span>
             <span className="font-bold text-white tracking-tight">{activeCard.title}</span>
@@ -1626,7 +1619,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
               soundFx.click();
               setInspectModalOpen(true);
             }}
-            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl border border-blue-400/40 shadow-sm transition-all cursor-pointer"
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl border border-blue-400/40 shadow-sm transition-all cursor-pointer backdrop-blur-md"
           >
             <Maximize2 className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">{viewMode === 'patient' ? 'Open Patient Guide & Doctor Note' : 'Deep Inspect Card'}</span>
@@ -1643,10 +1636,10 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
             setAutoRotate(!autoRotate);
           }}
           title={autoRotate ? 'Pause 3D Rotation' : 'Resume 3D Auto-Spin'}
-          className={`p-2 rounded-xl border transition-all cursor-pointer shadow-sm ${
-            autoRotate
-              ? 'bg-blue-600 border-blue-400 text-white shadow-blue-500/30'
-              : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+          className={`p-2 rounded-xl backdrop-blur-md border transition-all cursor-pointer shadow-sm ${
+            autoRotate 
+              ? 'bg-blue-600 border-blue-400 text-white shadow-blue-500/30' 
+              : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:text-white'
           }`}
         >
           <RotateCcw className={`w-3.5 h-3.5 ${autoRotate ? 'animate-spin' : ''}`} style={{ animationDuration: '8s' }} />
@@ -1655,7 +1648,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
         <button
           onClick={() => handleZoom(0.85)}
           title="Zoom In 3D View"
-          className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer"
+          className="p-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer"
         >
           <ZoomIn className="w-3.5 h-3.5" />
         </button>
@@ -1663,7 +1656,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
         <button
           onClick={() => handleZoom(1.15)}
           title="Zoom Out 3D View"
-          className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer"
+          className="p-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer"
         >
           <ZoomOut className="w-3.5 h-3.5" />
         </button>
@@ -1671,7 +1664,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
         <button
           onClick={handleResetCamera}
           title="Reset 3D Perspective"
-          className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer"
+          className="p-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer"
         >
           <Crosshair className="w-3.5 h-3.5" />
         </button>
@@ -1680,7 +1673,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
       {/* Floating Left/Right Arrows for 3D Carousel Spin */}
       <button
         onClick={handlePrevCard}
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg transition-all cursor-pointer"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg backdrop-blur-md transition-all cursor-pointer"
         title="Previous 3D Card"
       >
         <ChevronLeft className="w-4 h-4" />
@@ -1688,7 +1681,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
 
       <button
         onClick={handleNextCard}
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg transition-all cursor-pointer"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg backdrop-blur-md transition-all cursor-pointer"
         title="Next 3D Card"
       >
         <ChevronRight className="w-4 h-4" />
@@ -1696,7 +1689,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
 
       {/* BOTTOM SELECTOR: Quick Jump Tabs to any 3D Card */}
       <div className="absolute bottom-3 inset-x-3 z-20 pointer-events-auto">
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-1 bg-slate-900 rounded-2xl border border-slate-800/90 shadow-xl">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-1 bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-800/90 shadow-xl">
           {cardsData.map((card, idx) => {
             const isSelected = idx === activeCardIndex;
             return (
@@ -1726,7 +1719,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
       {/* HIGH-RES DEEP INSPECTOR & COMPARATIVE CLINICAL LIGHTBOX MODAL            */}
       {/* ========================================================================= */}
       {inspectModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col text-slate-100">
             
             {/* Modal Header */}
@@ -1954,7 +1947,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
                             </p>
                           </div>
                         )}
-                        <div className="absolute bottom-2 left-2 bg-slate-950 px-2 py-0.5 rounded text-[10px] font-mono text-rose-300">
+                        <div className="absolute bottom-2 left-2 bg-slate-950/80 px-2 py-0.5 rounded text-[10px] font-mono text-rose-300">
                           Primary Lesion Site: {primaryLesionSite || 'Regional tissue site'}
                         </div>
                       </div>
@@ -2340,7 +2333,7 @@ ${(warningSigns && warningSigns.length > 0) ? warningSigns.join(', ') : 'Standar
                           'Comprehensive Metabolic Panel (CMP)',
                           'C-Reactive Protein (CRP) / ESR inflammatory markers'
                         ]).map((lab, i) => (
-                          <li key={i} className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 flex items-start gap-2">
+                          <li key={i} className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-200 flex items-start gap-2">
                             <span className="text-emerald-400 font-mono text-xs mt-0.5 font-bold">›</span>
                             <span>{lab}</span>
                           </li>
@@ -2362,7 +2355,7 @@ ${(warningSigns && warningSigns.length > 0) ? warningSigns.join(', ') : 'Standar
                           'Multi-view Plain Radiographs',
                           'Contrast CT / MRI as indicated by acuity'
                         ]).map((img, i) => (
-                          <li key={i} className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 flex items-start gap-2">
+                          <li key={i} className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-200 flex items-start gap-2">
                             <span className="text-sky-400 font-mono text-xs mt-0.5 font-bold">›</span>
                             <span>{img}</span>
                           </li>
@@ -2384,7 +2377,7 @@ ${(warningSigns && warningSigns.length > 0) ? warningSigns.join(', ') : 'Standar
                           'Neurovascular and microcirculation check',
                           'Assessment for guarding, rebound, or focal swelling'
                         ]).map((sign, i) => (
-                          <li key={i} className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 flex items-start gap-2">
+                          <li key={i} className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-200 flex items-start gap-2">
                             <span className="text-amber-400 font-mono text-xs mt-0.5 font-bold">›</span>
                             <span>{sign}</span>
                           </li>
@@ -2411,7 +2404,7 @@ ${(warningSigns && warningSigns.length > 0) ? warningSigns.join(', ') : 'Standar
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
                       {/* First Line */}
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                      <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
                         <span className="text-[11px] font-bold text-emerald-400 font-mono uppercase tracking-wider block">
                           First-Line Regimen
                         </span>
@@ -2421,7 +2414,7 @@ ${(warningSigns && warningSigns.length > 0) ? warningSigns.join(', ') : 'Standar
                       </div>
 
                       {/* Alternative */}
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                      <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
                         <span className="text-[11px] font-bold text-amber-400 font-mono uppercase tracking-wider block">
                           Alternative (Allergy / Renal / Intolerance)
                         </span>
