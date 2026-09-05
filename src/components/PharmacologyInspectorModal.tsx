@@ -425,6 +425,7 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
                     </div>
                   </div>
                 </div>
+              )}
 
                 {/* BOTTOM FOOTER INFO */}
                 <div className="w-full mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 px-2">
@@ -506,7 +507,6 @@ export const PharmacologyInspectorModal: React.FC<PharmacologyInspectorModalProp
                 )}
               </div>
             </div>
-          </div>
 
           {/* LOWER DETAILED PHARMACOTHERAPY SECTIONS */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
