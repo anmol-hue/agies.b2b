@@ -263,7 +263,7 @@ export const ThreeInteractionSimulator: React.FC<ThreeInteractionSimulatorProps>
 
       {/* Top Header Simulation Overlay */}
       <div className="absolute top-3 inset-x-3 pointer-events-none flex items-center justify-between">
-        <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
           <span className={`w-2 h-2 rounded-full ${
             severity === 'Severe' ? 'bg-rose-500 animate-ping' : severity === 'Moderate' ? 'bg-amber-500' : 'bg-emerald-500'
           }`} />
@@ -282,7 +282,7 @@ export const ThreeInteractionSimulator: React.FC<ThreeInteractionSimulatorProps>
             soundFx.click();
             setIsSimulating(!isSimulating);
           }}
-          className="pointer-events-auto p-2 rounded-xl bg-slate-900/80 backdrop-blur-md border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
+          className="pointer-events-auto p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
           title="Toggle Simulation Motion"
         >
           <RotateCw className={`w-3.5 h-3.5 ${isSimulating ? 'animate-spin' : ''}`} />
@@ -291,13 +291,13 @@ export const ThreeInteractionSimulator: React.FC<ThreeInteractionSimulatorProps>
 
       {/* Bottom Simulation Legend */}
       <div className="absolute bottom-3 inset-x-3 pointer-events-none flex items-center justify-between text-[10px] font-mono text-slate-400">
-        <div className="bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800 flex items-center gap-2">
+        <div className="bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800 flex items-center gap-2">
           <span className="text-blue-400">● Ligand A: {drugAName}</span>
           <span className="text-slate-600">|</span>
           <span className={severity === 'Severe' ? 'text-rose-400' : 'text-amber-400'}>● Ligand B: {drugBName}</span>
         </div>
 
-        <div className="bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800 text-slate-300">
+        <div className="bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800 text-slate-300">
           CYP450 Enzyme Pocket Active
         </div>
       </div>

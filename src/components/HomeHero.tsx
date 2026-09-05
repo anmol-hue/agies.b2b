@@ -5,30 +5,18 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Pill, 
-  ShieldAlert, 
-  Stethoscope, 
-  Briefcase, 
+import {
+  Pill,
+  ShieldAlert,
+  Stethoscope,
   Users,
-  Building2,
-  ArrowRight, 
-  Sparkles, 
-  CheckCircle2, 
-  Activity, 
-  Database, 
-  Lock, 
-  Zap,
-  Layers,
+  ArrowRight,
+  Sparkles,
+  Activity,
   ChevronRight,
-  RotateCw,
-  Eye,
   Atom,
   Volume2,
   VolumeX,
-  Compass,
-  Radio,
-  Sliders
 } from 'lucide-react';
 import { UserAccount } from '../types';
 import { Hero3DBackground } from './Hero3DBackground';
@@ -129,29 +117,33 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
 
   return (
     <div className="w-full space-y-10 pb-16">
-      
+
       {/* Primary Hero Section with 3D Background */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative overflow-hidden rounded-3xl glass-panel p-8 sm:p-12 lg:p-14 text-center"
+        className="relative overflow-hidden rounded-3xl clinical-panel p-8 sm:p-12 lg:p-14 text-center border-blue-500/30"
       >
         {/* Real-time 3D Particle Mesh Background */}
         <Hero3DBackground />
+        <div className="hud-corner hud-tl"></div>
+        <div className="hud-corner hud-tr"></div>
+        <div className="hud-corner hud-bl"></div>
+        <div className="hud-corner hud-br"></div>
 
         {/* Ambient audio toggle in top right */}
         <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
           <button
             onClick={toggleSound}
-            className={`p-2 rounded-xl backdrop-blur-md border transition-all text-xs font-bold flex items-center gap-1.5 cursor-pointer ${
+            className={`p-2 rounded-xl border transition-all text-xs font-bold flex items-center gap-1.5 cursor-pointer ${
               isAudioMuted
-                ? 'bg-white/80 border-slate-200 text-slate-400 hover:text-slate-600'
-                : 'bg-blue-50/90 border-blue-200 text-blue-600 shadow-xs'
+                ? 'bg-slate-950 border-slate-800 text-slate-500 hover:text-slate-300'
+                : 'bg-slate-900 border-blue-500/30 text-blue-400 shadow-xs'
             }`}
             title={isAudioMuted ? 'Unmute UI Audio FX' : 'Mute UI Audio FX'}
           >
-            {isAudioMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-blue-600 animate-pulse" />}
+            {isAudioMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-blue-400 animate-pulse" />}
             <span className="hidden sm:inline text-[11px] uppercase tracking-wider font-mono">
               {isAudioMuted ? 'FX Muted' : 'Audio Live'}
             </span>
@@ -159,60 +151,60 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto space-y-6">
-          
+
           {/* Animated Clinical ECG Vital Ribbon */}
           <div className="flex items-center justify-center gap-3">
             <div className="h-6 w-32 relative overflow-hidden flex items-center opacity-75">
-              <svg className="w-full h-full text-blue-500" viewBox="0 0 120 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-full h-full text-blue-400" viewBox="0 0 120 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M0 12 L30 12 L36 4 L42 20 L48 10 L52 14 L56 12 L120 12" />
               </svg>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-shimmer" style={{ width: '40%', animationDuration: '2s' }}></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent animate-shimmer" style={{ width: '40%', animationDuration: '2s' }}></div>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50/90 backdrop-blur-xs border border-blue-200/80 text-blue-700 text-xs font-extrabold tracking-wider uppercase shadow-2xs hover:scale-105 transition-transform cursor-default"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-blue-500/30 text-blue-300 text-xs font-extrabold tracking-wider uppercase shadow-2xs hover:scale-105 transition-transform cursor-default"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-              <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-spin" style={{ animationDuration: '8s' }} />
+              <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+              <Sparkles className="w-3.5 h-3.5 text-blue-400 animate-spin" style={{ animationDuration: '8s' }} />
               <span>3D CLINICAL DECISION SUPPORT SYSTEM</span>
             </motion.div>
 
             <div className="h-6 w-32 relative overflow-hidden flex items-center opacity-75">
-              <svg className="w-full h-full text-blue-500" viewBox="0 0 120 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-full h-full text-blue-400" viewBox="0 0 120 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M0 12 L30 12 L36 4 L42 20 L48 10 L52 14 L56 12 L120 12" />
               </svg>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-shimmer" style={{ width: '40%', animationDuration: '2s' }}></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent animate-shimmer" style={{ width: '40%', animationDuration: '2s' }}></div>
             </div>
           </div>
 
           {/* Display Headline */}
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 uppercase leading-none"
+            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-100 uppercase leading-none"
           >
             CLINICAL <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-950 via-blue-900 to-blue-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-blue-300 to-blue-500">
               INTELLIGENCE CENTER
             </span>
           </motion.h1>
 
           {/* Subheading */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto font-normal leading-relaxed"
+            className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed"
           >
             Multimodal diagnostic toolkit with real-time 3D WebGL molecular simulation, pairwise interaction screening, and personal adherence tracking.
           </motion.p>
 
           {/* 4 Interactive Hero Buttons */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -230,16 +222,16 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
                     soundFx.click();
                     setActiveTab(module.id);
                   }}
-                  className="group relative flex flex-col items-center justify-center p-4 rounded-xl bg-gradient-to-b from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold text-[10px] tracking-wider transition-all shadow-md hover:shadow-xl hover:shadow-blue-500/30 cursor-pointer border border-blue-400/30 overflow-hidden uppercase"
+                  className="group relative flex flex-col items-center justify-center p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 text-slate-100 font-bold text-[10px] tracking-wider transition-all shadow-md hover:shadow-blue-500/20 cursor-pointer overflow-hidden uppercase"
                 >
                   <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative z-10 flex items-center gap-2 mb-1.5">
-                    <Icon className="w-4 h-4 text-sky-200 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="tracking-wider">{module.label}</span>
+                    <Icon className="w-4 h-4 text-blue-400 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="tracking-wider group-hover:text-blue-300 transition-colors">{module.label}</span>
                   </div>
                   <div className="relative z-10 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span className="text-[9px] text-blue-200 font-mono font-medium uppercase">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span>
+                    <span className="text-[9px] text-blue-300 font-mono font-medium uppercase">
                       {module.badge}
                     </span>
                   </div>
@@ -249,18 +241,18 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
           </motion.div>
 
           {/* 3 Key Stats Strip */}
-          <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-2xl mx-auto text-center">
+          <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800 max-w-2xl mx-auto text-center">
             <div className="space-y-1">
-              <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">EVIDENCE</div>
-              <div className="text-[10px] font-bold tracking-wider text-slate-600 uppercase">CLINICAL GUIDELINES</div>
+              <div className="text-xl sm:text-2xl font-black text-blue-400 tracking-tight clinical-text-mono">EVIDENCE</div>
+              <div className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">CLINICAL GUIDELINES</div>
             </div>
-            <div className="space-y-1 border-x border-slate-200">
-              <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">30+</div>
-              <div className="text-[10px] font-bold tracking-wider text-slate-600 uppercase">CORE MONOGRAPHS</div>
+            <div className="space-y-1 border-x border-slate-800">
+              <div className="text-2xl sm:text-3xl font-black text-blue-400 tracking-tight clinical-text-mono">30+</div>
+              <div className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">CORE MONOGRAPHS</div>
             </div>
             <div className="space-y-1">
-              <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight font-['JetBrains_Mono',monospace]">CLOUD</div>
-              <div className="text-[10px] font-bold tracking-wider text-slate-600 uppercase">FIRESTORE SYNC</div>
+              <div className="text-xl sm:text-2xl font-black text-blue-400 tracking-tight clinical-text-mono">CLOUD</div>
+              <div className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">FIRESTORE SYNC</div>
             </div>
           </div>
 
@@ -268,27 +260,27 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
       </motion.div>
 
       {/* Interactive 3D Showcase Studio Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 glass-panel"
+        className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 clinical-panel"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-100 tracking-tight">
                 3D Interactive Clinical Lab & Morphology Studio
               </h2>
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               Drag, rotate 360°, inspect chemical lattice bonds, and examine inner API micro-granules in real-time WebGL.
             </p>
           </div>
 
           {/* Mode Switcher: 3D Capsule vs 3D Molecule vs 3D Biometric */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-bold">
             <button
               onClick={() => {
                 soundFx.pillFlip();
@@ -297,7 +289,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                 hero3DMode === 'pill'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-400 hover:text-slate-100'
               }`}
             >
               <Pill className="w-3.5 h-3.5" />
@@ -312,7 +304,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                 hero3DMode === 'molecule'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-400 hover:text-slate-100'
               }`}
             >
               <Atom className="w-3.5 h-3.5" />
@@ -327,7 +319,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                 hero3DMode === 'biometric'
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-400 hover:text-slate-100'
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
@@ -394,17 +386,17 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
 
           {/* Right Controls & Info Panel */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-3">
-              <div className="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+              <div className="text-xs font-extrabold uppercase tracking-wider text-slate-100 flex items-center justify-between">
                 <span>Morphology Parameters</span>
-                <span className="text-[10px] font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                <span className="text-[10px] font-mono text-blue-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
                   WebGL 2.0 Active
                 </span>
               </div>
 
               {hero3DMode === 'pill' ? (
                 <div className="space-y-2">
-                  <span className="text-[11px] font-semibold text-slate-500">Preset Geometry</span>
+                  <span className="text-[11px] font-semibold text-slate-400">Preset Geometry</span>
                   <div className="grid grid-cols-2 gap-2">
                     {(['Capsule', 'Round', 'Oval', 'Oblong'] as PillShape3D[]).map((shape) => (
                       <button
@@ -416,7 +408,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
                         className={`py-2 px-3 rounded-xl text-xs font-bold transition-all text-center cursor-pointer ${
                           heroPillShape === shape
                             ? 'bg-blue-600 text-white shadow-xs'
-                            : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                            : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800'
                         }`}
                       >
                         {shape}
@@ -430,7 +422,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
                 </div>
               ) : hero3DMode === 'molecule' ? (
                 <div className="space-y-2">
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     Interactive atomic orbital structure with covalent bonds and thermal vibration simulations for leading pharmaceutical compounds.
                   </p>
                   <button
@@ -443,7 +435,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     Multi-axial kinetic gyroscope mapping real-time diagnostic latency, pharmacokinetic bio-distribution, and rule engine integrity.
                   </p>
                   <button
@@ -461,16 +453,16 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
       </motion.div>
 
       {/* Metric Detail Banner */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs transition-all glass-panel">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xs transition-all clinical-panel">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-400">
                 {metrics[selectedMetric].detailTitle}
               </span>
             </div>
-            <p className="text-sm text-slate-600 max-w-3xl">
+            <p className="text-sm text-slate-400 max-w-3xl">
               {metrics[selectedMetric].detailSub}
             </p>
           </div>
@@ -479,7 +471,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               soundFx.click();
               setActiveTab(metrics[selectedMetric].actionTab);
             }}
-            className="self-start md:self-center px-4 py-2 rounded-lg bg-blue-50 hover:bg-blue-100/80 text-blue-700 font-bold text-xs tracking-wider flex items-center gap-2 transition-all border border-blue-200/70 shrink-0 cursor-pointer"
+            className="self-start md:self-center px-4 py-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-blue-300 font-bold text-xs tracking-wider flex items-center gap-2 transition-all border border-slate-800 shrink-0 cursor-pointer"
           >
             <span>{metrics[selectedMetric].actionLabel}</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -503,17 +495,17 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               className={`p-6 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[160px] ${
                 isSelected
                   ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/40 ring-2 ring-blue-400/20'
-                  : 'bg-white/60 backdrop-blur-sm border-slate-200 text-slate-950 hover:border-blue-300 hover:bg-white/80'
+                  : 'bg-slate-900 border-slate-800 text-slate-100 hover:border-blue-500/50 hover:bg-slate-800'
               }`}
             >
               <div>
                 <div className={`text-[10px] font-bold tracking-wider uppercase ${
-                  isSelected ? 'text-blue-100' : 'text-slate-600'
+                  isSelected ? 'text-blue-100' : 'text-slate-400'
                 }`}>
                   {metric.label}
                 </div>
-                <div className={`text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 font-['JetBrains_Mono',monospace] ${
-                  isSelected ? 'text-white' : 'text-blue-600'
+                <div className={`text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 clinical-text-mono ${
+                  isSelected ? 'text-white' : 'text-blue-400'
                 }`}>
                   {metric.value}
                 </div>
@@ -531,12 +523,12 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
 
       {/* Clinical Insights & Safety Overview Header Section */}
       <div className="pt-4 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-100">
               Clinical Insights & Safety Overview
             </h2>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-400 mt-1">
               Live diagnostic intelligence, pairwise molecular matrices, and personal adherence monitors.
             </p>
           </div>
@@ -545,7 +537,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
               soundFx.click();
               setActiveTab('directory');
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-blue-300 cursor-pointer"
           >
             <span>Explore Full Directory</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -554,70 +546,70 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ setActiveTab, user, onOpenAu
 
         {/* Feature Spotlight Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <motion.div 
+          <motion.div
             whileHover={{ y: -4 }}
             onClick={() => {
               soundFx.click();
               setActiveTab('directory');
             }}
-            className="group p-6 rounded-2xl glass-panel hover:border-blue-300 hover:shadow-md transition-all cursor-pointer space-y-3"
+            className="group p-6 rounded-2xl clinical-panel border-slate-800 hover:border-blue-500/50 hover:shadow-md transition-all cursor-pointer space-y-3"
           >
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-slate-950 text-blue-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors border border-slate-800">
               <Pill className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors">
+            <h3 className="font-bold text-lg text-slate-100 group-hover:text-blue-400 transition-colors">
               3D Pill Identifier & Imprint Engine
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed">
               Identify unknown oral capsules and tablets by shape, color palette, and laser imprints with 3D WebGL rotation and zoom.
             </p>
-            <div className="pt-2 flex items-center text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
+            <div className="pt-2 flex items-center text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform">
               <span>Launch 3D Identifier</span>
               <ChevronRight className="w-3.5 h-3.5 ml-1" />
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             whileHover={{ y: -4 }}
             onClick={() => {
               soundFx.click();
               setActiveTab('interactions');
             }}
-            className="group p-6 rounded-2xl glass-panel hover:border-blue-300 hover:shadow-md transition-all cursor-pointer space-y-3"
+            className="group p-6 rounded-2xl clinical-panel border-slate-800 hover:border-blue-500/50 hover:shadow-md transition-all cursor-pointer space-y-3"
           >
-            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-slate-950 text-rose-400 flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-colors border border-slate-800">
               <ShieldAlert className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-lg text-slate-900 group-hover:text-rose-600 transition-colors">
+            <h3 className="font-bold text-lg text-slate-100 group-hover:text-rose-400 transition-colors">
               Multi-Drug Interaction Matrices
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed">
               Real-time pairwise checking across CYP450 pathways, renal clearances, and special pregnancy/geriatric alerts with 3D binding simulator.
             </p>
-            <div className="pt-2 flex items-center text-xs font-bold text-rose-600 group-hover:translate-x-1 transition-transform">
+            <div className="pt-2 flex items-center text-xs font-bold text-rose-400 group-hover:translate-x-1 transition-transform">
               <span>Analyze Cross-Risks</span>
               <ChevronRight className="w-3.5 h-3.5 ml-1" />
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             whileHover={{ y: -4 }}
             onClick={() => {
               soundFx.click();
               setActiveTab('scanner');
             }}
-            className="group p-6 rounded-2xl glass-panel hover:border-blue-300 hover:shadow-md transition-all cursor-pointer space-y-3"
+            className="group p-6 rounded-2xl clinical-panel border-slate-800 hover:border-blue-500/50 hover:shadow-md transition-all cursor-pointer space-y-3"
           >
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-slate-950 text-indigo-400 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors border border-slate-800">
               <Stethoscope className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-lg text-slate-900 group-hover:text-indigo-600 transition-colors">
+            <h3 className="font-bold text-lg text-slate-100 group-hover:text-indigo-400 transition-colors">
               AI Symptom & Dermatology Scanner
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed">
               Multimodal image capture combined with clinical reasoning and 3D anatomical radar for rapid differential diagnostics.
             </p>
-            <div className="pt-2 flex items-center text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition-transform">
+            <div className="pt-2 flex items-center text-xs font-bold text-indigo-400 group-hover:translate-x-1 transition-transform">
               <span>Start Multimodal Scan</span>
               <ChevronRight className="w-3.5 h-3.5 ml-1" />
             </div>

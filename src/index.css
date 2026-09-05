@@ -9,24 +9,43 @@
     scrollbar-width: none;
   }
 
-  .glass-panel {
-    @apply bg-slate-900/60 backdrop-blur-xl border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.1)];
+  /* Precision Clinical OS Surface System */
+  .clinical-panel {
+    @apply bg-slate-900 border border-slate-800 shadow-none;
   }
 
-  .glass-panel-noise {
-    @apply bg-slate-900/60 backdrop-blur-xl border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.1)] relative overflow-hidden;
+  .clinical-panel-active {
+    @apply bg-slate-900 border-blue-500/50 shadow-[0_0_12px_rgba(59,130,246,0.15)];
   }
 
-  .glass-panel-noise::before {
-    content: "";
+  .clinical-surface-inner {
+    @apply bg-slate-950 border border-slate-800;
+  }
+
+  /* Precision Typography */
+  .clinical-text-mono {
+    @apply font-mono tracking-tight;
+  }
+
+  .clinical-text-sans {
+    @apply font-['Plus_Jakarta_Sans',sans-serif];
+  }
+
+  .hud-corner {
     position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.05;
+    width: 8px;
+    height: 8px;
+    border-color: #3b82f6;
+    border-style: solid;
+    border-width: 1px;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
+  .hud-tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+  .hud-tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+  .hud-bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+  .hud-br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
 
+  /* Precision Animations */
   .border-beam {
     position: relative;
     overflow: hidden;
@@ -36,7 +55,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     border-radius: inherit;
     background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, #60a5fa, transparent) border-box;
     mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
@@ -45,23 +64,30 @@
     animation: beam 4s linear infinite;
   }
 
-  .hud-corner {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-color: #3b82f6;
-    border-style: solid;
-    border-width: 2px;
-    pointer-events: none;
-  }
-  .hud-tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
-  .hud-tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
-  .hud-bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
-  .hud-br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
-
   @keyframes beam {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
+  }
+
+  .scan-line-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-line {
+    position: absolute;
+    inset-x-0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #3b82f6, transparent);
+    box-shadow: 0 0 8px #3b82f6;
+    z-index: 20;
+    animation: scan 3s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(1000%); }
   }
 
   .holo-glow {
@@ -106,7 +132,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 50%,
       transparent 100%
     );
     background-size: 200% 100%;

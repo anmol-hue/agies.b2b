@@ -1542,7 +1542,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
           {/* Status Badge */}
           <div className="flex items-center gap-2 pointer-events-auto">
             {hasDiagnosedResult ? (
-              <div className="flex items-center gap-1.5 bg-blue-950/90 border border-blue-500/50 text-blue-200 px-3 py-1.5 rounded-xl backdrop-blur-md text-xs font-mono font-bold shadow-lg">
+              <div className="flex items-center gap-1.5 bg-blue-950/90 border border-blue-500/50 text-blue-200 px-3 py-1.5 rounded-xl text-xs font-mono font-bold shadow-lg">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
@@ -1550,7 +1550,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
                 <span>3D Guide: {conditionTitle}</span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 text-slate-200 px-3 py-1.5 rounded-xl backdrop-blur-md text-xs font-mono font-bold shadow-md">
+              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-mono font-bold shadow-md">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>3D Health Reference Atlas • Standby</span>
               </div>
@@ -1614,7 +1614,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
 
         {/* Secondary Bar: Active 3D Card Info & Direct Lightbox Button */}
         <div className="flex items-center justify-between gap-2 pointer-events-auto">
-          <div className="flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-md text-xs">
+          <div className="flex items-center gap-2 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-800 shadow-md text-xs">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: activeCard.accentHex }} />
             <span className="text-slate-400 font-mono hidden sm:inline">Card {activeCardIndex + 1}/6:</span>
             <span className="font-bold text-white tracking-tight">{activeCard.title}</span>
@@ -1626,7 +1626,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
               soundFx.click();
               setInspectModalOpen(true);
             }}
-            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl border border-blue-400/40 shadow-sm transition-all cursor-pointer backdrop-blur-md"
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl border border-blue-400/40 shadow-sm transition-all cursor-pointer"
           >
             <Maximize2 className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">{viewMode === 'patient' ? 'Open Patient Guide & Doctor Note' : 'Deep Inspect Card'}</span>
@@ -1643,9 +1643,9 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
             setAutoRotate(!autoRotate);
           }}
           title={autoRotate ? 'Pause 3D Rotation' : 'Resume 3D Auto-Spin'}
-          className={`p-2 rounded-xl backdrop-blur-md border transition-all cursor-pointer shadow-sm ${
-            autoRotate 
-              ? 'bg-blue-600 border-blue-400 text-white shadow-blue-500/30' 
+          className={`p-2 rounded-xl border transition-all cursor-pointer shadow-sm ${
+            autoRotate
+              ? 'bg-blue-600 border-blue-400 text-white shadow-blue-500/30'
               : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:text-white'
           }`}
         >
@@ -1680,7 +1680,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
       {/* Floating Left/Right Arrows for 3D Carousel Spin */}
       <button
         onClick={handlePrevCard}
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg backdrop-blur-md transition-all cursor-pointer"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg transition-all cursor-pointer"
         title="Previous 3D Card"
       >
         <ChevronLeft className="w-4 h-4" />
@@ -1688,7 +1688,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
 
       <button
         onClick={handleNextCard}
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg backdrop-blur-md transition-all cursor-pointer"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-white shadow-lg transition-all cursor-pointer"
         title="Next 3D Card"
       >
         <ChevronRight className="w-4 h-4" />
@@ -1696,7 +1696,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
 
       {/* BOTTOM SELECTOR: Quick Jump Tabs to any 3D Card */}
       <div className="absolute bottom-3 inset-x-3 z-20 pointer-events-auto">
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-1 bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-800/90 shadow-xl">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-1 bg-slate-900/90 rounded-2xl border border-slate-800/90 shadow-xl">
           {cardsData.map((card, idx) => {
             const isSelected = idx === activeCardIndex;
             return (
@@ -1726,7 +1726,7 @@ export const ThreeAnatomicalScanner: React.FC<ThreeAnatomicalScannerProps> = ({
       {/* HIGH-RES DEEP INSPECTOR & COMPARATIVE CLINICAL LIGHTBOX MODAL            */}
       {/* ========================================================================= */}
       {inspectModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 animate-in fade-in duration-200">
           <div className="relative w-full max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col text-slate-100">
             
             {/* Modal Header */}

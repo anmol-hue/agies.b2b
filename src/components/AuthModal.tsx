@@ -4,14 +4,14 @@
  */
 
 import React, { useState } from 'react';
-import { 
-  X, 
-  Eye, 
-  EyeOff, 
-  Loader2, 
-  Lock, 
-  Mail, 
-  ShieldCheck, 
+import {
+  X,
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  ShieldCheck,
   AlertCircle,
   Stethoscope,
   Sparkles,
@@ -19,14 +19,14 @@ import {
   Building2,
   ArrowRight
 } from 'lucide-react';
-import { 
+import {
   auth,
   googleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  saveLocalAccount, 
-  syncUserToFirestore, 
+  saveLocalAccount,
+  syncUserToFirestore,
   fetchUserFromFirestore,
   createFreshUserAccount,
   filterOutDemoPatients
@@ -90,8 +90,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         const fbUser = userCred.user;
         const newUser = createFreshUserAccount(
-          fbUser.uid, 
-          fbUser.email || email, 
+          fbUser.uid,
+          fbUser.email || email,
           fullName || fbUser.displayName
         );
         await syncUserToFirestore(newUser);
@@ -103,8 +103,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         const fbUser = userCred.user;
         const existingData = await fetchUserFromFirestore(fbUser.uid);
         const loggedUser: UserAccount = existingData || createFreshUserAccount(
-          fbUser.uid, 
-          fbUser.email || email, 
+          fbUser.uid,
+          fbUser.email || email,
           fbUser.displayName
         );
         loggedUser.patients = filterOutDemoPatients(loggedUser.patients);
@@ -177,8 +177,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
-      <div className="relative w-full max-w-md glass-panel rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 my-8 text-slate-900 overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-slate-950/80 flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
+      <div className="relative w-full max-w-md clinical-panel border-beam rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 my-8 text-slate-100 overflow-hidden">
+
+        {/* HUD Corners for Precision Look */}
+        <div className="hud-corner hud-tl" />
+        <div className="hud-corner hud-tr" />
+        <div className="hud-corner hud-bl" />
+        <div className="hud-corner hud-br" />
 
         {/* Subtle decorative top gradient */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500" />
@@ -189,27 +195,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             soundFx.click();
             onClose();
           }}
-          className="absolute top-5 right-5 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-1.5 rounded-full text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header with Clinical Badge */}
         <div className="text-center space-y-2 pt-1">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs mb-1">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-600 text-white border border-blue-400/30 shadow-xs mb-1">
             <Stethoscope className="w-6 h-6" />
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-950">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-100">
             {customTitle || (isSignUp ? 'Clinician Sign Up' : 'Clinician Log In')}
           </h2>
-          <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
-            {customSubtitle || (isSignUp 
+          <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+            {customSubtitle || (isSignUp
               ? 'Access HIPAA-grade AI scanner, patient records, interactive cabinets, and drug interactions.'
               : 'Sign in to access your persistent medical records, AI scans archive, and patient consultations.')}
           </p>
 
-          <div className="flex justify-center items-center gap-1 text-xs text-slate-600 pt-1">
+          <div className="flex justify-center items-center gap-1 text-xs text-slate-500 pt-1">
             {isSignUp ? (
               <>
                 <span>Already registered?</span>
@@ -220,7 +226,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     setIsSignUp(false);
                     setErrorMsg('');
                   }}
-                  className="text-blue-600 font-bold hover:underline cursor-pointer ml-1"
+                  className="text-blue-400 font-bold hover:text-blue-300 hover:underline cursor-pointer ml-1"
                 >
                   Log In
                 </button>
@@ -235,7 +241,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     setIsSignUp(true);
                     setErrorMsg('');
                   }}
-                  className="text-blue-600 font-bold hover:underline cursor-pointer ml-1"
+                  className="text-blue-400 font-bold hover:text-blue-300 hover:underline cursor-pointer ml-1"
                 >
                   Create Account
                 </button>
@@ -245,27 +251,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {errorMsg && (
-          <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs space-y-2">
+          <div className="p-3.5 rounded-2xl bg-rose-900/30 border border-rose-500/30 text-rose-200 text-xs space-y-2">
             <div className="flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-400" />
               <div className="space-y-1">
-                <span className="font-bold text-rose-950 block">{errorDetails?.title || 'Authentication Notice'}</span>
-                <p className="text-rose-700 leading-relaxed">{errorMsg}</p>
+                <span className="font-bold text-rose-100 block">{errorDetails?.title || 'Authentication Notice'}</span>
+                <p className="text-rose-300 leading-relaxed">{errorMsg}</p>
                 {errorDetails?.hint && (
-                  <p className="text-[11px] text-rose-600/90 leading-snug mt-1">{errorDetails.hint}</p>
+                  <p className="text-[11px] text-rose-400/90 leading-snug mt-1">{errorDetails.hint}</p>
                 )}
               </div>
             </div>
 
             {errorDetails?.canBypass && (
-              <div className="pt-2 border-t border-rose-200/60 flex items-center justify-between gap-2">
-                <span className="text-[11px] text-slate-500 font-medium">Bypass cloud error:</span>
+              <div className="pt-2 border-t border-rose-500/20 flex items-center justify-between gap-2">
+                <span className="text-[11px] text-slate-400 font-medium">Bypass cloud error:</span>
                 <button
                   type="button"
                   onClick={handleContinueLocalFallback}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-rose-300 hover:bg-rose-100 text-rose-900 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
+                  className="px-3 py-1.5 rounded-lg bg-slate-950 border border-rose-500/50 hover:bg-rose-900/40 text-rose-200 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
                 >
-                  <Building2 className="w-3.5 h-3.5 text-blue-600" />
+                  <Building2 className="w-3.5 h-3.5 text-blue-400" />
                   <span>Enter as Local Clinician</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
@@ -280,7 +286,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             type="button"
             onClick={handleGoogleAuth}
             disabled={loading}
-            className="w-full py-3 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 hover:border-slate-400 text-slate-800 font-bold text-xs flex items-center justify-center gap-3 transition-all shadow-xs cursor-pointer"
+            className="w-full py-3 px-4 rounded-xl border border-slate-800 hover:bg-slate-900 hover:border-slate-700 text-slate-300 font-bold text-xs flex items-center justify-center gap-3 transition-all shadow-xs cursor-pointer"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
@@ -295,9 +301,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Divider */}
         <div className="relative flex items-center justify-center">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200"></div>
+            <div className="w-full border-t border-slate-800"></div>
           </div>
-          <span className="relative bg-white px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+          <span className="relative bg-slate-900 px-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
             or clinical email
           </span>
         </div>
@@ -306,19 +312,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <form onSubmit={handleEmailAuth} className="space-y-3.5">
           {isSignUp && (
             <div className="space-y-1 text-left">
-              <label className="block text-xs font-bold text-slate-700">Full Name / Title</label>
+              <label className="block text-xs font-bold text-slate-400">Full Name / Title</label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="e.g. Dr. Sarah Chen, MD"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
               />
             </div>
           )}
 
           <div className="space-y-1 text-left">
-            <label className="block text-xs font-bold text-slate-700">Medical / Institutional Email</label>
+            <label className="block text-xs font-bold text-slate-400">Medical / Institutional Email</label>
             <div className="relative">
               <input
                 type="email"
@@ -326,14 +332,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="physician@hospital.org"
                 required
-                className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-800 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
               />
-              <Mail className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div className="space-y-1 text-left">
-            <label className="block text-xs font-bold text-slate-700">Password</label>
+            <label className="block text-xs font-bold text-slate-400">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -342,12 +348,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 placeholder="••••••••"
                 required
                 minLength={6}
-                className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                className="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-800 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 cursor-pointer"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -358,7 +364,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-blue-500/20 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer mt-2"
+            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-blue-500/20 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer mt-2"
           >
             {loading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -369,7 +375,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </form>
 
         {/* Trust Badges */}
-        <div className="flex items-center justify-center gap-4 text-[11px] text-slate-400 pt-2 border-t border-slate-100">
+        <div className="flex items-center justify-center gap-4 text-[11px] text-slate-500 pt-2 border-t border-slate-800">
           <span className="flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             Firebase Cloud Firestore & Auth

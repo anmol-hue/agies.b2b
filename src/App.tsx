@@ -316,8 +316,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fcfcfd] text-slate-950 selection:bg-blue-600 selection:text-white font-['Plus_Jakarta_Sans',sans-serif] relative overflow-x-hidden">
-      
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-blue-600 selection:text-white font-['Plus_Jakarta_Sans',sans-serif] relative overflow-x-hidden">
+
       {/* Dynamic Tab-Specific 2D Background Animation Canvas */}
       <AnimatedBackground2D activeTab={activeTab} />
 

@@ -68,7 +68,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
   // Input states — ALL INITIALLY BLANK TO PREVENT CONFUSION
   const [symptomText, setSymptomText] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  
+
   // Attached Scan Files (PDF, Word, Images, Text)
   const [attachedFile, setAttachedFile] = useState<AttachedScanDocument | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -188,7 +188,6 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
     const sizeFormatted = formatFileSize(file.size);
 
     if (file.type.startsWith('image/') || lowerName.endsWith('.dcm')) {
-      // Process as Image with ultra-fast browser compression
       const compressedDataUrl = await compressImage(file);
       setImagePreview(compressedDataUrl);
       setImageMimeType('image/jpeg');
@@ -200,7 +199,6 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
         dataUrl: compressedDataUrl
       });
     } else if (lowerName.endsWith('.pdf') || file.type === 'application/pdf') {
-      // Process as PDF Document
       const reader = new FileReader();
       reader.onloadend = () => {
         const dataUrl = reader.result as string;
@@ -215,12 +213,10 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       reader.readAsDataURL(file);
 
     } else {
-      // Word document or Text document (.doc, .docx, .txt, .rtf)
       const reader = new FileReader();
       reader.onloadend = () => {
         const textContent = (reader.result as string) || '';
-        // Extract basic readable text
-        const cleanPreview = textContent.replace(/[\x00-\x09\x0B-\x1F\x7F-\x9F]/g, ' ').slice(0, 4000);
+        const cleanPreview = textContent.replace(/[\\x00-\\x09\\x0B-\\x1F\\x7F-\\x9F]/g, ' ').slice(0, 4000);
         setAttachedFile({
           name: fileName,
           sizeFormatted,
@@ -243,7 +239,6 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
   };
 
   const handleRunAnalysis = async () => {
-    // PREVENT DIAGNOSIS IF USER HAS NOT PROVIDED ANY INPUT OR ATTACHMENT
     const hasSymptoms = Boolean(symptomText.trim());
     const hasTags = selectedTags.length > 0;
     const hasFile = Boolean(attachedFile);
@@ -267,7 +262,6 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
     ].filter(Boolean).join('. ');
 
     try {
-      // Call the high-accuracy server-side Gemini diagnostic endpoint
       const response = await fetch('/api/ai-diagnosis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -292,7 +286,6 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       soundFx.success();
       setLoading(false);
 
-      // AUTOMATICALLY SAVE SCAN TO FIRESTORE
       if (result) {
         const uid = user.id || 'clinician-user';
         const newSavedScan: SavedAiScan = {
@@ -342,14 +335,14 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
     }
   };
 
-  const filteredArchive = savedScans.filter(s => 
+  const filteredArchive = savedScans.filter(s =>
     s.primaryHypothesis.toLowerCase().includes(archiveSearch.toLowerCase()) ||
     s.queryOrPillName.toLowerCase().includes(archiveSearch.toLowerCase())
   );
 
   return (
     <div className="w-full space-y-8 pb-16">
-      
+
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1.5">
@@ -357,7 +350,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-100">
               AI Clinical & Diagnostic Scanner
             </h1>
-            <span className="px-2 py-0.5 rounded-md bg-blue-900 text-blue-300 text-[10px] font-bold tracking-wider uppercase font-mono border border-blue-500/30">
+            <span className="px-2 py-0.5 rounded-md bg-slate-900 text-blue-300 text-[10px] font-bold tracking-wider uppercase font-mono border border-blue-500/30">
               Auto-Sync
             </span>
           </div>
@@ -367,7 +360,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
         </div>
 
         {/* View Switcher: Live Scanner vs Saved Scans Archive */}
-        <div className="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200/80 shrink-0">
+        <div className="flex items-center bg-slate-950 p-1.5 rounded-2xl border border-slate-800 shrink-0">
           <button
             onClick={() => {
               soundFx.click();
@@ -375,8 +368,8 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             }}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               mainView === 'scanner'
-                ? 'bg-white text-blue-600 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-slate-400 hover:text-slate-100'
             }`}
           >
             <Scan className="w-3.5 h-3.5" />
@@ -390,13 +383,13 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             }}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               mainView === 'archive'
-                ? 'bg-white text-blue-600 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-slate-400 hover:text-slate-100'
             }`}
           >
             <History className="w-3.5 h-3.5" />
             <span>Scans Archive</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-blue-100 text-blue-700 text-[10px] font-mono">
+            <span className="px-1.5 py-0.2 rounded-full bg-blue-900/40 text-blue-300 text-[10px] font-mono border border-blue-500/30">
               {savedScans.length}
             </span>
           </button>
@@ -410,15 +403,15 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between shadow-xs"
+            className="p-3.5 rounded-2xl bg-slate-900 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center justify-between shadow-xs"
           >
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <ShieldCheck className="w-4 h-4 text-emerald-500" />
               <span>{savedNotification}</span>
             </div>
             <button
               onClick={() => setMainView('archive')}
-              className="text-emerald-700 underline text-xs font-extrabold hover:text-emerald-900 cursor-pointer"
+              className="text-emerald-300 underline text-xs font-extrabold hover:text-emerald-100 cursor-pointer"
             >
               View in Archive →
             </button>
@@ -433,15 +426,15 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-3.5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-semibold flex items-center justify-between shadow-xs"
+            className="p-3.5 rounded-2xl bg-slate-900 border border-amber-500/30 text-amber-400 text-xs font-semibold flex items-center justify-between shadow-xs"
           >
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+              <AlertCircle className="w-4 h-4 text-amber-500 shrink-0" />
               <span>{validationError}</span>
             </div>
             <button
               onClick={() => setValidationError(null)}
-              className="text-amber-700 hover:text-amber-900 font-bold ml-2 text-sm cursor-pointer"
+              className="text-amber-300 hover:text-amber-100 font-bold ml-2 text-sm cursor-pointer"
             >
               ✕
             </button>
@@ -453,14 +446,14 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       {mainView === 'scanner' && (
         <div className="space-y-6">
           {/* Sub Tabs: SYMPTOM CHECKER vs AI SKIN SCANNER */}
-          <div className="flex items-center gap-6 border-b border-slate-200 text-sm font-bold">
+          <div className="flex items-center gap-6 border-b border-slate-800 text-sm font-bold">
             <button
               onClick={() => {
                 soundFx.click();
                 setActiveSubTab('symptoms');
               }}
               className={`pb-3 transition-colors uppercase tracking-wider text-xs relative cursor-pointer ${
-                activeSubTab === 'symptoms' ? 'text-blue-600 font-extrabold' : 'text-slate-500 hover:text-slate-800'
+                activeSubTab === 'symptoms' ? 'text-blue-400 font-extrabold' : 'text-slate-500 hover:text-slate-100'
               }`}
             >
               <span>SYMPTOM INTAKE & SYSTEM CHECK</span>
@@ -475,12 +468,12 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                 setActiveSubTab('skin');
               }}
               className={`pb-3 transition-colors uppercase tracking-wider text-xs relative cursor-pointer ${
-                activeSubTab === 'skin' ? 'text-blue-600 font-extrabold' : 'text-slate-500 hover:text-slate-800'
+                activeSubTab === 'skin' ? 'text-blue-400 font-extrabold' : 'text-slate-500 hover:text-slate-100'
               }`}
             >
               <span className="flex items-center gap-1.5">
                 <span>AI DERMAL & TISSUE SCAN</span>
-                <span className="px-1.5 py-0.5 rounded text-[9px] bg-blue-100 text-blue-700 font-mono">VISION 2.0</span>
+                <span className="px-1.5 py-0.5 rounded text-[9px] bg-blue-900/40 text-blue-300 font-mono border border-blue-500/30">VISION 2.0</span>
               </span>
               {activeSubTab === 'skin' && (
                 <motion.div layoutId="scannertab-active" className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full" />
@@ -490,10 +483,10 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
           {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
+
             {/* Left Column: Inputs & Attachments (5 cols) */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="glass-panel-noise border-beam bg-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative">
+              <div className="clinical-panel border-beam rounded-3xl p-6 sm:p-7 space-y-5 shadow-sm relative">
                 <div className="hud-corner hud-tl" />
                 <div className="hud-corner hud-tr" />
                 <div className="hud-corner hud-bl" />
@@ -508,7 +501,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     {symptomText && (
                       <button
                         onClick={() => setSymptomText('')}
-                        className="text-[11px] text-slate-400 hover:text-rose-600 cursor-pointer"
+                        className="text-[11px] text-slate-500 hover:text-rose-600 cursor-pointer"
                       >
                         Clear
                       </button>
@@ -523,7 +516,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     }}
                     rows={3}
                     placeholder="Type symptoms here (e.g. sore throat with white patches, low-grade fever, dry cough, abdominal reflux after meals...)"
-                    className="w-full p-3.5 rounded-2xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-2xs leading-relaxed"
+                    className="w-full p-3.5 rounded-2xl border border-slate-800 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-2xs leading-relaxed"
                   />
 
                   {/* Quick symptom tags */}
@@ -537,14 +530,14 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                           className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer ${
                             isSelected
                               ? 'bg-blue-600 text-white shadow-xs'
-                              : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800'
                           }`}
                         >
                           <span>{tag}</span>
                           {isSelected ? (
                             <X className="w-3 h-3" />
                           ) : (
-                            <Plus className="w-3 h-3 text-slate-400" />
+                            <Plus className="w-3 h-3 text-slate-500" />
                           )}
                         </button>
                       );
@@ -553,13 +546,13 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                 </div>
 
                 {/* 2. Attach Scan Files (PDF, Word, Text, Images) */}
-                <div className="space-y-2.5 pt-2 border-t border-slate-100">
+                <div className="space-y-2.5 pt-2 border-t border-slate-800">
                   <div className="flex items-center justify-between">
                     <label className="block text-sm font-extrabold text-slate-100 tracking-tight flex items-center gap-1.5">
                       <Paperclip className="w-4 h-4 text-blue-400" />
                       <span>Attach Scan Files & Reports</span>
                     </label>
-                    <span className="text-[10px] font-mono text-slate-400">PDF, Word, Images</span>
+                    <span className="text-[10px] font-mono text-slate-500">PDF, Word, Images</span>
                   </div>
 
                   <input
@@ -572,7 +565,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
                   {attachedFile ? (
                     /* File Attachment Preview Card */
-                    <div className="relative rounded-2xl border border-blue-200 bg-blue-50/50 p-3.5 space-y-2">
+                    <div className="relative rounded-2xl border border-blue-500/30 bg-slate-950 p-3.5 space-y-2">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2.5 min-w-0">
                           <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
@@ -582,20 +575,20 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                             {attachedFile.type === 'text' && <FileText className="w-5 h-5" />}
                           </div>
                           <div className="min-w-0">
-                            <div className="text-xs font-bold text-slate-900 truncate">
+                            <div className="text-xs font-bold text-slate-100 truncate">
                               {attachedFile.name}
                             </div>
                             <div className="text-[10px] font-mono text-slate-500 flex items-center gap-2">
                               <span>{attachedFile.sizeFormatted}</span>
                               <span>•</span>
-                              <span className="uppercase font-bold text-blue-700">{attachedFile.type} DOCUMENT</span>
+                              <span className="uppercase font-bold text-blue-400">{attachedFile.type} DOCUMENT</span>
                             </div>
                           </div>
                         </div>
 
                         <button
                           onClick={handleRemoveAttachedFile}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-900/20 cursor-pointer transition-colors"
                           title="Remove attachment"
                         >
                           <X className="w-4 h-4" />
@@ -604,13 +597,13 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
                       {/* If it's an image, show small thumbnail preview */}
                       {imagePreview && (
-                        <div className="mt-2 rounded-xl overflow-hidden border border-slate-200 max-h-36 bg-slate-950 flex items-center justify-center">
+                        <div className="mt-2 rounded-xl overflow-hidden border border-slate-800 max-h-36 bg-black flex items-center justify-center">
                           <img src={imagePreview} alt="Attached Scan" className="max-h-36 object-contain" />
                         </div>
                       )}
 
-                      <div className="flex items-center gap-1 text-[10px] text-emerald-700 font-bold pt-0.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-bold pt-0.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                         <span>Ready for AI Diagnostic Ingestion</span>
                       </div>
                     </div>
@@ -621,12 +614,12 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                         soundFx.click();
                         docInputRef.current?.click();
                       }}
-                      className="rounded-2xl border-2 border-dashed border-slate-300 hover:border-blue-500 hover:bg-blue-50/40 p-5 text-center space-y-2 cursor-pointer transition-all group"
+                      className="rounded-2xl border-2 border-dashed border-slate-800 hover:border-blue-500 hover:bg-blue-600/10 p-5 text-center space-y-2 cursor-pointer transition-all group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform">
+                      <div className="w-10 h-10 rounded-xl bg-slate-900 text-blue-400 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform border border-slate-800">
                         <Upload className="w-5 h-5" />
                       </div>
-                      <div className="text-xs font-bold text-slate-800">
+                      <div className="text-xs font-bold text-slate-300">
                         Click or drag to attach scan files
                       </div>
                       <p className="text-[11px] text-slate-500 max-w-xs mx-auto">
@@ -657,7 +650,6 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     )}
                   </motion.button>
                 </div>
-
               </div>
             </div>
 
@@ -676,9 +668,8 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                 )}
               </AnimatePresence>
 
-              {/* 3D Disease & Clinical Images Explorer (Interactive in both Standby and Result states) */}
+              {/* 3D Disease & Clinical Images Explorer */}
               <ThreeAnatomicalScanner
-
                 symptomArea={result?.anatomicalArea}
                 affectedOrganSystem={result?.affectedOrganSystem}
                 conditionTitle={result?.primaryHypothesis}
@@ -704,21 +695,21 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
 
               {/* State A: Result is Null -> Standby Guidance Frame */}
               {!result && (
-                <div className="bg-slate-50 border border-slate-200/80 rounded-3xl p-6 sm:p-7 space-y-3">
-                  <div className="flex items-center gap-2 text-slate-800 font-extrabold text-sm">
-                    <Activity className="w-4 h-4 text-blue-600" />
+                <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 space-y-3">
+                  <div className="flex items-center gap-2 text-slate-100 font-extrabold text-sm">
+                    <Activity className="w-4 h-4 text-blue-400" />
                     <span>3D Disease & Clinical Image Explorer (Diagnostic Standby)</span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    The 3D viewer above presents interactive clinical examination modalities in a spatial 3D carousel. Drag or click the arrows to rotate between <strong>Chest Radiography (CXR)</strong>, <strong>Dermatoscopy</strong>, <strong>12-Lead ECG</strong>, <strong>Pharyngeal Exam</strong>, <strong>Gastric Endoscopy</strong>, and <strong>Neurovascular Imaging</strong>. Click any card to deep-inspect normal benchmarks.
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    The 3D viewer above presents interactive clinical examination modalities in a spatial 3D carousel. Drag or click the arrows to rotate between <strong className="text-slate-200">Chest Radiography (CXR)</strong>, <strong className="text-slate-200">Dermatoscopy</strong>, <strong className="text-slate-200">12-Lead ECG</strong>, <strong className="text-slate-200">Pharyngeal Exam</strong>, <strong className="text-slate-200">Gastric Endoscopy</strong>, and <strong className="text-slate-200">Neurovascular Imaging</strong>. Click any card to deep-inspect normal benchmarks.
                   </p>
                   <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-500">
-                    <span className="font-semibold text-slate-700">To generate 3D disease dossier:</span>
-                    <span>1. Enter symptoms on the left.</span>
-                    <span>•</span>
-                    <span>2. Or attach a scan file (PDF/Word/Image).</span>
-                    <span>•</span>
-                    <span>3. Click &quot;Run AI Diagnostic Scan&quot;.</span>
+                    <span className="font-semibold text-slate-300">To generate 3D disease dossier:</span>
+                    <span className="clinical-text-mono">1. Enter symptoms on the left.</span>
+                    <span className="text-slate-600">•</span>
+                    <span className="clinical-text-mono">2. Or attach a scan file (PDF/Word/Image).</span>
+                    <span className="text-slate-600">•</span>
+                    <span className="clinical-text-mono">3. Click &quot;Run AI Diagnostic Scan&quot;.</span>
                   </div>
                 </div>
               )}
@@ -728,21 +719,21 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="glass-panel-noise border-beam data-stream bg-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative z-10"
+                  className="clinical-panel border-beam data-stream rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm relative z-10"
                 >
                   <div className="hud-corner hud-tl" />
                   <div className="hud-corner hud-tr" />
                   <div className="hud-corner hud-bl" />
                   <div className="hud-corner hud-br" />
                   {/* Header Status & Match Score */}
-                  <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-4 gap-2">
+                  <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-2">
                     <div className="flex items-center gap-2">
                       <span className={`w-2.5 h-2.5 rounded-full ${result.isDangerous === 'Dangerous' ? 'bg-rose-600' : 'bg-blue-600'} animate-pulse`}></span>
                       <span className={`text-xs font-extrabold tracking-wider uppercase ${result.isDangerous === 'Dangerous' ? 'text-rose-400' : 'text-blue-400'}`}>
                         Triage: {result.isDangerous === 'Dangerous' ? 'Emergency / Urgent' : 'Stable / Routine'}
                       </span>
                       {result.affectedOrganSystem && (
-                        <span className="text-[10px] font-mono font-bold text-slate-300 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] font-mono font-bold text-slate-300 bg-slate-950 border border-slate-800 px-2 py-0.5 rounded-md">
                           {result.affectedOrganSystem}
                         </span>
                       )}
@@ -751,12 +742,12 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleResetScan}
-                        className="text-xs text-slate-500 hover:text-slate-800 font-bold px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer flex items-center gap-1"
+                        className="text-xs text-slate-500 hover:text-slate-100 font-bold px-2.5 py-1 rounded-lg border border-slate-800 hover:bg-slate-800 cursor-pointer flex items-center gap-1"
                       >
                         <RotateCcw className="w-3 h-3" />
                         <span>New Scan</span>
                       </button>
-                      <div className="text-xs font-extrabold text-blue-600 font-mono bg-blue-50 px-2.5 py-1 rounded-md">
+                      <div className="text-xs font-extrabold text-blue-400 font-mono bg-slate-950 px-2.5 py-1 rounded-md border border-slate-800">
                         Match {result.confidence}%
                       </div>
                     </div>
@@ -776,24 +767,24 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       )}
                     </div>
 
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal bg-slate-950 p-4 rounded-2xl border border-slate-800">
                       {result.empatheticNarrative}
                     </p>
                   </div>
 
-                  {/* PHYSICIAN CLINICAL DECISION SUPPORT: Workup & Pharmacotherapy */}
+                  {/* PHYSICIAN CLINICAL DECISION SUPPORT */}
                   <div className="space-y-4 pt-2">
                     <div className="flex items-center justify-between">
                       <h3 className="font-extrabold text-base text-slate-100 tracking-tight flex items-center gap-2">
                         <Activity className="w-4 h-4 text-blue-400" />
                         <span>Physician Diagnostic Workup & Order Panel</span>
                       </h3>
-                      <span className="text-[11px] font-mono text-slate-400">Evidence-Based Clinical Guidance</span>
+                      <span className="text-[11px] font-mono text-slate-500">Evidence-Based Clinical Guidance</span>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {/* Priority Labs */}
-                      <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2.5">
+                      <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
                             <span>🧪</span> Priority Lab Orders
@@ -815,7 +806,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </div>
 
                       {/* Imaging Modalities */}
-                      <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2.5">
+                      <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                             <span>🩻</span> Imaging Modalities
@@ -837,7 +828,7 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                       </div>
 
                       {/* Physical Exam Signs */}
-                      <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2.5">
+                      <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                             <span>🩺</span> Physical Maneuvers
@@ -858,199 +849,197 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                         </ul>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Pharmacotherapy & Guideline Therapeutics */}
-                  <div className="space-y-3 pt-2">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-extrabold text-base text-slate-100 tracking-tight flex items-center gap-2">
-                        <Pill className="w-4 h-4 text-blue-400" />
-                        <span>Guideline Pharmacotherapy & Dosing Regimens</span>
+                    {/* Pharmacotherapy & Guideline Therapeutics */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-extrabold text-base text-slate-100 tracking-tight flex items-center gap-2">
+                          <Pill className="w-4 h-4 text-blue-400" />
+                          <span>Guideline Pharmacotherapy & Dosing Regimens</span>
+                        </h3>
+                        <span className="text-[11px] font-mono text-slate-500">
+                          Consult Specialist: <strong className="text-slate-100">{result.recDoctor || 'Internal Medicine'}</strong>
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="p-4 rounded-2xl bg-blue-900/30 border border-blue-500/30 space-y-1.5">
+                          <span className="text-[11px] font-bold text-blue-300 font-mono uppercase tracking-wider block">
+                            First-Line Regimen
+                          </span>
+                          <p className="text-xs text-slate-200 leading-relaxed font-semibold">
+                            {result.pharmacotherapy?.firstLine || 'Initiate standard first-line guideline therapy tailored to renal and hepatic function.'}
+                          </p>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-amber-900/30 border border-amber-500/30 space-y-1.5">
+                          <span className="text-[11px] font-bold text-amber-300 font-mono uppercase tracking-wider block">
+                            Alternative Regimen (Allergy / Intolerance)
+                          </span>
+                          <p className="text-xs text-slate-200 leading-relaxed font-semibold">
+                            {result.pharmacotherapy?.alternative || 'Second-line allergy-sparing agent based on patient tolerance.'}
+                          </p>
+                        </div>
+                      </div>
+
+                      {result.pharmacotherapy?.contraindications && result.pharmacotherapy.contraindications.length > 0 && (
+                        <div className="p-3.5 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-1">
+                          <span className="text-[11px] font-bold text-rose-300 font-mono uppercase tracking-wider block">
+                            Contraindications & Safety Screening
+                          </span>
+                          <ul className="list-disc list-inside text-xs text-rose-200 space-y-0.5">
+                            {result.pharmacotherapy.contraindications.map((contra, idx) => (
+                              <li key={idx}>{contra}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Hospital EMR SOAP Documentation */}
+                    <div className="p-5 rounded-3xl bg-slate-950 text-slate-200 space-y-4 shadow-sm border border-slate-800">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                        <div className="flex items-center gap-2">
+                          <FileCheck className="w-4 h-4 text-blue-400" />
+                          <span className="text-xs font-bold text-white font-mono tracking-wide uppercase">
+                            Hospital EMR SOAP Consult Documentation
+                          </span>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            const fullSoapText = [
+                              `=== CLINICAL DECISION SUPPORT CONSULT NOTE ===`,
+                              `DATE: ${new Date().toLocaleDateString()} | TIME: ${new Date().toLocaleTimeString()}`,
+                              `CONDITION: ${result.primaryHypothesis}`,
+                              result.icd10Code ? `ICD-10 CODE: ${result.icd10Code}` : '',
+                              `SPECIALIST: ${result.recDoctor || 'Internal Medicine'}`,
+                              '',
+                              `[S] SUBJECTIVE:`,
+                              result.soapNote?.subjective || result.empatheticNarrative,
+                              '',
+                              `[O] OBJECTIVE:`,
+                              result.soapNote?.objective || `Target lesion: ${result.primaryLesionSite || 'Regional tissue'}. Labs and imaging pending.`,
+                              '',
+                              `[A] ASSESSMENT:`,
+                              result.soapNote?.assessment || `${result.primaryHypothesis} [ICD-10: ${result.icd10Code || 'Unspecified'}]. Confidence: ${result.confidence}%.`,
+                              '',
+                              `[P] PLAN:`,
+                              result.soapNote?.plan || `Initiate first-line regimen: ${result.pharmacotherapy?.firstLine || 'Guideline treatment'}. Complete confirmatory workup.`,
+                              '',
+                              `CLINICIAN SIGN-OFF: ___________________ MD/DO`
+                            ].filter(Boolean).join('\\n');
+
+                            navigator.clipboard.writeText(fullSoapText);
+                            setCopiedSoapNote(true);
+                            setTimeout(() => setCopiedSoapNote(false), 3000);
+                          }}
+                          className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs cursor-pointer shadow-sm flex items-center gap-1.5 transition-all"
+                        >
+                          {copiedSoapNote ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-300" />
+                              <span>Copied to EHR Clipboard!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span>Copy SOAP Note to EHR</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      <div className="space-y-3 font-mono text-xs">
+                        <div>
+                          <span className="text-sky-400 font-bold block mb-0.5">[S] SUBJECTIVE:</span>
+                          <p className="text-slate-300 pl-3 border-l-2 border-sky-500/40 leading-relaxed whitespace-pre-wrap">
+                            {result.soapNote?.subjective || result.empatheticNarrative}
+                          </p>
+                        </div>
+
+                        <div>
+                          <span className="text-emerald-400 font-bold block mb-0.5">[O] OBJECTIVE:</span>
+                          <p className="text-slate-300 pl-3 border-l-2 border-emerald-500/40 leading-relaxed whitespace-pre-wrap">
+                            {result.soapNote?.objective || `Target lesion localized to ${result.primaryLesionSite || 'regional tissue'}. Clinical imaging and laboratory studies evaluated.`}
+                          </p>
+                        </div>
+
+                        <div>
+                          <span className="text-amber-400 font-bold block mb-0.5">[A] ASSESSMENT:</span>
+                          <p className="text-slate-300 pl-3 border-l-2 border-amber-500/40 leading-relaxed whitespace-pre-wrap">
+                            {result.soapNote?.assessment || `${result.primaryHypothesis} (Confidence: ${result.confidence}%). Key differential candidates evaluated.`}
+                          </p>
+                        </div>
+
+                        <div>
+                          <span className="text-purple-400 font-bold block mb-0.5">[P] PLAN:</span>
+                          <p className="text-slate-300 pl-3 border-l-2 border-purple-500/40 leading-relaxed whitespace-pre-wrap">
+                            {result.soapNote?.plan || `Prescribe first-line pharmacotherapy: ${result.pharmacotherapy?.firstLine || 'Guideline treatment'}. Complete confirmatory workup.`}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Differential Diagnoses List */}
+                    <div className="space-y-4 pt-2">
+                      <h3 className="font-extrabold text-base text-slate-100 tracking-tight">
+                        Differential Diagnoses Matrix
                       </h3>
-                      <span className="text-[11px] font-mono text-slate-400">
-                        Consult Specialist: <strong className="text-slate-100">{result.recDoctor || 'Internal Medicine'}</strong>
-                      </span>
+
+                      <div className="space-y-3">
+                        {result.matches.map((diff, idx) => (
+                          <div
+                            key={idx}
+                            className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 hover:border-blue-500/50 transition-colors"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="font-bold text-sm text-slate-100">{diff.condition}</div>
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-900/50 px-2 py-0.5 rounded-md border border-blue-500/30">
+                                {diff.urgency}
+                              </span>
+                            </div>
+
+                            <div className="text-xs text-slate-400 leading-relaxed">
+                              <span className="font-semibold text-slate-300">Specialist: </span>
+                              {result.recDoctor}. <span className="font-semibold text-slate-300">Intervention: </span>
+                              {diff.typicalInterventions}
+                            </div>
+
+                            <p className="text-[11px] text-slate-500 font-normal">
+                              {diff.details}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="p-4 rounded-2xl bg-blue-900/30 border border-blue-500/30 space-y-1.5">
-                        <span className="text-[11px] font-bold text-blue-300 font-mono uppercase tracking-wider block">
-                          First-Line Regimen
-                        </span>
-                        <p className="text-xs text-slate-200 leading-relaxed font-semibold">
-                          {result.pharmacotherapy?.firstLine || 'Initiate standard first-line guideline therapy tailored to renal and hepatic function.'}
-                        </p>
-                      </div>
-
-                      <div className="p-4 rounded-2xl bg-amber-900/30 border border-amber-500/30 space-y-1.5">
-                        <span className="text-[11px] font-bold text-amber-300 font-mono uppercase tracking-wider block">
-                          Alternative Regimen (Allergy / Intolerance)
-                        </span>
-                        <p className="text-xs text-slate-200 leading-relaxed font-semibold">
-                          {result.pharmacotherapy?.alternative || 'Second-line allergy-sparing agent based on patient tolerance.'}
-                        </p>
-                      </div>
-                    </div>
-
-                    {result.pharmacotherapy?.contraindications && result.pharmacotherapy.contraindications.length > 0 && (
-                      <div className="p-3.5 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-1">
-                        <span className="text-[11px] font-bold text-rose-300 font-mono uppercase tracking-wider block">
-                          Contraindications & Safety Screening
-                        </span>
-                        <ul className="list-disc list-inside text-xs text-rose-200 space-y-0.5">
-                          {result.pharmacotherapy.contraindications.map((contra, idx) => (
-                            <li key={idx}>{contra}</li>
+                    {/* Warning Signs Box */}
+                    {result.warningSigns && result.warningSigns.length > 0 && (
+                      <div className="p-4 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-2 text-xs text-rose-200">
+                        <div className="font-extrabold uppercase tracking-wider text-[11px] text-rose-400 flex items-center gap-1.5">
+                          <ShieldAlert className="w-4 h-4" />
+                          <span>Emergency Warning Signs (Seek Urgent Care If Present)</span>
+                        </div>
+                        <ul className="space-y-1 list-disc list-inside font-medium text-[11px] text-rose-300">
+                          {result.warningSigns.map((w, i) => (
+                            <li key={i}>{w}</li>
                           ))}
                         </ul>
                       </div>
                     )}
-                  </div>
 
-                  {/* Hospital EMR SOAP Documentation */}
-                  <div className="p-5 rounded-3xl bg-slate-900 text-slate-200 space-y-4 shadow-sm border border-slate-800">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
-                      <div className="flex items-center gap-2">
-                        <FileCheck className="w-4 h-4 text-blue-400" />
-                        <span className="text-xs font-bold text-white font-mono tracking-wide uppercase">
-                          Hospital EMR SOAP Consult Documentation
-                        </span>
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          const fullSoapText = [
-                            `=== CLINICAL DECISION SUPPORT CONSULT NOTE ===`,
-                            `DATE: ${new Date().toLocaleDateString()} | TIME: ${new Date().toLocaleTimeString()}`,
-                            `CONDITION: ${result.primaryHypothesis}`,
-                            result.icd10Code ? `ICD-10 CODE: ${result.icd10Code}` : '',
-                            `SPECIALIST: ${result.recDoctor || 'Internal Medicine'}`,
-                            '',
-                            `[S] SUBJECTIVE:`,
-                            result.soapNote?.subjective || result.empatheticNarrative,
-                            '',
-                            `[O] OBJECTIVE:`,
-                            result.soapNote?.objective || `Target lesion: ${result.primaryLesionSite || 'Regional tissue'}. Labs and imaging pending.`,
-                            '',
-                            `[A] ASSESSMENT:`,
-                            result.soapNote?.assessment || `${result.primaryHypothesis} [ICD-10: ${result.icd10Code || 'Unspecified'}]. Confidence: ${result.confidence}%.`,
-                            '',
-                            `[P] PLAN:`,
-                            result.soapNote?.plan || `Initiate first-line regimen: ${result.pharmacotherapy?.firstLine || 'Guideline treatment'}. Complete diagnostic workup.`,
-                            '',
-                            `CLINICIAN SIGN-OFF: ___________________ MD/DO`
-                          ].filter(Boolean).join('\n');
-
-                          navigator.clipboard.writeText(fullSoapText);
-                          setCopiedSoapNote(true);
-                          setTimeout(() => setCopiedSoapNote(false), 3000);
-                        }}
-                        className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs cursor-pointer shadow-sm flex items-center gap-1.5 transition-all"
-                      >
-                        {copiedSoapNote ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-emerald-300" />
-                            <span>Copied to EHR Clipboard!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Copy SOAP Note to EHR</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    <div className="space-y-3 font-mono text-xs">
-                      <div>
-                        <span className="text-sky-400 font-bold block mb-0.5">[S] SUBJECTIVE:</span>
-                        <p className="text-slate-300 pl-3 border-l-2 border-sky-500/40 leading-relaxed whitespace-pre-wrap">
-                          {result.soapNote?.subjective || result.empatheticNarrative}
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-emerald-400 font-bold block mb-0.5">[O] OBJECTIVE:</span>
-                        <p className="text-slate-300 pl-3 border-l-2 border-emerald-500/40 leading-relaxed whitespace-pre-wrap">
-                          {result.soapNote?.objective || `Target lesion localized to ${result.primaryLesionSite || 'regional tissue'}. Clinical imaging and laboratory studies evaluated.`}
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-amber-400 font-bold block mb-0.5">[A] ASSESSMENT:</span>
-                        <p className="text-slate-300 pl-3 border-l-2 border-amber-500/40 leading-relaxed whitespace-pre-wrap">
-                          {result.soapNote?.assessment || `${result.primaryHypothesis} (Confidence: ${result.confidence}%). Key differential candidates evaluated.`}
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-purple-400 font-bold block mb-0.5">[P] PLAN:</span>
-                        <p className="text-slate-300 pl-3 border-l-2 border-purple-500/40 leading-relaxed whitespace-pre-wrap">
-                          {result.soapNote?.plan || `Prescribe first-line pharmacotherapy: ${result.pharmacotherapy?.firstLine || 'Guideline treatment'}. Complete confirmatory workup.`}
-                        </p>
-                      </div>
+                    {/* Clinical Decision Support Reference Note */}
+                    <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-500 leading-relaxed flex items-start gap-2">
+                      <Info className="w-3.5 h-3.5 text-slate-600 shrink-0 mt-0.5" />
+                      <span>
+                        {result.disclaimer}
+                      </span>
                     </div>
                   </div>
-
-                  {/* Differential Diagnoses List */}
-                  <div className="space-y-4 pt-2">
-                    <h3 className="font-extrabold text-base text-slate-100 tracking-tight">
-                      Differential Diagnoses Matrix
-                    </h3>
-
-                    <div className="space-y-3">
-                      {result.matches.map((diff, idx) => (
-                        <div
-                          key={idx}
-                          className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/50 space-y-2 hover:border-blue-500/50 transition-colors"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="font-bold text-sm text-slate-100">{diff.condition}</div>
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-900/50 px-2 py-0.5 rounded-md border border-blue-500/30">
-                              {diff.urgency}
-                            </span>
-                          </div>
-
-                          <div className="text-xs text-slate-600 leading-relaxed">
-                            <span className="font-semibold text-slate-800">Specialist: </span>
-                            {result.recDoctor}. <span className="font-semibold text-slate-800">Intervention: </span>
-                            {diff.typicalInterventions}
-                          </div>
-
-                          <p className="text-[11px] text-slate-500 font-normal">
-                            {diff.details}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Warning Signs Box */}
-                  {result.warningSigns && result.warningSigns.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-rose-900/30 border border-rose-500/30 space-y-2 text-xs text-rose-200">
-                      <div className="font-extrabold uppercase tracking-wider text-[11px] text-rose-400 flex items-center gap-1.5">
-                        <ShieldAlert className="w-4 h-4" />
-                        <span>Emergency Warning Signs (Seek Urgent Care If Present)</span>
-                      </div>
-                      <ul className="space-y-1 list-disc list-inside font-medium text-[11px] text-rose-300">
-                        {result.warningSigns.map((w, i) => (
-                          <li key={i}>{w}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Clinical Decision Support Reference Note */}
-                  <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-500 leading-relaxed flex items-start gap-2">
-                    <Info className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
-                    <span>
-                      {result.disclaimer}
-                    </span>
-                  </div>
-
                 </motion.div>
               )}
             </div>
-
           </div>
         </div>
       )}
@@ -1059,29 +1048,29 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       {mainView === 'archive' && (
         <div className="space-y-6">
           {/* Filter / Search Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800">
             <div className="relative w-full sm:w-96">
               <input
                 type="text"
                 value={archiveSearch}
                 onChange={(e) => setArchiveSearch(e.target.value)}
                 placeholder="Search scans by diagnosis, symptoms, or tags..."
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-100 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
 
-            <div className="text-xs text-slate-500 font-medium">
+            <div className="text-xs text-slate-400 font-medium">
               Showing {filteredArchive.length} of {savedScans.length} cloud records
             </div>
           </div>
 
           {filteredArchive.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-4">
-              <div className="w-16 h-16 rounded-3xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto">
+            <div className="bg-slate-900 rounded-3xl border border-slate-800 p-12 text-center space-y-4">
+              <div className="w-16 h-16 rounded-3xl bg-slate-950 text-blue-400 flex items-center justify-center mx-auto border border-slate-800">
                 <Scan className="w-8 h-8" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">No Saved AI Scans Yet</h3>
+              <h3 className="text-lg font-bold text-slate-100">No Saved AI Scans Yet</h3>
               <p className="text-xs text-slate-500 max-w-md mx-auto">
                 Run an AI symptom check or scan in the Live Scanner tab. Completed analyses are automatically persisted to your Firebase Firestore cloud archive.
               </p>
@@ -1100,40 +1089,40 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
                   key={scan.id}
                   whileHover={{ y: -4 }}
                   onClick={() => setSelectedArchiveScan(scan)}
-                  className="bg-white rounded-3xl border border-slate-200 p-5 space-y-4 shadow-xs hover:border-blue-300 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+                  className="clinical-panel rounded-3xl p-5 space-y-4 shadow-xs hover:border-blue-500/50 transition-all cursor-pointer flex flex-col justify-between"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-slate-400 flex items-center gap-1">
+                      <span className="text-[10px] font-mono text-slate-500 flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         {new Date(scan.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-blue-50 text-blue-700 font-mono">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-blue-900/40 text-blue-300 font-mono border border-blue-500/30">
                         {scan.confidence}% Match
                       </span>
                     </div>
 
                     {scan.previewUrl && (
-                      <div className="h-28 rounded-xl bg-slate-50 border border-slate-100 overflow-hidden flex items-center justify-center p-2">
+                      <div className="h-28 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden flex items-center justify-center p-2">
                         <img src={scan.previewUrl} alt="Scan preview" className="max-h-full object-contain rounded" />
                       </div>
                     )}
 
-                    <h4 className="text-base font-extrabold text-slate-950 line-clamp-2">
+                    <h4 className="text-base font-extrabold text-slate-100 line-clamp-2">
                       {scan.primaryHypothesis}
                     </h4>
 
-                    <p className="text-xs text-slate-600 line-clamp-2">
+                    <p className="text-xs text-slate-400 line-clamp-2">
                       {scan.empatheticNarrative}
                     </p>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-                      <span className="text-[11px] font-bold text-blue-600 font-mono truncate max-w-[170px]">
+                    <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+                      <span className="text-[11px] font-bold text-blue-400 font-mono truncate max-w-[170px]">
                         {scan.queryOrPillName}
                       </span>
                       <button
                         onClick={(e) => handleDeleteScan(scan.id, e)}
-                        className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                        className="text-slate-500 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-900/20 transition-colors"
                         title="Delete record from Cloud"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -1150,54 +1139,54 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
       {/* Archive Modal Inspection Dialog */}
       <AnimatePresence>
         {selectedArchiveScan && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto space-y-6 shadow-2xl relative"
+              className="bg-slate-900 rounded-3xl border border-slate-800 p-6 sm:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto space-y-6 shadow-2xl relative"
             >
               <button
                 onClick={() => setSelectedArchiveScan(null)}
-                className="absolute top-6 right-6 p-2 rounded-xl text-slate-400 hover:text-slate-900 hover:bg-slate-100 cursor-pointer"
+                className="absolute top-6 right-6 p-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[10px] font-mono font-bold">
+                  <span className="px-2.5 py-0.5 rounded-md bg-blue-900/40 text-blue-300 text-[10px] font-mono font-bold border border-blue-500/30">
                     CLOUD ARCHIVED RECORD
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">
+                  <span className="text-xs text-slate-500 font-mono">
                     {new Date(selectedArchiveScan.timestamp).toLocaleString()}
                   </span>
                 </div>
-                <h3 className="text-2xl font-extrabold text-slate-950">
+                <h3 className="text-2xl font-extrabold text-slate-100">
                   {selectedArchiveScan.primaryHypothesis}
                 </h3>
               </div>
 
               {selectedArchiveScan.previewUrl && (
-                <div className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 p-2 flex justify-center">
+                <div className="rounded-2xl border border-slate-800 overflow-hidden bg-slate-950 p-2 flex justify-center">
                   <img src={selectedArchiveScan.previewUrl} alt="Visual scan" className="max-h-56 object-contain rounded-xl" />
                 </div>
               )}
 
-              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {selectedArchiveScan.empatheticNarrative}
               </div>
 
               <div className="space-y-3">
-                <h4 className="text-sm font-bold text-slate-900">Differential Conditions Evaluated:</h4>
+                <h4 className="text-sm font-bold text-slate-100">Differential Conditions Evaluated:</h4>
                 <div className="space-y-2">
                   {selectedArchiveScan.differentialMatches.map((m, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
-                      <div className="flex justify-between font-bold text-slate-900">
+                    <div key={idx} className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1">
+                      <div className="flex justify-between font-bold text-slate-100">
                         <span>{m.condition}</span>
-                        <span className="text-blue-700">{m.urgency}</span>
+                        <span className="text-blue-400">{m.urgency}</span>
                       </div>
-                      <div className="text-slate-600">{m.typicalInterventions}</div>
+                      <div className="text-slate-400">{m.typicalInterventions}</div>
                       <p className="text-[11px] text-slate-500">{m.details}</p>
                     </div>
                   ))}
@@ -1205,8 +1194,8 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
               </div>
 
               {selectedArchiveScan.warningSigns && selectedArchiveScan.warningSigns.length > 0 && (
-                <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-900 space-y-1.5">
-                  <div className="font-bold flex items-center gap-1 text-rose-700">
+                <div className="p-4 rounded-2xl bg-rose-900/30 border border-rose-500/30 text-xs text-rose-200 space-y-1.5">
+                  <div className="font-bold flex items-center gap-1 text-rose-400">
                     <ShieldAlert className="w-4 h-4" />
                     <span>Warning Signs:</span>
                   </div>
@@ -1221,12 +1210,11 @@ export const ClinicalScanner: React.FC<ClinicalScannerProps> = ({
               <div className="flex justify-end pt-2">
                 <button
                   onClick={() => setSelectedArchiveScan(null)}
-                  className="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs cursor-pointer hover:bg-slate-800"
+                  className="px-5 py-2.5 rounded-xl bg-slate-950 text-white font-bold text-xs cursor-pointer hover:bg-slate-800 border border-slate-800"
                 >
                   Close Record
                 </button>
               </div>
-
             </motion.div>
           </div>
         )}
