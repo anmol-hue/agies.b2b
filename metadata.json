@@ -1,0 +1,6 @@
+{
+  "name": "tpis.agies",
+  "description": "Physician Clinical Decision Support & Intelligence Center: an offline-first platform featuring agentic diagnostic reasoning, ICD-10 coding, diagnostic workup order panels, guideline pharmacotherapy, hospital EMR SOAP notes, and 3D anatomical examination atlas.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

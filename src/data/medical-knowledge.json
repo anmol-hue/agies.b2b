@@ -1,0 +1,49 @@
+{
+  "markers": {
+    "visual": {
+      "erythema": { "label": "Redness", "weight": 2, "associations": ["inflammation", "infection", "allergy"] },
+      "scaling": { "label": "Scaling/Flaking", "weight": 3, "associations": ["psoriasis", "eczema", "fungal"] },
+      "exudate": { "label": "Fluid/Pus", "weight": 4, "associations": ["bacterial infection", "severe inflammation"] },
+      "papules": { "label": "Small Bumps", "weight": 2, "associations": ["acne", "allergy", "viral"] },
+      "opacity": { "label": "Radiological Opacity", "weight": 5, "associations": ["pneumonia", "edema", "tumor"] },
+      "hyperemia": { "label": "Increased Blood Flow", "weight": 3, "associations": ["acute inflammation", "infection"] },
+      "cyanosis": { "label": "Bluish Tint", "weight": 5, "associations": ["hypoxia", "heart failure", "respiratory distress"] }
+    },
+    "textual": {
+      "itch": { "label": "Pruritus", "weight": 3, "associations": ["eczema", "allergy", "psoriasis"] },
+      "pain": { "label": "Pain/Tenderness", "weight": 3, "associations": ["infection", "ischemia", "trauma"] },
+      "fever": { "label": "Pyrexia", "weight": 4, "associations": ["systemic infection", "viral load", "autoimmune"] },
+      "dyspnea": { "label": "Shortness of Breath", "weight": 5, "associations": ["heart failure", "asthma", "pneumonia"] },
+      "odynophagia": { "label": "Painful Swallowing", "weight": 4, "associations": ["pharyngitis", "tonsillitis"] }
+    }
+  },
+  "conditions": {
+    "atopic_dermatitis": {
+      "name": "Atopic Dermatitis (Chronic Eczema)",
+      "required_markers": ["erythema", "itch"],
+      "supporting_markers": ["scaling", "papules"],
+      "pathophysiology": "Driven by a Th2 cytokine cascade leading to epidermal barrier disruption and increased transepidermal water loss.",
+      "doctor_notes": "Look for typical distribution in flexural areas. Differentiate from psoriasis by the absence of silvery scales.",
+      "interventions": "Topical corticosteroids and ceramide-based emollients.",
+      "specialist": "Dermatologist"
+    },
+    "strep_throat": {
+      "name": "Acute Bacterial Pharyngitis (Strep Throat)",
+      "required_markers": ["hyperemia", "odynophagia"],
+      "supporting_markers": ["exudate", "fever"],
+      "pathophysiology": "Colonization of the pharyngeal mucosa by Streptococcus pyogenes, triggering an acute inflammatory response in the lymphatic tissues.",
+      "doctor_notes": "Presence of tonsillar exudates strongly suggests bacterial over viral etiology.",
+      "interventions": "First-line therapy with Penicillin or Amoxicillin.",
+      "specialist": "Otolaryngologist"
+    },
+    "myocardial_infarction": {
+      "name": "Acute Myocardial Infarction",
+      "required_markers": ["opacity", "dyspnea"],
+      "supporting_markers": ["cyanosis", "pain"],
+      "pathophysiology": "Occlusion of a coronary artery leading to transmural ischemia and subsequent myocardial necrosis.",
+      "doctor_notes": "Urgent evaluation of ECG for ST-segment elevation. Immediate reperfusion is critical to save myocardium.",
+      "interventions": "Emergency PCI (Percutaneous Coronary Intervention) or Thrombolytics.",
+      "specialist": "Interventional Cardiologist"
+    }
+  }
+}
